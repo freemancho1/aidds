@@ -5,7 +5,7 @@ def run_args():
         description='Server-side Program of an Artificial Intelligence-based Distribution Design System',
         usage='Please use it as follows.\n' \
               '- modeling: run [--modeling, -m] [--skip-gpd, -sg]\n' \
-              '- serving: run -s(--service) [--port, -p] PORT-NO(default: 11001)',
+              '- serving: run -s(--service) [--port, -p] PORT-NO(default: 11001)', 
     )
     
     parser.add_argument(
