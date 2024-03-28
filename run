@@ -1,0 +1,15 @@
+#!/home/freeman/anaconda3/envs/aidds/bin/python
+import os
+from aidd.sys.argvs import run_args
+
+args = run_args()
+exec_str = 'python '
+if args.modeling:
+    exec_str += './modeling/main.py '
+    if args.skip_gpd:
+        exec_str += '--skip-gpd'
+elif args.serving:
+    exec_str += f'./serving/main.py --port {args.port}'
+
+# os.system(exec_str)
+print(exec_str)
