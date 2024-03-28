@@ -4,6 +4,8 @@ import os
 IS_DEBUG_MODE = True
 # 로그 출력여부
 IS_LOG_DISPLAY = True
+# 웹 서비스 포트
+PORT = 11002
 
 ## 학습에 사용할 데이터 셋 종류
 DATA_SETs = ['CONS', 'POLE', 'LINE', 'SL']
@@ -67,33 +69,31 @@ CONSTRAINTs = {
     'MAX_LINE_CNT'          : 11
 } 
 
+## 설비 연동 키 값
+JOIN_COL = 'ACC_NO'
 ## 다양하게 사용될 컬럼들
 COLs = {
-    # 설비 연동 키값
-    'JOIN': 'ACC_NO',
     # 타겟 컬럼
     'TARGET': 'TOTAL_CONS_COST', 
     # 예측결과 리턴할 항목 리스트(현재 사용하지 않음)
-    'RETURN': ['CONS_ID', 'TOTAL_CONS_COST'],
+    'RETURN': [JOIN_COL, 'TOTAL_CONS_COST'],
     # 전주 갯 수 확인 컬럼
     'PC': 'POLE_CNT',     # PC: POLE COUNT
     # 영문으로 변경할 컬럼들
     'RENAME': {
-        '공사번호': 'ACC_NO',               # Construction ID
-        '총공사비': 'TOTAL_CONS_COST',      # Total Construction Cost
-        '최종변경일시': 'LAST_MOD_DATE',    # Last Modification Date and Time
-        '최종변경자사번': 'LAST_MOD_EID',   # Last Modification Employee ID
+        '공사번호': JOIN_COL,               # Accept No
+        '총공사비': 'CONS_COST',            # Total Construction Cost
+        '최종변경일시': 'ACC_DATE',         # Last Modification Date and Time
         '사업소명': 'OFFICE_NAME',
         '계약전력': 'CONT_CAP',             # Contracted Capacity
+        '공급방식': 'SUP_TYPE',
         '접수종류명': 'ACC_TYPE_NAME',      # Accept Type Name
-        '공사형태코드': 'CONS_TYPE_CD',     # Construction Type Code
-        '전산화번호': 'COMP_ID',
-        '전원측전산화번호': 'FROM_COMP_ID',
-        'GISID': 'GIS_ID',
+        
         '전주형태코드': 'POLE_SHAPE_CD',
         '전주종류코드': 'POLE_TYPE_CD',
         '전주규격코드': 'POLE_SPEC_CD',
         'X좌표-Y좌표': 'COORDINATE',
+        
         '결선방식코드': 'WIRING_SCHEME',
         '지지물간거리': 'SPAN',
         '전선종류코드1': 'LINE_TYPE_CD',
@@ -101,8 +101,10 @@ COLs = {
         '전선조수1': 'LINE_PHASE_CD',
         '중성선종류코드': 'NEUTRAL_TYPE_CD',
         '중성선규격코드': 'NEUTRAL_SPEC_CD',
+        
         '인입전선종류코드': 'SL_TYPE_CD',
         '고객공급선규격코드': 'SL_SPEC_CD',
+        '인입선지지물간거리': 'SL_SPAN',
         '조수': 'SUPERVISOR',
     },
 
@@ -110,34 +112,46 @@ COLs = {
     'PP': {
         'CONS': {
             'SOURCE': [
-                'CONS_ID', 'TOTAL_CONS_COST',  
-                'LAST_MOD_DATE', 
-                'OFFICE_NAME', 'CONT_CAP', 'ACC_TYPE_NAME' 
+                JOIN_COL, 'CONS_COST',  
+                'ACC_DATE', 'OFFICE_NAME', 
+                'CONT_CAP', 'SUB_TYPE',
+                'CONT_TYPE', 'ACC_TYPE_NAME' 
+            ],
+            'PRED': [
+                JOIN_COL, 'PRED_NO', 'PRED_TYPE',  
+                'ACC_DATE', 'OFFICE_CD',
+                'CONT_CAP', 'SUB_TYPE'
+            ],
+            'PP_IN': [
+                JOIN_COL, 'CONS_COST',  
+                'ACC_DATE', 'OFFICE_CD', 
+                'CONT_CAP', 'SUB_TYPE'
             ],
             'PP': [
-                'CONS_ID', 'TOTAL_CONS_COST', 'LAST_MOD_DATE', 
-                'OFFICE_NAME', 'CONT_CAP',
+                JOIN_COL, 'CONS_COST', 'OFFICE_NO', 'CONT_CAP', 'SUB_TYPE',
                 'YEAR', 'MONTH', 'DAY', 'DAYOFWEEK', 'DAYOFYEAR', 'YEAR_MONTH',
-                'OFFICE_NUMBER',
             ],
         },
         'POLE': {
             'SOURCE': [
-                'CONS_ID', 
-                'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
+                JOIN_COL, 'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
                 'COORDINATE'    
+            ],
+            'PP_IN': [
+                JOIN_COL, 'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
+                'GEO_X', 'GEO_Y',
             ],
         },
         'LINE': {
             'SOURCE': [
-                'CONS_ID', 
+                JOIN_COL, 
                 'WIRING_SCHEME', 'LINE_TYPE_CD', 'LINE_SPEC_CD', 'LINE_PHASE_CD',
                 'SPAN', 'NEUTRAL_TYPE_CD', 'NEUTRAL_SPEC_CD'
             ], 
         },
         'SL': {
             'SOURCE': [
-                'CONS_ID', 'SL_TYPE_CD', 'SL_SPEC_CD', 'SPAN', 'SUPERVISOR'
+                JOIN_COL, 'SL_TYPE_CD', 'SL_SPEC_CD', 'SL_SPAN', 'SUPERVISOR'
             ],
         }
     },
