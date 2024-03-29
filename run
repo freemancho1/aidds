@@ -19,4 +19,3 @@ else:
     exec_str += './modeling/main.py'
 
 os.system(exec_str)
-# print(exec_str)

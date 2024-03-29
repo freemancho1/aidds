@@ -55,13 +55,13 @@ def get_provide_data():
         logs.stop()
         raise AiddsException('GET_PROVIDE_DATA', se_msg=str(e))
 
-def get_merged_data():
-    logs = Logs('GET_MERGED_DATA')
+def get_cleaning_data():
+    logs = Logs('GET_CLEANING_DATA')
     try:
         data = {}
         for key in cfg.DATA_SETs:
             # start_time = datetime.now()
-            df = read_data(f'MERGE,BATCH,{key}')
+            df = read_data(f'CLEANING,BATCH,{key}')
             data[key] = df
             # value = f'크기{df.shape}, 처리시간({datetime.now()-start_time})'
             # logs.mid(dcode=key, value=value)
@@ -69,7 +69,7 @@ def get_merged_data():
         return data
     except Exception as e:
         logs.stop()
-        raise AiddsException('GET_MERGED_DATA', se_msg=str(e))
+        raise AiddsException('GET_CLEANING_DATA', se_msg=str(e))
 
 def _get_file_path(fcode=None):
     fcodes = fcode.split(',')

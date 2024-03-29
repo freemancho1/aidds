@@ -56,12 +56,15 @@ class Cleaning:
         self.cdict['CONS'] = df[cfg.COLs['PP']['CONS']['PP_IN']]
         
         # 전주 X, Y 좌표 만들기
-        df = self.cdict['POLE'].copy()
-        df[['GEO_X', 'GEO_Y', 'T1', 'T2']] = \
-            df.COORDINATE.str.split(',', expand=True)
-        self.cdict['POLE'] = df[cfg.COLs['PP']['POLE']['PP_IN']]
+        # 전주 X, Y 좌표는 모델링에서 사용하지 않기 때문에,
+        # 이 부분은 모델링에서 제외
+        # df = self.cdict['POLE'].copy()
+        # df[['GEO_X', 'GEO_Y', 'T1', 'T2']] = \
+        #     df.COORDINATE.str.split(',', expand=True)
+        # self.cdict['POLE'] = df[cfg.COLs['PP']['POLE']['PP_IN']]
+        self.cdict['POLE'] = self.cdict['POLE'][cfg.COLs['PP']['POLE']['PP_IN']]
         
         for key in cfg.DATA_SETs:
-            save_data(self.cdict[key], f'MERGE,BATCH,{key}')
+            save_data(self.cdict[key], f'CLEANING,BATCH,{key}')
             self.logs.mid(key, self.cdict[key].shape)
         

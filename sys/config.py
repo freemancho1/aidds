@@ -27,7 +27,7 @@ FILE_NAMEs = {
         'LINE': 'LINE_DATA.xlsx', 
         'SL': 'SL_DATA.xlsx',
     },
-    'MERGE': {
+    'CLEANING': {
         'BATCH': {name: f'STEP01_MB_{name}.CSV' for name in DATA_SETs},
         'ONLINE': {name: f'STEP01_MO_{name}.CSV' for name in DATA_SETs},
     }, 
@@ -66,7 +66,8 @@ CONSTRAINTs = {
     'MIN_POLE_CNT'          : 1,
     'MAX_POLE_CNT'          : 10,
     'MIN_LINE_CNT'          : 1,
-    'MAX_LINE_CNT'          : 11
+    'MAX_LINE_CNT'          : 11,
+    'SL_CNT'                : 1,
 } 
 
 ## 설비 연동 키 값
@@ -137,9 +138,12 @@ COLs = {
                 JOIN_COL, 'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
                 'COORDINATE'    
             ],
-            'PP_IN': [
+            'PRED': [
                 JOIN_COL, 'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
                 'GEO_X', 'GEO_Y',
+            ],
+            'PP_IN': [
+                JOIN_COL, 'POLE_SHAPE_CD', 'POLE_TYPE_CD', 'POLE_SPEC_CD',
             ],
         },
         'LINE': {
