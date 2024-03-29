@@ -12,10 +12,10 @@ class Cleaning:
         try:
             self.data = get_provide_data()
             self._run()
-            self.logs.stop()
         except Exception as e:
-            self.logs.stop()
             raise AiddsException('CLEANING', se_msg=str(e))
+        finally:
+            self.logs.stop()
         
     def _run(self):
         # 공사비 데이터 학습대상 레코드 추출
