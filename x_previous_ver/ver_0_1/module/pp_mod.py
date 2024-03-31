@@ -34,6 +34,7 @@ class PreprocessingModule:
     def calculate(self, soc_df=None, fdict=None):
         try:
             df = soc_df
+
             # 공사비까지 전처리된 데이터 셋에 설비 갯 수 컬럼 추가(3개)
             # 공사비 데이터 셋은 처리하지 않아도 됨
             for key in cfg.DATA_SETs[1:]:
@@ -45,6 +46,7 @@ class PreprocessingModule:
                     left_on=cfg.JOIN_COL, right_on=cons_ids_cnt.index, how='left'
                 )
                 df[col_name] = df[col_name].fillna(0)
+            print(f'aaa[{df}]')
                 
             # 모델 학습에 사용할 레코드 추출
             # * 전주/전선 갯 수가 10개 이상인 경우 

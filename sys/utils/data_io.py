@@ -1,0 +1,68 @@
+import os
+import pickle
+import pandas as pd
+from datetime import datetime 
+
+import aidds.sys.config as cfg 
+import aidds.sys.messages as msg
+from aidds.sys.utils.logs import ModelingLogs as Logs
+from aidds.sys.utils.exception import AiddsException as AE
+
+
+def read_data(file_code=None, **kwargs):
+    try:
+        file_type, file_path = _get_file_path(file_code=file_code)
+        if file_type == cfg.FILE_TYPE_PICKLE:
+            with open(file_path, 'rb') as file:
+                return pickle.load(file)
+        else:
+            _, file_ext = os.path.splitext(file_path)
+            if file_ext.lower() == cfg.FILE_EXT_EXCEL:
+                return pd.read_excel(file_path, **kwargs)
+            elif file_ext.lower() == cfg.FILE_EXT_CSV:
+                return pd.read_csv(file_path, **kwargs)
+            else:
+                # 이거 테스트 필요
+                raise AE(f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_path}')
+    except AE as ae:
+        raise AE(ae)
+    except Exception as e:
+        raise AE(e)
+    
+def save_data(data=None, file_code=None, **kwargs):
+    try:
+        file_type, file_path = _get_file_path(file_code=file_code)
+        if file_type == cfg.FILE_TYPE_PICKLE:
+            with open(file_path, 'wb') as file:
+                pickle.dump(data, file)
+        else:
+            # 데이터프레임 저장 시 인덱스를 저장하지 않음
+            if 'index' not in kwargs:
+                kwargs['index'] = False
+            data.to_csv(file_path, **kwargs)
+    except AE as ae:
+        raise AE(ae)
+    except Exception as e:
+        raise AE(e)
+
+
+def _get_file_path(file_code=None):
+    try:
+        file_codes = file_code.split(',')
+        file_type = cfg.FILE_TYPE_PICKLE \
+            if file_codes[0] == 'DUMP' else cfg.FILE_TYPE_DATA
+        file_keys = ''.join([f'["{code}"]' for code in file_codes])
+        file_name = eval('cfg.FILE_NAMEs'+file_keys)
+        paths = [cfg.BASE_PATH, file_type, file_name]
+        return file_type, os.path.join(*paths)
+    except Exception as e:
+        raise AE(e)
+
+def _get_rename_cols(cols=None):
+    try:
+        return {
+            name: cfg.COLs['RENAME'][name] \
+                for name in cfg.COLs['RENAME'] if name in cols
+        }
+    except Exception as e:
+        raise AE(e)

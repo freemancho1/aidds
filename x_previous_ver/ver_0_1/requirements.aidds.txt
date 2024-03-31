@@ -1,0 +1,21 @@
+pandas
+pandas_profiling
+matplotlib
+bayesian-optimization
+# scikit-learn -> bayesian-optimization
+xlrd        # excel
+imageio
+jupyter
+jupyterlab
+
+# conda install -c conda-forge lightgbm
+lightgbm
+# conda install -c conda-forge xgboost
+xgboost
+
+openpyxl
+
+# Flask Web Service
+Flask
+Flask-RESTful
+tornado

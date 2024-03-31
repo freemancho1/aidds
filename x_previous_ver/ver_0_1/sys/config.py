@@ -8,12 +8,6 @@ IS_SERVICE_LOG_DISPLAY = True
 # 웹 서비스 포트
 PORT = 11001 
 
-# 파일 타입(파일저장 중간 경로로도 사용)
-FILE_TYPE_PICKLE = 'pickle'
-FILE_TYPE_DATA = 'data'
-FILE_EXT_EXCEL = '.xlsx'
-FILE_EXT_CSV = '.csv'
-
 ## 학습에 사용할 데이터 셋 종류
 DATA_SETs = ['CONS', 'POLE', 'LINE', 'SL']
 

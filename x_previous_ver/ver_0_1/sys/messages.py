@@ -3,8 +3,6 @@ SYS = {
 }
 
 EXCEPIONs = {
-    'UNKNOWN_FILE_EXT': 'Unknown file extension error, the extension is',
-    
     # 시스템 오류
     'EXCEPTION_ERR': 'An error occurred during the exception handling process.',
     'EXCEPTION_TEST': 'Exception test',

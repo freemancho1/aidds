@@ -1,14 +1,10 @@
-import uuid
 import platform
 import warnings
-import sys
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-from datetime import datetime
 from sklearn.exceptions import DataConversionWarning, ConvergenceWarning
 
 import aidds.sys.config as cfg
-import aidds.sys.messages as msg
 
 
 class AiddsInit:
@@ -58,7 +54,8 @@ class PltInit:
     def _set_korean(self):
         # 기본적인 경우는 아래 4컬럼만 해도 됨
         osName = platform.system()
-        fontPath = cfg.WIN_FONT_PATH if osName == 'Windows' else cfg.UBUNTU_FONT_PATH
+        fontPath = cfg.WIN_FONT_PATH if osName == 'Windows' \
+            else cfg.UBUNTU_FONT_PATH
         fontFamily = fm.FontProperties(fname=fontPath).get_name()
         plt.rcParams['font.family'] = fontFamily
         
@@ -72,72 +69,3 @@ class PltInit:
             name = cfg.WIN_FONT_NAME if osName == 'Windows' else cfg.UBUNTU_FONT_NAME
         )
         fm.fontManager.ttflist.insert(0, font_entry)
-        
-        
-class AiddsException(Exception):
-    def __init__(self, e_code, value=None, se_msg=None):
-        # e_code: error code
-        # se_msg: super exception message
-        
-        # 에러 단계별로 구분하는 구분자('\n')
-        self.delimiter = cfg.EXCEPTION_DELIMITER
-        try:
-            self.msg = msg.EXCEPIONs[e_code]
-            self.msg += '' if value is None else f'[{value}]'
-            self.msg += '' if se_msg is None else f'{self.delimiter}{se_msg}'
-            self.msgs = self.msg.split(self.delimiter)
-            self.out_msg = ''
-            for m in self.msgs:
-                self.out_msg += f'{"  "+m}{self.delimiter}'
-            super().__init__(self.out_msg)
-        except Exception as e:
-            print(f'{msg.EXCEPIONs["EXCEPTION_ERR"]}\n{e}')
-            sys.exit(-1)
-
-
-class Logs:
-    # 중첩 로그의 깊이를 저장하는 정형변수
-    depth = -1
-    
-    def __init__(self, code='NONE'):
-        self.uuid = str(uuid.uuid4()).split('-')[-1]
-        self.is_log_display = cfg.IS_LOG_DISPLAY
-        self.start_time = datetime.now()
-        self.code = code
-        self.msg = msg.LOGs['MAIN'][code]
-        Logs.depth += 1
-        self.depth = Logs.depth
-        self._start()
-        
-    def _start(self):
-        self._print(self._get_message('START'))
-        
-    def mid(self, dcode=None, value=None):
-        # dcode: details code
-        out_msg = ''
-        if dcode is not None:
-            out_msg = msg.LOGs['SUB'][self.code][dcode]
-            if value is not None:
-                out_msg += f': {value}'
-        else:
-            if value is not None:
-                out_msg = value
-        self._print(out_msg, depth=self.depth+1)
-        
-    def stop(self):
-        ptime = datetime.now() - self.start_time
-        self._print(self._get_message('STOP'), ptime)
-        Logs.depth -= 1
-    
-    def _get_message(self, mode='START'):
-        tail = msg.LOGs['SYS'][mode]
-        return tail if self.code=='NONE' else f'{self.msg} {tail}'
-    
-    def _print(self, pmsg, ptime=None, depth=None):
-        # pmsg: print message, ptime: processing time
-        if not self.is_log_display:
-            return
-        dspace = '  ' * (self.depth if depth is None else depth)
-        print(f'[{self.uuid}][{datetime.now()}] {dspace}{pmsg}', end='')
-        print('' if ptime is None else f', {msg.LOGs["SYS"]["TOTAL"]}: {ptime}')
-        

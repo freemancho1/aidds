@@ -26,6 +26,7 @@ class Preprocessing:
                 self.pdf = self._pp_facilitie_data(key)
             # for key in cfg.DATA_SETs:
             #     self.pdf = eval(f'self._{key.lower()}(key)')
+            self._pp_to_scaler()
         except AiddsException as ae:
             raise AiddsException('PP_RUN', se_msg=ae)
         
@@ -90,73 +91,15 @@ class Preprocessing:
             raise AiddsException(f'PP_{key}', se_msg=e)
         finally:
             logs.stop()
+            
+    def _pp_to_scaler(self):
+        # 최종 완료시점에서 NaN값을 0으로 처리
+        # 온라인 작업 시 인입선이 없거나 전주가 없는 작업 등에서 NaN가 올 수 있음
+        self.pdf.fillna(0, inplace=True)
+        # 모델링 시점과 서비스 시점의 데이터프레임 컬럼 순서를 동일하게 하기 위해
+        # 모델링 시점의 컬럼 순서를 저장해 서비스 시점에서 컬럼 순서를 재배치
+        # One-Hot Encoding시점에 데이터 컬럼의 순서가 변경될 수 있음.
+        save_data(self.pdf.columns, fcode='DUMP,LAST_PP_COLS')
+        # 전처리 데이터 저장
+        save_data(self.pdf, fcode='PP_LAST')
     
-    # def _pole(self, key=None):
-    #     logs = Logs(f'PP_{key}')
-        
-    #     try:
-    #         df = self.cdict[key]
-            
-    #         df = self.pp.pole(df)
-    #         cols = df.columns.tolist()
-    #         # 실시간 처리에서 동일 컬럼을 추가하기 위해 학습에서 나온 컬럼 리스트 저장
-    #         save_data(cols, fcode='DUMP,POLE_ONE_HOT_COLS')
-    #         logs.mid('ONE_HOT', df.shape)
-            
-    #         # 각 데이터셋 별로 처리할 컬럼이 다르기 때문에 컬럼도 별도로 보냄
-    #         sum_cols = [col for col in df.columns if col.startswith('POLE_')]
-    #         pdf = self.pp.calculate_sum(df, sum_cols, self.pdf)
-    #         logs.mid('RESULT', pdf.shape)
-    #         return pdf
-    #     except AiddsException as ae:
-    #         raise AiddsException(f'PP_{key}', se_msg=ae)
-    #     except Exception as e:
-    #         raise AiddsException(f'PP_{key}', se_msg=e)
-    #     finally:
-    #         logs.stop()
-    
-    # def _line(self, key=None):
-    #     logs = Logs(f'PP_{key}')
-        
-    #     try: 
-    #         df = self.cdict[key]
-    #         df = self.pp.line(df)
-    #         cols = df.columns.tolist()
-    #         # 실시간 처리에서 동일 컬럼을 추가하기 위해 학습에서 나온 컬럼 리스트 저장
-    #         save_data(cols, fcode='DUMP,LINE_ONE_HOT_COLS')
-    #         logs.mid('ONE_HOT', df.shape)
-            
-    #         sum_cols = df.columns.tolist()[1:]
-    #         pdf = self.pp.calculate_sum(df, sum_cols, self.pdf)
-    #         logs.mid('RESULT', pdf.shape)
-            
-    #         return pdf
-    #     except AiddsException as ae:
-    #         raise AiddsException(f'PP_{key}', se_msg=ae)
-    #     except Exception as e:
-    #         raise AiddsException(f'PP_{key}', se_msg=e)
-    #     finally:
-    #         logs.stop()
-    
-    # def _sl(self, key=None):
-    #     logs = Logs(f'PP_{key}')
-        
-    #     try:
-    #         df = self.cdict[key]
-    #         df = self.pp.sl(df)
-    #         cols = df.columns.tolist()
-    #         save_data(cols, fcode='DUMP,SL_ONE_HOT_COLS')
-    #         logs.mid('ONE_HOT', df.shape)
-            
-    #         sum_cols = df.columns.tolist()[1:]
-    #         pdf = self.pp.calculate_sum(df, sum_cols, self.pdf)
-    #         logs.mid('RESULT', pdf.shape)
-            
-    #         return pdf
-    #     except AiddsException as ae:
-    #         raise AiddsException(f'PP_{key}', se_msg=ae)
-    #     except Exception as e:
-    #         raise AiddsException(f'PP_{key}', se_msg=e)
-    #     finally:
-    #         logs.stop()
-        

@@ -16,7 +16,7 @@ def read_data(fcode=None, **kwargs):
         else:
             _, fext = os.path.splitext(fpath)
             if fext.lower() == '.xlsx':
-                return pd.read_excel(fpath, **kwargs)
+                return pd.read_excel(fpath, **kwargs) 
             if fext.lower() == '.csv':
                 return pd.read_csv(fpath, **kwargs)
     except Exception as e:
@@ -49,26 +49,20 @@ def get_provide_data():
             data[key] = df
             value = f'Size{df.shape}, pTime({datetime.now()-start_time})'
             logs.mid(dcode=key, value=value)
-        logs.stop()
         return data
     except Exception as e:
-        logs.stop()
         raise AiddsException('GET_PROVIDE_DATA', se_msg=str(e))
+    finally:
+        logs.stop()
 
 def get_cleaning_data():
-    logs = Logs('GET_CLEANING_DATA')
     try:
         data = {}
         for key in cfg.DATA_SETs:
-            # start_time = datetime.now()
             df = read_data(f'CLEANING,BATCH,{key}')
             data[key] = df
-            # value = f'크기{df.shape}, 처리시간({datetime.now()-start_time})'
-            # logs.mid(dcode=key, value=value)
-        logs.stop()
         return data
     except Exception as e:
-        logs.stop()
         raise AiddsException('GET_CLEANING_DATA', se_msg=str(e))
 
 def _get_file_path(fcode=None):
