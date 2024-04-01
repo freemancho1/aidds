@@ -6,7 +6,7 @@ from datetime import datetime
 import aidds.sys.config as cfg 
 import aidds.sys.messages as msg
 from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AiddsException as AE
+from aidds.sys.utils.exception import AiddsException 
 
 
 def read_data(file_code=None, **kwargs):
@@ -23,11 +23,12 @@ def read_data(file_code=None, **kwargs):
                 return pd.read_csv(file_path, **kwargs)
             else:
                 # 이거 테스트 필요
-                raise AE(f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_path}')
-    except AE as ae:
-        raise AE(ae)
+                raise AiddsException(
+                    f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_path}')
+    except AiddsException as ae: 
+        raise AiddsException(ae)
     except Exception as e:
-        raise AE(e)
+        raise AiddsException(e)
     
 def save_data(data=None, file_code=None, **kwargs):
     try:
@@ -40,10 +41,39 @@ def save_data(data=None, file_code=None, **kwargs):
             if 'index' not in kwargs:
                 kwargs['index'] = False
             data.to_csv(file_path, **kwargs)
-    except AE as ae:
-        raise AE(ae)
+    except AiddsException as ae: 
+        raise AiddsException(ae)
     except Exception as e:
-        raise AE(e)
+        raise AiddsException(e)
+    
+def get_provide_data():
+    logs = Logs('GET_PROVIDE_DATA')
+    try:
+        data_dict = {}
+        for key in cfg.DATA_SETs:
+            start_time = datetime.now()
+            df = read_data(f'{PROVIDE,{key}}')
+            if key == 'SL':
+                df = df.rename(columns={'지지물간거리': '인입선지지물간거리'})
+            df.rename(columns=_get_rename_cols(df.columns), inplace=True)
+            data_dict[key] = df
+            value = f'Size{df.shape}, Processing Time {datetime.now()-start_time}'
+            logs.mid(mcode=key, value=value)
+        return data_dict
+    except AiddsException as ae:
+        raise AiddsException(ae)
+    except Exception as e:
+        raise AiddsException(e)
+    finally:
+        logs.stop()
+        
+def get_cleaning_data():
+    try:
+        return {key: read_data(f'CLEANING,BATCH,{key}') for key in cfg.DATA_SETs}
+    except AiddsException as ae:
+        raise AiddsException(ae)
+    except Exception as e:
+        raise AiddsException(e)
 
 
 def _get_file_path(file_code=None):
@@ -56,7 +86,7 @@ def _get_file_path(file_code=None):
         paths = [cfg.BASE_PATH, file_type, file_name]
         return file_type, os.path.join(*paths)
     except Exception as e:
-        raise AE(e)
+        raise AiddsException(e)
 
 def _get_rename_cols(cols=None):
     try:
@@ -65,4 +95,4 @@ def _get_rename_cols(cols=None):
                 for name in cfg.COLs['RENAME'] if name in cols
         }
     except Exception as e:
-        raise AE(e)
+        raise AiddsException(e)

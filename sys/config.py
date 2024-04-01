@@ -3,7 +3,7 @@ import os
 # 디버그 모드
 IS_DEBUG_MODE = False
 # 로그 출력여부
-IS_LOG_DISPLAY = True
+IS_MODULING_LOG_DISPLAY = True
 IS_SERVICE_LOG_DISPLAY = True
 # 웹 서비스 포트
 PORT = 11001 

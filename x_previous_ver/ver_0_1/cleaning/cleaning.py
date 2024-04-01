@@ -6,8 +6,8 @@ from aidds.module.data_io import get_provide_data, save_data
 
 
 class Cleaning:
-    def __init__(self):
-        self.logs = Logs('CLEANING')
+    def __init__(self): 
+        self.logs = Logs('CLEANING') 
         self.cdict = {}
         try:
             self.data = get_provide_data()
