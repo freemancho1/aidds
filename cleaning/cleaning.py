@@ -18,7 +18,9 @@ class Cleaning:
         except Exception as e:
             raise AiddsException(e)
         finally:
-            self._logs.stop()
+            # Logs()에서 에러가 발생하면 self._logs 속성이 생성되지 않음
+            if hasattr(self, '_logs'):
+                self._logs.stop()
             
     def _run(self):
         try:
@@ -59,7 +61,7 @@ class Cleaning:
             # 크리닝 데이터 저장
             for key in cfg.DATA_SETs:
                 save_data(self._cd_dict[key], f'CLEANING,BATCH,{key}')
-                
-            
+                self._logs.mid(key, self._cd_dict[key].shape)
+
         except Exception as e:
             raise AiddsException(e)

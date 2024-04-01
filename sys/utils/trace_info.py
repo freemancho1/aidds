@@ -38,7 +38,7 @@ def get_caller_info(is_file_info=False, is_display=False):
     # 클래스 메서드인 경우 클래스명 추출
     if caller_frame.frame.f_locals.get('self'):
         class_info = caller_frame.frame.f_locals['self']
-        caller_function = class_info.__class__.__name__ + caller_function
+        caller_function = f'{class_info.__class__.__name__}.{caller_function}'
     
     # 파일정보(파일명:호출라인) 추출
     caller_file_info = f'{caller_frame.filename}:{caller_frame.lineno}'
@@ -62,9 +62,9 @@ def get_error_info(e_msg=None):
                 ZeroDivisionError: division by zero
     """     
     # 이 함수를 호출될 때까지의 전체 이벤트가 저장된 트레이스를 불러옴
-    trace_infos = inspect.trace()
+    trace_info = inspect.trace()
     # 에러 위치를 가져옴(에러는 보통 마지막에 저장됨)
-    error_pos = trace_infos[-1]
+    error_pos = trace_info[-1]
     
     # 다양한 에러 위치의 정보 추출
     error_filename = error_pos.filename

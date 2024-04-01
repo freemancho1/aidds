@@ -11,7 +11,7 @@ class MyException(Exception):
             self._msg = call_fn + msg
         else:
             self._msg = f'{call_fn}\n' + get_error_info(msg) + ERR_ENDSWITH
-        super().__init__(self._msg)
+        super().__init__(self._msg) 
         
     def print(self):
         out_msg = self._msg[:-3] if self._msg.endswith(ERR_ENDSWITH) else self._msg

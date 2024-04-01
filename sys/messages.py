@@ -3,6 +3,7 @@ SYS = {
 }
 
 EXCEPIONs = {
+    'EXCEPTION': 'The system has terminated unexpectedly for an unknown reason.',
     'UNKNOWN_FILE_EXT': 'Unknown file extension error, the extension is',
     
     # 시스템 오류

@@ -19,12 +19,10 @@ def read_data(file_code=None, **kwargs):
             _, file_ext = os.path.splitext(file_path)
             if file_ext.lower() == cfg.FILE_EXT_EXCEL:
                 return pd.read_excel(file_path, **kwargs)
-            elif file_ext.lower() == cfg.FILE_EXT_CSV:
+            if file_ext.lower() == cfg.FILE_EXT_CSV:
                 return pd.read_csv(file_path, **kwargs)
-            else:
-                # 이거 테스트 필요
-                raise AiddsException(
-                    f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_path}')
+            raise AiddsException(
+                f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_ext}')
     except AiddsException as ae: 
         raise AiddsException(ae)
     except Exception as e:
@@ -52,7 +50,7 @@ def get_provide_data():
         data_dict = {}
         for key in cfg.DATA_SETs:
             start_time = datetime.now()
-            df = read_data(f'{PROVIDE,{key}}')
+            df = read_data(f'PROVIDE,{key}')
             if key == 'SL':
                 df = df.rename(columns={'지지물간거리': '인입선지지물간거리'})
             df.rename(columns=_get_rename_cols(df.columns), inplace=True)
@@ -69,7 +67,9 @@ def get_provide_data():
         
 def get_cleaning_data():
     try:
-        return {key: read_data(f'CLEANING,BATCH,{key}') for key in cfg.DATA_SETs}
+        return {
+            key: read_data(f'CLEANING,BATCH,{key}') for key in cfg.DATA_SETs
+        }
     except AiddsException as ae:
         raise AiddsException(ae)
     except Exception as e:
