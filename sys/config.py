@@ -53,11 +53,13 @@ FILE_NAMEs = {
         'TEST_y': {name: f'STEP09_TEST_y_{name}.CSV' for name in PC_TYPEs},
     },
     'DUMP': {
-        'OFFICE_LIST': 'MEM01_OFFICE_LIST.pkl',
-        'POLE_ONE_HOT_COLS': 'MEM02_POLE_ONE_HOT_COLS.pkl',
-        'LINE_ONE_HOT_COLS': 'MEM03_LINE_ONE_HOT_COLS.pkl',
-        'SL_ONE_HOT_COLS': 'MEM04_SL_ONE_HOT_COLS.pkl',
-        'LAST_PP_COLS': 'MEM05_LAST_PP_COLS.pkl',
+        'PP': {
+            'OFFICE_CDS': 'MEM01_OFFICE_CDS.pkl',
+            'POLE_ONE_HOT_COLS': 'MEM02_POLE_ONE_HOT_COLS.pkl',
+            'LINE_ONE_HOT_COLS': 'MEM03_LINE_ONE_HOT_COLS.pkl',
+            'SL_ONE_HOT_COLS': 'MEM04_SL_ONE_HOT_COLS.pkl',
+            'LAST_PP_COLS': 'MEM05_LAST_PP_COLS.pkl',
+        },
         'MODELING_COLS': 'MEM05_MODELING_COLS.pkl',
         'SCALER': {name: f'MEM06_SCALER_{name}.pkl' for name in PC_TYPEs},
         # MEM07: 인공지능 모델 저장
@@ -66,10 +68,11 @@ FILE_NAMEs = {
 }
 
 # 모델링에서 전처리를 위해 읽을 pickle파일 리스트
-LOAD_PICKLEs = [
-    'OFFICE_LIST', 'POLE_ONE_HOT_COLS', 'LINE_ONE_HOT_COLS',
-    'SL_ONE_HOT_COLS', 'LAST_PP_COLS'
-]
+# ['DUMP']['PP'].keys()로 대체 가능
+# LOAD_PICKLEs = [
+#     'OFFICE_LIST', 'POLE_ONE_HOT_COLS', 'LINE_ONE_HOT_COLS',
+#     'SL_ONE_HOT_COLS', 'LAST_PP_COLS'
+# ]
 
 ## 학습 데이터 제약조건
 CONSTRAINTs = {

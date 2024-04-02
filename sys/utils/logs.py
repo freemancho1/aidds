@@ -20,17 +20,13 @@ class ModelingLogs:
             ModelingLogs._depth += 1
             self._depth = ModelingLogs._depth
             self._start()
-        except AiddsException as ae: 
-            raise AiddsException(ae)
-        except Exception as e: 
+        except (AiddsException, Exception) as e: 
             raise AiddsException(e)
         
     def _start(self):
         try:
             self._print(self._get_message('START'))
-        except AiddsException as ae: 
-            raise AiddsException(ae)
-        except Exception as e: 
+        except (AiddsException, Exception) as e: 
             raise AiddsException(e)
         
     def mid(self, mcode=None, value=None):
@@ -43,9 +39,7 @@ class ModelingLogs:
             else:
                 if value is not None: message = value
             self._print(message, depth=self._depth+1)
-        except AiddsException as ae: 
-            raise AiddsException(ae)
-        except Exception as e: 
+        except (AiddsException, Exception) as e: 
             raise AiddsException(e)
         
     def stop(self):
@@ -53,9 +47,7 @@ class ModelingLogs:
             ptime = datetime.now() - self._start_time
             self._print(self._get_message('STOP'), ptime=ptime)
             ModelingLogs._depth -= 1
-        except AiddsException as ae: 
-            raise AiddsException(ae)
-        except Exception as e: 
+        except (AiddsException, Exception) as e: 
             raise AiddsException(e)
     
     def _get_message(self, mode='START'):
@@ -80,5 +72,13 @@ class ModelingLogs:
             raise AiddsException(e)
         
         
-class ServingLogs:
-    pass
+def service_logs(mcode=None, value=None):
+    if not cfg.IS_SERVICE_LOG_DISPLAY:
+        return
+    try:
+        message = f'[{datetime.now()}]'
+        message += '' if mcode is None else f' {msg.SERVICE_LOGs[mcode]}'
+        message += '' if value is None else f' {value}'
+        print(message)
+    except Exception as e:
+        raise AiddsException(e)

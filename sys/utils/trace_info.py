@@ -41,7 +41,7 @@ def get_caller_info(is_file_info=False, is_display=False):
         caller_function = f'{class_info.__class__.__name__}.{caller_function}'
     
     # 파일정보(파일명:호출라인) 추출
-    caller_file_info = f'{caller_frame.filename}:{caller_frame.lineno}'
+    caller_file_info = f'{caller_frame.filename}[{caller_frame.lineno}]'
 
     if is_file_info:
         return caller_function, caller_file_info

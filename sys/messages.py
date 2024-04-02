@@ -94,9 +94,10 @@ LOGs = {
         'PP_CONS': {
             'SOURCE': 'CONS dataset size before preprocessing',
             'RESULT': 'CONS dataset size after preprocessing',
+            'CALCULATE': 'Dataset size after calculating and checking',
         }, 
         'PP_CALCULATE': {
-            'CALCULATE': 'Dataset size after calculating and checking',
+            
             # 'RESULT': 'Dataset size after check count',
         },
         'PP_POLE': {

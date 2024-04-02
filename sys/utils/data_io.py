@@ -23,10 +23,9 @@ def read_data(file_code=None, **kwargs):
                 return pd.read_csv(file_path, **kwargs)
             raise AiddsException(
                 f'{msg.EXCEPIONs["UNKNOWN_FILE_EXT"]} {file_ext}')
-    except AiddsException as ae: 
-        raise AiddsException(ae)
-    except Exception as e:
+    except (AiddsException, Exception) as e: 
         raise AiddsException(e)
+
     
 def save_data(data=None, file_code=None, **kwargs):
     try:
@@ -39,10 +38,9 @@ def save_data(data=None, file_code=None, **kwargs):
             if 'index' not in kwargs:
                 kwargs['index'] = False
             data.to_csv(file_path, **kwargs)
-    except AiddsException as ae: 
-        raise AiddsException(ae)
-    except Exception as e:
+    except (AiddsException, Exception) as e: 
         raise AiddsException(e)
+
     
 def get_provide_data():
     logs = Logs('GET_PROVIDE_DATA')
@@ -58,9 +56,7 @@ def get_provide_data():
             value = f'Size{df.shape}, Processing Time {datetime.now()-start_time}'
             logs.mid(mcode=key, value=value)
         return data_dict
-    except AiddsException as ae:
-        raise AiddsException(ae)
-    except Exception as e:
+    except (AiddsException, Exception) as e: 
         raise AiddsException(e)
     finally:
         logs.stop()
@@ -70,9 +66,7 @@ def get_cleaning_data():
         return {
             key: read_data(f'CLEANING,BATCH,{key}') for key in cfg.DATA_SETs
         }
-    except AiddsException as ae:
-        raise AiddsException(ae)
-    except Exception as e:
+    except (AiddsException, Exception) as e: 
         raise AiddsException(e)
 
 

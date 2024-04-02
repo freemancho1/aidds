@@ -24,4 +24,4 @@ class AiddsException(Exception):
             message = self._message[:-3]
         else:
             message = self._message
-        print(f'\n\n:::AiddsError {message}')
+        print(f'\n:::AiddsError {message}\n')

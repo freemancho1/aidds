@@ -13,9 +13,7 @@ class Cleaning:
             self._cd_dict = {}                  # cd_data: cleaning df dict
             self._pd_dict = get_provide_data()  # pd_data: provide df dict
             self._run()
-        except AiddsException as ae:
-            raise AiddsException(ae)
-        except Exception as e:
+        except (AiddsException, Exception) as e:
             raise AiddsException(e)
         finally:
             # Logs()에서 에러가 발생하면 self._logs 속성이 생성되지 않음
