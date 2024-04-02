@@ -3,7 +3,7 @@ import random
 import pandas as pd 
 
 import aidds.sys.config as cfg
-import aidds.sys.message.SERVICE_LOGs as log_message
+import aidds.sys.messages as msg
 
 from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.logs import service_logs as logs
@@ -15,8 +15,8 @@ class Samples:
         try:
             self._source_df = read_data('PP_LAST')
             self._cd_dict = get_cleaning_data()
-            logs(log_message['SAMPLE'])
-        except (AiddsException, Exception) as e:
+            logs(mcode='SAMPLE')
+        except Exception as e:
             raise AiddsException(e)
         
     def get(self, sample_count=3):

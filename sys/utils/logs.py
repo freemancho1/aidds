@@ -4,6 +4,7 @@ from datetime import datetime
 import aidds.sys.config as cfg
 import aidds.sys.messages as msg
 from aidds.sys.utils.exception import AiddsException
+from aidds.sys.utils.trace_info import get_caller_info, get_error_info
 
 
 class ModelingLogs:
@@ -82,3 +83,8 @@ def service_logs(mcode=None, value=None):
         print(message)
     except Exception as e:
         raise AiddsException(e)
+    
+def route_error_logs(error=None):
+    message = f'\n:::AiddsError [{get_caller_info()}]\n' \
+              f'{get_error_info(str(error))}\n'
+    print(message)

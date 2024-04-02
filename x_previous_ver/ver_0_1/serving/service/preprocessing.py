@@ -18,7 +18,7 @@ class Preprocessing:
         except ASE as ae:
             raise ASE(emsg='[PP][INIT]', smsg=ae)
         except Exception as e:
-            raise ASE(emsg='[PP][INIT] ', smsg=e)
+            raise ASE(emsg='[PP][INIT] ', smsg=e) 
             
     def _run(self):
         try:

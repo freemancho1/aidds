@@ -13,7 +13,7 @@ class Preprocessing:
             self._ppm = PPM()       # Preprocessing Moduel
             self.pdf = None         # Preprocessing DataFrame
             self._run()
-        except (AiddsException, Exception) as e:
+        except Exception as e:
             raise AiddsException(e)
         finally:
             if hasattr(self, '_logs'): self._logs.stop()
@@ -25,7 +25,7 @@ class Preprocessing:
             for key in cfg.DATA_SETs[1:]:
                 self._pp_facilities_data(key=key)
             self._completion_of_pp()
-        except (AiddsException, Exception) as e:
+        except Exception as e:
             raise AiddsException(e)
         
     def _cons(self, key=None):
@@ -76,7 +76,7 @@ class Preprocessing:
             sum_cols = df.columns.tolist()[1:]
             self.pdf = self._ppm.calculate_sum(df, sum_cols, self.pdf)
             logs.mid('RESULT', self.pdf.shape)
-        except (AiddsException, Exception) as e:
+        except Exception as e:
             raise AiddsException(e)
         finally:
             logs.stop()

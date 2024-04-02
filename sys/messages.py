@@ -134,16 +134,12 @@ LOGs = {
 
 SERVICE_LOGs = {
     'SERVICE': 'The construction cost prediction web service is ready. Please visit http://aidds.kdn.com:',
-    'SERVICE_MID': {
-        'DEBUG_MODE': 'This server is running in debug mode.',
-        'PRODUCT_MODE': 'This server is running in product mode.', 
-        'EXIT': 'When you press Ctrl+C, the service will be terminated.', 
-    },
+    'DEBUG_MODE': 'This server is running in debug mode.',
+    'PRODUCT_MODE': 'This server is running in product mode.', 
+    'EXIT': 'When you press Ctrl+C, the service will be terminated.', 
     'SERVICE_MGR': 'The service manager for the web service has started.',
     'ROUTE': 'The route manager for the web service has started.',
-    'ROUTE_MID': {
-        'ERROR': 'Error:',
-    },
     'PREDICT': 'The predict manager for the web service has started.',
     'SAMPLE': 'The sample manager for the web service has started.',
+    'INPUT_JSON_SIZE': 'Prediction requests counts: ',
 }

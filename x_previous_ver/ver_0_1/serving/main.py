@@ -25,7 +25,7 @@ def main(s_port=None, is_debug=False):
     except KeyboardInterrupt:
         raise AiddsException('STOP_SERVICE')
     except Exception as e:
-        raise AiddsException('RUN_SERVICE', se_msg=e)
+        raise AiddsException('RUN_SERVICE', se_msg=e) 
     
 if __name__ == '__main__':
     try:

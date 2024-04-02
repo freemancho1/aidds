@@ -6,8 +6,9 @@ from aidds.serving.route.predict import Predict
 
 app = Flask(__name__)
 
-# 플라스크 정의
-app.debug = True 
+# 플라스크 설정 정의
+# (이곳의 정의는 main.py에서 호출되는 tornado 설정에 의해 적용되지 않음)
+app.debug = True
 
 # 라우터 정의
 app.add_url_rule('/samples', view_func=Samples.as_view('samples'))
