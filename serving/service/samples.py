@@ -67,8 +67,9 @@ class Samples:
                 # 각 추천번호별 설비(전주/전선/인입선)정보 추가
                 json_dict[pred_key].update({'POLE': {}, 'LINE': {}, 'SL': {}})
                 for key in cfg.DATA_SETs[1:]:
-                    df = row[key]
-                    if key == 'POLE': df.loc[:,['GEO_X','GEO_Y']] = 'GEO'
+                    df = row[key].copy()
+                    if key == 'POLE': 
+                        df.loc[:,['GEO_X','GEO_Y']] = 'GEO'
                     # 각 추천번호별 설비정보 추출
                     fc_dict = {}
                     fc_seq = 1

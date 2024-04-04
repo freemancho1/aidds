@@ -115,9 +115,9 @@ LOGs = {
             'RESULT': 'Modeling dataset size after SL dataset One-Hot Encoding',
         }, 
         'SCALING': {
-            'SOURCE_X': '학습대상 속성 데이터 전체 크기',
-            'PC_TYPE_X': '전주 수 타입',
-            'PC_TYPE_TT': '전주 수 타입별 훈련/시험 데이터 크기'
+            'SOURCE_X': 'Total size of attribute data for learning target',
+            'PC_TYPE_X': 'Data type of pole count',
+            'PC_TYPE_TT': 'Data size of training/testing data by pole count',
         },
         'LEARNING': {
             'RESULT': '모델학습 결과',

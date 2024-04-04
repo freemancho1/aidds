@@ -11,7 +11,7 @@ class Preprocessing:
             self.cdict = {}
             # Preprocessing Data
             self.pdf = None
-            self.pp = PreprocessingModule()
+            self.pp = PreprocessingModule() 
             self._run()
         except AiddsException as ae:
             raise AiddsException('PP', se_msg=ae)
