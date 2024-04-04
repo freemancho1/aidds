@@ -1,4 +1,5 @@
 from aidds.sys.app_init import AiddsInit
+from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
 from aidds.modeling.preprocessing import Preprocessing
 from aidds.modeling.scaler import Scaling
@@ -8,13 +9,16 @@ import aidds.sys.messages as msg
 
 def main():
     try:
+        logs = Logs('MODELING_MAIN')
         AiddsInit()
         pp = Preprocessing()
         sc = Scaling(preprocessing_data=pp.pdf)
-    except (KeyboardInterrupt, AiddsException) as ae:
-        raise AiddsException(ae)
+    except KeyboardInterrupt as ke:
+        raise AiddsException(ke)
     except Exception as e:
-        raise AiddsException(msg.EXCEPIONs['EXCEPTION'])
+        raise AiddsException(e)
+    finally:
+        logs.stop()
         
 if __name__ == '__main__':
     try:

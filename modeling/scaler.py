@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import aidds.sys.config as cfg
 from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.data_io import read_data, save_data
+from aidds.sys.utils.data_io import save_data
 
 
 class Scaling:
@@ -48,7 +48,7 @@ class Scaling:
             save_data(self._data['X_ALL'], file_code='SCALING,X,ALL')
             save_data(self._data['y_ALL'], file_code='SCALING,y,ALL')
         except Exception as e:
-            raise AiddException(e)
+            raise AiddsException(e)
         
     def _scaling(self, pc_key=None):
         try:
@@ -59,8 +59,7 @@ class Scaling:
                 condition = self._data['X_ALL'].POLE_CNT == 1 \
                     if pc_key == '1' else self._data['X_ALL'].POLE_CNT != 1
                 X = self._data['X_ALL'][condition]
-                y = self._data['y_All'][condition]
-                self._logs.mid('PC_TYPE_X', f'[{pc_key}] attr data size {X.shape}')
+                y = self._data['y_ALL'][condition]
                 # 저장
                 self._data[f'X_{pc_key}'] = X
                 self._data[f'y_{pc_key}'] = y
