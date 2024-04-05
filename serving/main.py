@@ -16,7 +16,7 @@ def main(service_port=None, is_debug_mode=None):
     try:
         app.debug = is_debug_mode
         http_server = HTTPServer(WSGIContainer(app))
-        http_server.listen(service_port)
+        http_server.listen(service_port, 'dev.aidds.kdn.com')
         
         logs()
         logs(mcode='SERVICE', value=f'{service_port}/predict')
@@ -29,7 +29,7 @@ def main(service_port=None, is_debug_mode=None):
     except (KeyboardInterrupt, AiddsException) as ae:
         raise AiddsException(ae)
     except Exception as e:
-        raise AiddsException(msg.EXCEPIONs['EXCEPTION'])
+        raise AiddsException(f'{msg.EXCEPIONs["EXCEPTION"]}\n{str(e)}')
         
 if __name__ == '__main__':
     try:
