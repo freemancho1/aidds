@@ -120,7 +120,7 @@ LOGs = {
             'PC_TYPE_TT': 'Data size of training/testing data by pole count',
         },
         'LEARNING': {
-            'RESULT': '모델학습 결과',
+            'RESULT': 'Model training results',
         },
         'SERVICE_PP': {
             'MSG': '',  

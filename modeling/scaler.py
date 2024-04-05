@@ -68,7 +68,7 @@ class Scaling:
 
             # 분할
             train_X, test_X, train_y, test_y = \
-                train_test_split(X, y, test_size=0.2)
+                train_test_split(X, y, test_size=0.2) 
             message = f'PC_TYPE[{pc_key}] Total{X.shape}, ' \
                       f'Train{train_X.shape}, Test{test_X.shape}'
             self._logs.mid('PC_TYPE_TT', value=message)

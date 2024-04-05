@@ -79,7 +79,7 @@ def service_logs(mcode=None, value=None):
     try:
         message = f'[{datetime.now()}]'
         message += '' if mcode is None else f' {msg.SERVICE_LOGs[mcode]}'
-        message += '' if value is None else f' {value}'
+        message += '' if value is None else f'{value}'
         print(message)
     except Exception as e:
         raise AiddsException(e)

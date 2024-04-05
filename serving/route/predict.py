@@ -15,8 +15,8 @@ class Predict(MethodView):
     def post(self):
         try:
             input_json = request.json
-            ret_json_dict = sm.predict().run(input_json=input_json)
-            return jsonify(ret_json_dict), hc.OK
+            pred_result_dict = sm.predict().run(input_json=input_json)
+            return jsonify(pred_result_dict), hc.OK
         except HTTPException as he:
             logs(he)
             return jsonify({'error': str(he)}), he.code

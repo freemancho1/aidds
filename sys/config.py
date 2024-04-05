@@ -12,14 +12,15 @@ PORT = 11001
 FILE_TYPE_PICKLE = 'pickle'
 FILE_TYPE_DATA = 'data'
 FILE_EXT_EXCEL = '.xlsx'
-FILE_EXT_CSV = '.csv'
+FILE_EXT_CSV = '.csv' 
 
 ## 학습에 사용할 데이터 셋 종류
 DATA_SETs = ['CONS', 'POLE', 'LINE', 'SL']
 
 ## 특정 컬럼의 값을 이용해 데이터 분리
 ## 여기서는 전주 갯 수를 이용해 데이터를 분리하고 있음
-PC_TYPEs = ['ALL', '1', 'N1']       
+PC_TYPEs = ['ALL', '1', 'N1']    
+PC_COL = 'POLE_CNT'   
 
 ## 모델링 데이터 셋
 DATA_TYPEs = ['TRAIN_X', 'TEST_X', 'TRAIN_y', 'TEST_y']
@@ -89,6 +90,7 @@ CONSTRAINTs = {
 
 ## 설비 연동 키 값
 JOIN_COL = 'ACC_NO'
+
 ## 다양하게 사용될 컬럼들
 COLs = {
     # 타겟 컬럼

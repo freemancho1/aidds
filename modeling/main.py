@@ -3,6 +3,7 @@ from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
 from aidds.modeling.preprocessing import Preprocessing
 from aidds.modeling.scaler import Scaling
+from aidds.modeling.learning import Learning
 
 import aidds.sys.messages as msg
 
@@ -13,6 +14,7 @@ def main():
         AiddsInit()
         pp = Preprocessing()
         sc = Scaling(preprocessing_data=pp.pdf)
+        Learning(scaling_data=sc.sdata)
     except KeyboardInterrupt as ke:
         raise AiddsException(ke)
     except Exception as e:

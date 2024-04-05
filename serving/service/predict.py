@@ -1,4 +1,5 @@
 import json
+import numpy as np
 import pandas as pd
 
 import aidds.sys.config as cfg
@@ -18,15 +19,16 @@ class Predict:
                     for key in cfg.FILE_NAMEs['DUMP']['PP'].keys() 
             }
             self._memory_pkl['MODELING_COLS'] = \
-                read_data(file_code=['DUMP,MODELING_COLS'])
+                read_data(file_code='DUMP,MODELING_COLS')
             self._model = {
-                pckey: read_data(f'DUMP,MODELS,{pckey},BEST') \
-                    for pckey in cfg.PC_TYPEs
+                pc_key: read_data(f'DUMP,MODELS,{pc_key},BEST') \
+                    for pc_key in cfg.PC_TYPEs
             }
             self._scaler = {
-                pckey: read_data(f'DUMP,SCALER,{pckey}') \
-                    for pckey in cfg.PC_TYPEs
+                pc_key: read_data(f'DUMP,SCALER,{pc_key}') \
+                    for pc_key in cfg.PC_TYPEs
             }
+            self._training_cols = read_data('DUMP,MODELING_COLS')
             logs(mcode='PREDICT')
         except Exception as e:
             raise AiddsException(e)
@@ -42,12 +44,23 @@ class Predict:
                 pdf_dict=pp.pdf_dict, 
                 models=self._model,
                 scalers=self._scaler,
-                memory_pkls=self._memory_pkl
+                memory_pkls=self._memory_pkl,
+                training_cols=self._training_cols
             )
-            ret_json_dict = pp.ret_json_dict
-            return ret_json_dict
+            pred_result_dict = sc.pred_result_dict
+            # np.int64형 정수를 파이썬 기본 정수로 변환
+            for main_key in pred_result_dict.keys():
+                for sub_key in pred_result_dict[main_key]:
+                    pred_result_dict[main_key][sub_key] = \
+                        self._convert_to_builtin_type(
+                            pred_result_dict[main_key][sub_key]
+                        )
+            return json.dumps(pred_result_dict)
         except Exception as e:
             raise AiddsException(e)
+        
+    def _convert_to_builtin_type(self, obj):
+        return int(obj) if isinstance(obj, np.int64) else obj
         
 
 class Preprocessing:
@@ -82,7 +95,7 @@ class Preprocessing:
             # 접수번호 및 접수번에의 예측 건수(추천 건수) 출력
             first_key = next(iter(self._input_json))
             acc_no = self._input_json[first_key]['CONS']['ACC_NO']
-            value = f'ACC_NO={acc_no}, size[{len(self._input_json)}]'
+            value = f'ACC_NO={acc_no}, size={len(self._input_json)}'
             logs(mcode='INPUT_JSON_SIZE', value=value)
             
             self.ret_json_dict = self._input_json.copy()
@@ -162,7 +175,43 @@ class ScalingAndPrediction:
         self, 
         pdf_dict=None, 
         models=None, 
-        sclaers=None,
-        memory_pkls=None
+        scalers=None,
+        memory_pkls=None,
+        training_cols=None
     ):
-        pass
+        try:
+            self._pdf_dict = pdf_dict
+            self._models = models
+            self._scalers = scalers
+            self._memory_pkls = memory_pkls
+            self._training_cols = training_cols
+            self.pred_result_dict = {}
+            self._run()
+        except Exception as e:
+            raise AiddsException(e)
+        
+    def _run(self):
+        try:
+            for pn_key in self._pdf_dict.keys():
+                pdf = self._pdf_dict[pn_key].copy()
+                X = pdf[self._training_cols].reset_index(drop=True)
+                logs(value=f'++++ len: {len(self._training_cols)}, {X.shape}')
+                self.pred_result_dict[pn_key] = {
+                    cfg.JOIN_COL: pdf.loc[0, cfg.JOIN_COL],
+                    cfg.COLs['TARGET']: pdf.loc[0, cfg.COLs['TARGET']]
+                }
+                pc_key = X.loc[0, cfg.PC_COL].astype(int)
+                scaler = self._scalers['1'] if pc_key==1 \
+                    else self._scalers['N1']
+                model = self._models['1'] if pc_key==1 \
+                    else self._models['N1']
+                scaled_X = scaler.transform(X)
+                pred_y1 = model.predict(scaled_X)[0]
+                pred_y2 = self._models['ALL'].predict(
+                    self._scalers['ALL'].transform(X)
+                )[0]
+                self.pred_result_dict[pn_key].update({
+                    'PRED1': pred_y1, 'PRED2': pred_y2
+                })
+        except Exception as e:
+            raise AiddsException(e)
