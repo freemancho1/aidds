@@ -93,6 +93,10 @@ class Scaling:
             self.sdata[f'TEST_X_{pc_key}'] = test_SX_df
             self.sdata[f'TEST_y_{pc_key}'] = test_y
             
+            # 데이터 저장
+            save_data(test_SX_df, file_code=f'SCALING,TEST_X,{pc_key}')
+            save_data(test_y, file_code=f'SCALING,TEST_y,{pc_key}')
+            
             # 스케일러 저장
             save_data(scaler, file_code=f'DUMP,SCALER,{pc_key}')
         except Exception as e:

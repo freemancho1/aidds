@@ -45,7 +45,7 @@ class Learning:
             model.fit(data['TRAIN_X'], train_y)
             
             pred_y = model.predict(data['TEST_X'])
-            test_y = data['TEST_y'].to_numpy()
+            test_y = data['TEST_y'].to_numpy().reshape(-1)
             evals, message = \
                 regression_evals(y=test_y, p=pred_y, verbose=1)
             value = f'MODEL[{md_key}], Data[{pc_key}] - {message}'
