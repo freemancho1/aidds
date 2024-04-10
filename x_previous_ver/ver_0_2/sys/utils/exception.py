@@ -5,7 +5,7 @@ class AiddsException(Exception):
     
     ERROR_ENDSWITH = '***'
     
-    def __init__(self, message=None):
+    def __init__(self, message=None): 
         if isinstance(message, str):
             self._message = f'\n{message}'
         else:

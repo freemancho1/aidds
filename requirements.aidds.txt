@@ -1,10 +1,16 @@
 pandas
-pandas_profiling
 matplotlib
 bayesian-optimization
 # scikit-learn -> bayesian-optimization
-xlrd        # excel
+# Excel read
+openpyxl
+xlrd      
+
+# Etc
 imageio
+dotmap
+
+# Jupyter
 jupyter
 jupyterlab
 
@@ -13,7 +19,6 @@ lightgbm
 # conda install -c conda-forge xgboost
 xgboost
 
-openpyxl
 
 # Flask Web Service
 Flask

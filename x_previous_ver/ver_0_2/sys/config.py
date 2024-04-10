@@ -209,7 +209,7 @@ COLs = {
 ## AiddException에서 메시지 출력할 때 구분자로 줄바꿈 문자를 사용
 EXCEPTION_DELIMITER = '\n'
 
-## 폰트설정
+## 폰트설정 
 WIN_FONT_PATH = 'c:/Windows/Fonts/malgun.ttf'
 WIN_FONT_NAME = 'MalgunGothic'
 UBUNTU_FONT_PATH = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
