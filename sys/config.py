@@ -129,6 +129,7 @@ _col = {
         'acc_date'              : 'acc_date',       # Last Modification Date and Time
         'office_name'           : 'office_name',
         'office_cd'             : 'office_cd',
+        'office_id'             : 'office_id',
         'cont_cap'              : 'cont_cap',       # Contracted Capacity
         'cont_type'             : 'cont_type',
         'sup_type'              : 'sup_type',

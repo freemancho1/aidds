@@ -1,5 +1,5 @@
 from dotmap import DotMap
-
+import aidds.sys.config as cfg
 
 _log = {
     'sys': {
@@ -36,6 +36,21 @@ _log = {
                 'source': 'CONS dataset size before preprocessing',
                 'result': 'CONS dataset size after preprocessing',
                 'calculate': 'Preprocessing Dataset size after calculating and checking',
+            },
+            'pole': {
+                'main': 'POLE dataset preprocessing',
+                'one_hot': 'POLE dataset size after One-Hot Encoding',
+                'result': 'Modeling dataset size merged with One-Hot POLE dataset',
+            },
+            'line': {
+                'main': 'LINE dataset preprocessing',
+                'one_hot': 'LINE dataset size after One-Hot Encoding',
+                'result': 'Modeling dataset size merged with One-Hot LINE dataset',
+            },
+            'sl': {
+                'main': 'SL dataset preprocessing',
+                'one_hot': 'SL dataset size after One-Hot Encoding',
+                'result': 'Modeling dataset size merged with One-Hot SL dataset',
             },
         },
 
