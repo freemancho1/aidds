@@ -9,6 +9,9 @@ import aidds.sys.config as cfg
 
 class AiddsInit: 
     def __init__(self):
+        pass
+    
+    def run(self):
         self._set_warnings()
         
     def _set_warnings(self):
@@ -35,6 +38,8 @@ class PltInit:
         # 한글처리 여부와 해상도 지정(시스템 기본값이 100임)
         self.korean = korean
         self.dpi = dpi
+        
+    def run(self):
         if self.korean:
             self._set_korean()
         self._set_minus()
@@ -53,19 +58,21 @@ class PltInit:
         
     def _set_korean(self):
         # 기본적인 경우는 아래 4컬럼만 해도 됨
-        osName = platform.system()
-        fontPath = cfg.WIN_FONT_PATH if osName == 'Windows' \
-            else cfg.UBUNTU_FONT_PATH
-        fontFamily = fm.FontProperties(fname=fontPath).get_name()
-        plt.rcParams['font.family'] = fontFamily
+        os_name = platform.system()
+        font_path = cfg.sys.font.win.path if os_name == cfg.sys.font.win.osname \
+            else cfg.sys.font.ubuntu.path
+        font_family = fm.FontProperties(fname=font_path).get_name()
+        plt.rcParams['font.family'] = font_family
         
         # 위와 같이 해도 안되는 경우
         # Matplotlib에서 자체적으로 관리하는 폰트 캐시에 해당 문자를 추가함
         plt.rcParams['font.family'] = 'sans-serif'
-        plt.rcParams['font.sans-serif'] = [fontFamily]
+        plt.rcParams['font.sans-serif'] = [font_family]
         
         font_entry = fm.FontEntry(
-            fname = cfg.WIN_FONT_PATH if osName == 'Windows' else cfg.UBUNTU_FONT_PATH,
-            name = cfg.WIN_FONT_NAME if osName == 'Windows' else cfg.UBUNTU_FONT_NAME
+            fname = cfg.sys.font.win.path if os_name == cfg.sys.font.win.osname \
+                else cfg.sys.font.ubuntu.path,
+            name = cfg.sys.font.win.name if os_name == cfg.sys.font.win.osname \
+                else cfg.sys.font.ubuntu.name
         )
-        fm.fontManager.ttflist.insert(0, font_entry)
+        fm.fontManager.ttflist.insert(0, font_entry)        

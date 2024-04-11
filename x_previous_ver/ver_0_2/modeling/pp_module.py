@@ -17,7 +17,7 @@ class PreprocessingModule:
             # * '최종변경일시'를 이용해 다양한 일자정보 컬럼 추가
             # * 참고로 일자정보가 날자형식이 아니면 날자형식으로 변환
             if df.ACC_DATE.dtype != '<M8[ns]':
-                df.ACC_DATE = pd.to_datetime(df.ACC_DATE)
+                df.ACC_DATE = pd.to_datetime(df.ACC_DATE) 
             df['YEAR'] = df.ACC_DATE.dt.year
             df['MONTH'] = df.ACC_DATE.dt.month
             df['DAY'] = df.ACC_DATE.dt.day

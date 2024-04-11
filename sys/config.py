@@ -30,10 +30,12 @@ _sys = {
     # 폰트 설정
     'font': {
         'win': {
+            'osname': 'Windows',
             'path': 'c:/Windows/Fonts/malgun.ttf',
             'name': 'MalgunGothic',
         },
         'ubuntu': {
+            'osname': 'Ubuntu',
             'path': '/usr/share/fonts/truetype/nanum/NanumGothic.ttf',
             'name': 'NanumGothic',
         }
@@ -177,7 +179,7 @@ _col.update({
         '전주형태코드'          : _col['base']['pole_shape_cd'],
         '전주종류코드'          : _col['base']['pole_type_cd'],
         '전주규격코드'          : _col['base']['pole_spec_cd'],
-        'X좌표-Y좌표'           : _col['base']['coordinate'],
+        'X좌표_Y좌표'           : _col['base']['coordinate'],
         # 전선
         '결선방식코드'          : _col['base']['wiring_scheme'],
         '지지물간거리'          : _col['base']['span'],
@@ -198,7 +200,7 @@ _col.update({
                 'modeling': [
                     _col['join'], 
                     _col['base']['cons_cost'],
-                    _col['base']['acc_date'],
+                    _col['base']['acc_date'],   # 제거(공사일과 접수일은 다름)
                     _col['base']['office_name'],
                     _col['base']['cont_cap'],
                     _col['base']['sup_type'],
@@ -210,35 +212,19 @@ _col.update({
                     _col['base']['cons_cost'],  # 서비스시는 공백값(시험시 테스트 용으로 사용)
                     _col['base']['pred_no'],
                     _col['base']['pred_type'],
-                    _col['base']['acc_date'],
+                    _col['base']['acc_date'],   # 제거
                     _col['base']['office_cd'],
                     _col['base']['cont_cap'],
                     _col['base']['sup_type'],
                 ],
             },
-            'pp': {
-                'in': [
-                    _col['join'], 
-                    _col['base']['cons_cost'],
-                    _col['base']['acc_date'],
-                    _col['base']['office_cd'],
-                    _col['base']['cont_cap'],
-                    _col['base']['sup_type'],                    
-                ],
-                'last': [
-                    _col['join'], 
-                    _col['base']['cons_cost'],
-                    _col['base']['office_cd'],
-                    _col['base']['cont_cap'],
-                    _col['base']['sup_type'],
-                    _col['base']['year'],
-                    _col['base']['month'],
-                    _col['base']['day'],
-                    _col['base']['dayofweek'],
-                    _col['base']['dayofyear'],
-                    _col['base']['year_month'],
-                ],                
-            },
+            'pp': [
+                _col['join'], 
+                _col['base']['cons_cost'],
+                _col['base']['office_cd'],
+                _col['base']['cont_cap'],
+                _col['base']['sup_type'],                    
+            ],
         },
         'pole': {
             'source': {
@@ -324,7 +310,10 @@ _file = {
         },
         'pickle': {
             'pp': {
-                'office_cds': 'mem01_office_cds.pkl',
+                'office': {
+                    'names': 'mem01_office_names.pkl',
+                    'codes': 'mem01_office_codes.pkl',
+                },
                 'one_hot_cols': {
                     'pole': 'mem02_one_hot_cols_pole.pkl',
                     'line': 'mem03_one_hot_cols_line.pkl',

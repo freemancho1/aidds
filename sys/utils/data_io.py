@@ -28,7 +28,7 @@ def read_data(file_code=None, **kwargs):
     
 def save_data(data=None, file_code=None, **kwargs):
     try:
-        file_type, file_path, _ = _get_file_path(file_code)
+        file_type, file_path, file_ext = _get_file_path(file_code)
         if file_type == cfg.file.type.pickle:
             with open(file_path, cfg.sys.pickle.write) as file:
                 pickle.dump(data, file)
@@ -36,7 +36,13 @@ def save_data(data=None, file_code=None, **kwargs):
             # 데이터프레임 저장시 인덱스를 저장하지 않음
             if cfg.sys.index not in kwargs:
                 kwargs[cfg.sys.index] = False
-            data.to_csv(file_path, **kwargs)
+            if file_ext.lower() == cfg.file.ext.excel:
+                data.to_excel(file_path, **kwargs)
+            elif file_ext.lower() == cfg.file.ext.csv:
+                data.to_csv(file_path, **kwargs)
+            else:
+                raise AiddsException(
+                    f'{msg.exception.sys.unknown_file_ext} {file_ext}')
     except Exception as e:
         raise AiddsException(e)
     
@@ -62,9 +68,16 @@ def get_provide_data():
     finally:
         logs.stop()
 
+def get_cleaning_data() -> dict:
+    try:
+        return {
+            id: read_data(eval(f'data.cleaning.{id}')) \
+                for id in cfg.type.pds.ids
+        }
+    except Exception as e:
+        raise AiddsException(e)
 
-
-def _get_file_path(file_code=None):
+def _get_file_path(file_code=None) -> Tuple[str, str, str]:
     try:
         # 파일명 찾기
         file_name = eval('cfg.file.name.'+file_code)

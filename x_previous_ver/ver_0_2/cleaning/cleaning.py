@@ -6,7 +6,7 @@ from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.data_io import get_provide_data, save_data
 
 
-class Cleaning:
+class Cleaning: 
     def __init__(self):
         try:
             self._logs = Logs('CLEANING')

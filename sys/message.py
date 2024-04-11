@@ -14,8 +14,31 @@ _log = {
             'pole': 'Get POLE dataset',
             'line': 'Get LINE dataset',
             'sl': 'Get SL dataset',
-            'columns': 'Columns'
         },
+        'cleaning': {
+            'main': 'Cleaning provided data',
+            'cons': 'CONS dataset cleaning',
+            'pole': 'POLE dataset cleaning',
+            'line': 'LINE dataset cleaning',
+            'sl': 'SL dataset cleaning',
+        },
+        'get_cleaning_data': {
+            'main': 'Fetching cleaning data',  
+            'cons': 'Get cleaning CONS dataset',
+            'pole': 'Get cleaning POLE dataset',
+            'line': 'Get cleaning LINE dataset',
+            'sl': 'Get cleaning SL dataset',
+        },
+        'pp': {
+            'main': 'Data preprocessing',
+            'cons': {
+                'main': 'CONS dataset preprocessing',
+                'source': 'CONS dataset size before preprocessing',
+                'result': 'CONS dataset size after preprocessing',
+                'calculate': 'Preprocessing Dataset size after calculating and checking',
+            },
+        },
+
     }
 }
 
