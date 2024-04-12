@@ -40,7 +40,7 @@ class PreprocessingModule:
                     ppdf, cons_ids_cnt.rename(col_name),
                     left_on=cfg.col.join, right_on=cons_ids_cnt.index, how='left'
                 )
-                df[col_name] = df[col_name].fillna(0)
+                ppdf[col_name] = ppdf[col_name].fillna(0)
                 
             # 설비 갯 수에 따른 제약조건 처리
             # - 전주/전선 10개 이하
@@ -75,7 +75,7 @@ class PreprocessingModule:
             if df.pole_spec_cd.dtype != 'float64':
                 df.pole_spec_cd = df.pole_spec_cd.astype(float)
             # One-Hot Encoding
-            df = df.get_dummies(df, columns=cols, prefix=prefix)
+            df = pd.get_dummies(df, columns=cols, prefix=prefix)
             # True, False를 1과 0으로 변환
             df = df.apply(lambda item: int(item) if isinstance(item, bool) else item)
             return df

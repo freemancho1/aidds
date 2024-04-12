@@ -7,32 +7,44 @@ from aidds.sys.utils.trace import get_caller, get_error
 
 
 class ModelingLogs:
-    # 중첩 로그의 깊이를 저장하는 정형변수
+    """ 모델링 부분 로그 출력 클래스 
+    
+    Args:
+        code             (str): sys.message에 정의된 로그메시지 코드,
+                                앞에 붙는 'msg.log.'과 뒤에 붙은 '.main'은 생략함
+    
+    Static Attributes:
+        _depth           (int): 로그 인스턴스 중첩도 관리 데이터
+    Attributes:
+        _uuid            (str): 현재 로그의 고유값(로그 출력시 같이 출력됨)
+        _is_display     (bool): 로그 출력여부 체크
+        _start_time (datetime): 로그 생성시간(종료시점까지의 처리시간 계산에 활용)
+        _code            (str): 현재 로그의 코드(msg.log(o), main(x))
+        _message         (str): 현재 로그의 main 메시지
+        _depth           (int): 현재 로그의 깊이
+    """
     _depth = -1
     
-    def __init__(self, message=None):
+    def __init__(self, code=None):
         # 로그별 고유Key값 생성
         self._uuid = str(uuid.uuid4()).split('-')[-1]
-        # 로그 출력 여부
         self._is_display = cfg.sys.case.log_display.modeling
-        # 로그 시작시간 저장(나중에 최종 처리시간 계산 시 사용)
         self._start_time = datetime.now()
-        # stop()함수에서 사용하기 위해 저장해 둠
-        self._message = message
+        self._code = f'msg.log.{code}'
+        self._message = eval(f'{self._code}.main')
         # 로그 depth별 깊이를 표현하기 위해 앞 공백 표시하는데
         # 로그가 중첩될수록 앞의 공백이 추가됨
         ModelingLogs._depth += 1
-        # 현재 로그의 깊이를 저장
         self._depth = ModelingLogs._depth
         self._start()
         
     def _start(self):
         self._print(message=f'{self._message} {msg.log.sys.start}')
         
-    def mid(self, message=None, value=None):
+    def mid(self, code=None, value=None):
         output = ''
-        if message is not None:
-            output = message
+        if code is not None:
+            output = eval(f'{self._code}.{code}')
             if value is not None: output += f': {value}'
         else:
             if value is not None: output = value
@@ -59,11 +71,18 @@ class ModelingLogs:
         print(output)
         
 
-def service_logs(message=None, value=None):
+def service_logs(code=None, value=None):
+    """ 모델링 부분 로그 출력 클래스 
+    
+    Args:
+        code     (str): sys.message에 정의된 로그메시지 코드,
+                        앞에 붙는 'msg.log.service.'는 생략함
+        value (object): 상황에 따라 변경되는 값(숫자, 문자, 튜플 등)
+    """
     if not cfg.sys.case.log_display.service:
         return
     output = f'[{datetime.now()}]'
-    output += '' if message is None else f' {message}'
+    output += '' if code is None else f' {eval(f"msg.log.service.{code}")}'
     output += '' if value is None else f'{value}'
     
     

@@ -7,20 +7,21 @@ _log = {
         'stop': 'end.',
         'total': ', Total processing time:',
     },
+    'cleaning': {
+        'main': 'Cleaning provided data',
+        'cons': 'CONS dataset cleaning',
+        'pole': 'POLE dataset cleaning',
+        'line': 'LINE dataset cleaning',
+        'sl': 'SL dataset cleaning',
+    },
     'modeling': {
+        'main': 'Data modeling',
         'get_provide_data': {
             'main': 'Fetching provided data',
             'cons': 'Get CONS dataset',
             'pole': 'Get POLE dataset',
             'line': 'Get LINE dataset',
             'sl': 'Get SL dataset',
-        },
-        'cleaning': {
-            'main': 'Cleaning provided data',
-            'cons': 'CONS dataset cleaning',
-            'pole': 'POLE dataset cleaning',
-            'line': 'LINE dataset cleaning',
-            'sl': 'SL dataset cleaning',
         },
         'get_cleaning_data': {
             'main': 'Fetching cleaning data',  
@@ -53,6 +54,11 @@ _log = {
                 'result': 'Modeling dataset size merged with One-Hot SL dataset',
             },
         },
+        'scaling': {
+            'main': 'Preprocessing data scaling',
+            'source_x': 'Total size of attribute data for learning',
+            'type_pc': 'Data size of training/testing data by pole count',
+        }
 
     }
 }

@@ -2,7 +2,7 @@ import pandas as pd
 
 import aidds.sys.config as cfg
 import aidds.sys.message as msg
-from aidds.sys.utils.log import ModelingLogs as Logs
+from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.data_io import get_provide_data, save_data
 
@@ -10,7 +10,7 @@ from aidds.sys.utils.data_io import get_provide_data, save_data
 class Cleaning:
     def __init__(self):
         try:
-            self._logs = Logs(msg.log.modeling.cleaning.main)
+            self._logs = Logs(code='cleaning')
             self.cd_dict = {}
             self._pd_dict = get_provide_data()
             self._run()
@@ -63,10 +63,7 @@ class Cleaning:
             # 크리닝 데이터 저장
             for id in cfg.type.pds.ids:
                 save_data(self.cd_dict[id], f'data.cleaning.{id}')
-                self._logs.mid(
-                    message=eval(f'msg.log.modeling.cleaning.{id}'),
-                    value=self.cd_dict[id].shape
-                )
+                self._logs.mid(code=id, value=self.cd_dict[id].shape)
         except Exception as e:
             raise AiddsException(e)
             

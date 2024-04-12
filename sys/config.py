@@ -55,24 +55,24 @@ _sys = {
 # 학습 모델 정보
 _model = {'seed': 1234}
 _model['ml'] = {
-    'LIN': LinearRegression(),
-    'LASSO': Lasso(max_iter=3000),
-    'RIDGE': Ridge(),
-    'KNR': KNeighborsRegressor(),
-    'DTR': DecisionTreeRegressor(),
-    'RFR': RandomForestRegressor(
+    'lin': LinearRegression(),
+    'lasso': Lasso(max_iter=3000),
+    'ridge': Ridge(),
+    'knr': KNeighborsRegressor(),
+    'dtr': DecisionTreeRegressor(),
+    'rfr': RandomForestRegressor(
         n_estimators=200, 
         n_jobs=-1, 
         random_state=_model['seed']
     ),
-    'GBR': GradientBoostingRegressor(),
-    'EN': ElasticNet(
+    'gbr': GradientBoostingRegressor(),
+    'en': ElasticNet(
         alpha=0.1, 
         max_iter=1000,
         l1_ratio=0.5, 
         random_state=_model['seed']
     ),
-    'XGR': XGBRegressor(eta=0.01, n_estimators=100, n_jobs=-1),
+    'xgr': XGBRegressor(eta=0.01, n_estimators=100, n_jobs=-1),
 }
 _model[_sys['indexes']] = list(_model['ml'].keys())
 
@@ -302,11 +302,17 @@ _file = {
                 id: f'step02_pp_{id}.csv' \
                     for id in _type['pds'][_sys['indexes']]+['last']
             },
-            'scaling': {
+            'split': {
                 id1: {
-                    id2: f'step03_scaling_x_{id2}.csv' \
+                    id2: f'step03_split_{id1}_{id2}.csv' \
                         for id2 in _type['pc'][_sys['indexes']]
                 } for id1 in ['x', 'y'] + _type['mds'][_sys['indexes']]
+            },
+            'scaling': {
+                id1: {
+                    id2: f'step04_scaling_{id1}_{id2}.csv' \
+                        for id2 in _type['pc'][_sys['indexes']]
+                } for id1 in _type['mds'][_sys['indexes']]
             },
         },
         'pickle': {
@@ -334,7 +340,6 @@ _file = {
                 } for id1 in _type['pc'][_sys['indexes']]
             },
             'modeling_history': 
-                # 항상 같은 이름으로 생성되는지 확인 필요
                 f'mem09_mh_{datetime.now().strftime("%Y%m%d%H%M%S")}.pkl'
         }
     }

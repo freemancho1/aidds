@@ -4,8 +4,10 @@ import traceback
 
 
 def get_caller(is_file_info=False, is_display=False):
-    """ 이 함수를 호출한 함수를 호출한 함수의 정보를 리턴한다.
-        일반적으로 로그출력이나, 예외사항 처리에서 사용한다.
+    """ 
+    이 함수를 호출한 함수를 호출한 함수의 정보를 리턴한다.
+    일반적으로 로그출력이나, 예외사항 처리에서 사용한다.
+    
     Args:
         is_file_info (bool, optional):
             함수명에 추가적으로 파일정보를 리턴할 여부를 설정
@@ -49,7 +51,9 @@ def get_caller(is_file_info=False, is_display=False):
         return caller_function
     
 def get_error(e_msg=None):
-    """ 발생한 에러 정보를 리턴한다.
+    """ 
+    발생한 에러 정보를 리턴한다.
+    
     Args:
         e_msg (str, required): 
             에러 정보를 생성하는 과정에서 에러 메시지가 없을 때 바로 사용하기 위해,
@@ -63,14 +67,21 @@ def get_error(e_msg=None):
     """     
     # 이 함수를 호출될 때까지의 전체 이벤트가 저장된 트레이스를 불러옴
     trace_info = inspect.trace()
-    # 에러 위치를 가져옴(에러는 보통 마지막에 저장됨)
-    error_pos = trace_info[-1]
     
-    # 다양한 에러 위치의 정보 추출
-    error_filename = error_pos.filename
+    # 마지막부터 반복(배열이기 때문에 전체크기 -1부터 0까지 진행)
+    for error_idx in range(len(trace_info)-1, -1, -1):
+        error_pos = trace_info[error_idx]
+        error_filename = error_pos.filename
+        # 마지막 에러 위치가 오픈소스 라이브러리이면 스킵
+        if 'site-packages' in error_filename:
+            continue
+        else:
+            break
+    
+    # 에러 위치의 다양한 정보(라인번호, 함수명(또는 클래스명.함수명)) 추출
     error_lineno = error_pos.lineno
-    # 함수명(또는 클래스명.함수명) 정보 추출
     error_function = error_pos.function
+    # 클래스인 경우
     if 'self' in error_pos.frame.f_locals:
         error_class = error_pos.frame.f_locals['self'].__class__.__name__
         error_function = f'{error_class}.{error_function}'

@@ -6,7 +6,7 @@ from datetime import datetime
 
 import aidds.sys.config as cfg
 import aidds.sys.message as msg
-from aidds.sys.utils.log import ModelingLogs as Logs
+from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
 
 
@@ -49,7 +49,7 @@ def save_data(data=None, file_code=None, **kwargs):
     
     
 def get_provide_data():
-    logs = Logs(msg.log.modeling.get_provide_data.main)
+    logs = Logs(code='modeling.get_provide_data')
     try:
         data_dict = {}
         for id in cfg.type.pds.ids:
@@ -59,10 +59,7 @@ def get_provide_data():
             data_dict[id] = df
             value = f'Size{df.shape}, '\
                     f'Processing Time {datetime.now()-start_time}'
-            logs.mid(
-                message=eval('msg.log.modeling.get_provide_data.'+id),
-                value=value
-            )
+            logs.mid(code=id, value=value)
         return data_dict
     except Exception as e:
         raise AiddsException(e)
@@ -72,7 +69,7 @@ def get_provide_data():
 def get_cleaning_data() -> dict:
     try:
         return {
-            id: read_data(eval(f'data.cleaning.{id}')) \
+            id: read_data(f'data.cleaning.{id}') \
                 for id in cfg.type.pds.ids
         }
     except Exception as e:
