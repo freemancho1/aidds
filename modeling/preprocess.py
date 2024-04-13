@@ -1,5 +1,4 @@
 import aidds.sys.config as cfg
-import aidds.sys.message as msg
 from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.data_io import get_cleaning_data, save_data
@@ -7,7 +6,16 @@ from aidds.modeling.pp_module import PreprocessingModule as ppm
 
 
 class Preprocessing:
-    """ 모델링 부분 전처리 메인 클래스 """
+    """ 모델링 부분 전처리 메인 클래스 
+    
+    Args:
+        cd_dict      (dict): 크리닝된 공사비+설비 데이터
+        
+    Attributes:
+        _cd_dict     (dict): 전처리에 사용할 크리닝 데이터
+        _ppm        (class): 모델링과 서비스에서 공통으로 사용할 전처리 모듈 클래스
+        ppdf (pd.DataFrame): 최종 전처리 된 데이터프레임(스케일링에 사용됨)
+    """
     
     def __init__(self, cd_dict=None):
         try:

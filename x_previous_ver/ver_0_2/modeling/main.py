@@ -1,7 +1,7 @@
 from aidds.sys.app_init import AiddsInit
 from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AiddsException
-from aidds.modeling.preprocessing import Preprocessing
+from modeling.preprocess import Preprocessing
 from aidds.modeling.scaler import Scaling
 from aidds.modeling.learning import Learning
 

@@ -92,8 +92,8 @@ _type = {
     },
     'pc': {        # pole count type
         'all': 'all',
-        '1': '1',
-        'n1': 'n1',
+        'e1': 'e1', # equal 1
+        'n1': 'n1', # not equal 1
     },
 }
 _type['pds'][_sys['indexes']] = list(_type['pds'].keys())
@@ -300,7 +300,7 @@ _file = {
             },
             'pp': {
                 id: f'step02_pp_{id}.csv' \
-                    for id in _type['pds'][_sys['indexes']]+['last']
+                    for id in _type['pds'][_sys['indexes']]+['last', 'best']
             },
             'split': {
                 id1: {

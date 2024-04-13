@@ -83,7 +83,9 @@ def service_logs(code=None, value=None):
         return
     output = f'[{datetime.now()}]'
     output += '' if code is None else f' {eval(f"msg.log.service.{code}")}'
-    output += '' if value is None else f'{value}'
+    output += '' if value is None else \
+        f' {value}' if code is None else f'{value}'
+    print(output)
     
     
 def route_error_logs(error=None):

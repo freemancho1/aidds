@@ -10,10 +10,10 @@ if args.cleaning:
     exec_str += './cleaning/main.py'
 elif args.serving:
     exec_str += './serving/main.py '
-    if args.debug or cfg.IS_DEBUG_MODE:
+    if args.debug or cfg.sys.case.debug_mode:
         exec_str += '-d '
     if args.port == 0:
-        args.port = cfg.PORT    
+        args.port = cfg.sys.web_service.port
     exec_str += f'--port {args.port}'
 else:
     exec_str += './modeling/main.py'

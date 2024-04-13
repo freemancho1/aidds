@@ -1,6 +1,6 @@
 from aidds.sys.utils import AiddsInit as init
 from aidds.sys.utils import Logs, AiddsException
-from aidds.modeling.preprocessing import Preprocessing
+from modeling.preprocess import Preprocessing
 
 
 def main():

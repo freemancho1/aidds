@@ -3,7 +3,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 import aidds.sys.config as cfg
-import aidds.sys.message as msg
 from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.data_io import save_data, read_data
@@ -20,11 +19,12 @@ class Scaling:
         _data         (dict): train_Xy, test_Xy로 분할된 데이터(스케일링 전)
         sdata         (dict): train_Xy, test_Xy로 분할된 데이터(스케일링 후)
     """
-    def __init__(self, preprocessing_df=None):
+    def __init__(self, preprocessing_df=None, is_best=False):
         try:
             self._logs = Logs(code='modeling.scaling')
             self._ppdf = preprocessing_df
             self._data = {}
+            self._is_best = is_best
             self.sdata = {}
             self._run()
         except Exception as e:
@@ -36,11 +36,16 @@ class Scaling:
     def _run(self):
         try:
             # 전처리 데이터를 제공 받지 못한 경우 읽어옴
-            if self._ppdf is None:
-                self._ppdf = read_data(file_code='data.pp.last')
+            if self._is_best:
+                self._ppdf = \
+                    read_data(file_code='data.pp.best', dtype={'acc_no': str})
+            elif self._ppdf is None:
+                self._ppdf = \
+                    read_data(file_code='data.pp.last', dtype={'acc_no': str})
             # self._data의 데이터 저장 딕셔너리 추가
             # self._data['x']={}, 'y'={}, 'train_x'={}.... 생성
             self._data = {id: {} for id in ['x', 'y'] + cfg.type.mds.ids}
+            self.sdata = {id: {} for id in cfg.type.mds.ids}
             # 전체 데이터를 속성과 타겟(예측목표)로 분리
             self._split_xy()
             # 전주 갯 수로 데이터를 분리 후 스케일링
@@ -96,8 +101,36 @@ class Scaling:
                 self._data[id2][id] = eval(id2)
                 
             # 스케일링
+            cols = train_x.columns.tolist()
+            scaler = StandardScaler()
+            train_x = pd.DataFrame(scaler.fit_transform(train_x), columns=cols)
+            test_x = pd.DataFrame(scaler.transform(test_x), columns=cols)
             
+            # 스케일 데이터 저장
+            for id2 in cfg.type.mds.ids:
+                self.sdata[id2][id] = eval(id2)
+                
+            # 스케일러 저장
+            save_data(data=scaler, file_code=f'pickle.scaler.{id}')
         except Exception as e:
             raise AiddsException(e)
                 
+    def _save_data(self):
+        """ 스케일링 전('x','y' 포함)/후 데이터 저장 """
+        try:
+            for mds_id in cfg.type.mds.ids + ['x', 'y']:
+                for pc_id in cfg.type.pc.ids:
+                    save_data(
+                        data=self._data[mds_id][pc_id],
+                        file_code=f'data.split.{mds_id}.{pc_id}'
+                    )
+                    # 원본 데이터 ['x', 'y']는 스케일링 하지 않음
+                    if mds_id in ['x', 'y']:
+                        continue
+                    save_data(
+                        data=self.sdata[mds_id][pc_id],
+                        file_code=f'data.scaling.{mds_id}.{pc_id}'
+                    )
+        except Exception as e:
+            raise AiddsException(e)
                 

@@ -74,6 +74,17 @@ def get_cleaning_data() -> dict:
         }
     except Exception as e:
         raise AiddsException(e)
+    
+def get_scaling_data() -> dict:
+    try:
+        return {
+            mid: {
+                pid: read_data(file_code=f'data.scaling.{mid}.{pid}') \
+                    for pid in cfg.type.pc.ids
+            } for mid in cfg.type.mds.ids
+        }
+    except Exception as e:
+        raise AiddsException(e)
 
 def _get_file_path(file_code=None) -> Tuple[str, str, str]:
     try:

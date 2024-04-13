@@ -10,6 +10,8 @@ from aidds.sys.utils.exception import AiddsException
 
 def user_mape(y, p):
     try:
+        print(f'=== TYPE: y[{type(y)}], p[{type(p)}]')
+        print(f'=== SHAPE: y[{y.shape}], p[{p.shape}]')
         max_value = max(np.max(y), 1)
         umape = 0.0  
         data_size = len(y)
@@ -17,6 +19,7 @@ def user_mape(y, p):
             (_y, _p) = (max_value, p[i]+max_value) if y[i]<1 else (y[i], p[i])
             umape += abs((_y-_p)/_y)
         umape = umape / data_size
+        print(f'=== TYPE & shape: type[{type(umape)}], shape[{umape.shape}]')
         return umape 
     except Exception as e:
         raise AiddsException(e)
@@ -32,16 +35,16 @@ def regression_evals(y, p, verbose=1):
         mae = mean_absolute_error(y, p)
         r2score = r2_score(y, p)
         mape = mean_absolute_percentage_error(y, p)
-        umape = user_mape(y, p)
+        # umape = user_mape(y, p)
         
         message = \
-            f'MAPE: {mape:.6f}({umape*100:.4f}), ' \
+            f'MAPE: {mape:.6f}, ' \
             f'R2SCORE: {r2score:.6f}, \nMAE: {mae:.6f}, MSE: {mse:.6f}, ' \
             f'RMSE: {rmse:.6f}' if verbose == 2 \
         else \
-            f'MAPE: {mape:.6f}({umape*100:.4f}), ' \
+            f'MAPE: {mape:.6f}, ' \
             f'R2SCORE: {r2score:.6f}' if verbose == 1 \
         else ''
-        return [mape, umape, r2score, mae, mse, rmse], message
+        return [mape, r2score, mae, mse, rmse], message
     except Exception as e:
         raise AiddsException(e)
