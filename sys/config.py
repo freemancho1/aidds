@@ -318,7 +318,6 @@ _file = {
         'pickle': {
             'pp': {
                 'office': {
-                    'names': 'mem01_office_names.pkl',
                     'codes': 'mem01_office_codes.pkl',
                 },
                 'one_hot_cols': {

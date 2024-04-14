@@ -72,6 +72,10 @@ _log = {
         'samples': {
             'main': 'The sample manager for the web service has started.',
         },
+        'predict': {
+            'main': 'The predic manager for the web service has started.',
+            'json_size': 'Prediction request data size:',
+        },
         'manager': 'The service manager for the web service has started.',
         'exception': 'The system has terminated unexpectedly for an unknown reason.',
         'shut_down': 'The system has been shut down at the request of the administrator.'

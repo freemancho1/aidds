@@ -85,7 +85,40 @@ def get_scaling_data() -> dict:
         }
     except Exception as e:
         raise AiddsException(e)
+    
+def get_service_pickle():
+    pickle_list = []
+    
+    def get_pickle_list(data_dict=None, parent_key='', sep='.'):
+        try:
+            for key, value in data_dict.items():
+                new_key = f'{parent_key}{sep}{key}' if parent_key else key
+                if isinstance(value, dict):
+                    # 모델 피클중 best모델만 추출
+                    if new_key.startswith('models.'):
+                        pickle_list.append(f'{new_key}.best')
+                    else:
+                        get_pickle_list(data_dict=value, parent_key=new_key)
+                else:
+                    # 'modeling_history'는 필요없으니 제거
+                    if new_key.startswith('modeling_history'):
+                        pass
+                    else:
+                        pickle_list.append(new_key)
+                        # 딕셔너리로 가져올 때는
+                        # pickle_dict[new_key] = value                        
+        except Exception as e:
+            raise AiddsException(e)
 
+    try:
+        get_pickle_list(cfg.file.name.pickle)
+        return {
+            id: read_data(file_code=f'pickle.{id}') \
+                for id in pickle_list
+        }
+    except Exception as e:
+        raise AiddsException(e)
+    
 def _get_file_path(file_code=None) -> Tuple[str, str, str]:
     try:
         # 파일명 찾기
