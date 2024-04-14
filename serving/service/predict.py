@@ -42,6 +42,7 @@ class Predict:
             # ret_json_dict에 리턴할 값 추가
             # ret_json_dict에 리턴할 값 추가
             # ret_json_dict에 리턴할 값 추가
+            # 셈플키를 이용해 모델링 부분에서 예측하는 코드 추가
         except Exception as e:
             raise AiddsException(e)
         
