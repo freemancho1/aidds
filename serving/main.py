@@ -14,7 +14,7 @@ def main(service_port=None, is_debug_mode=None):
     try:
         app.debug = is_debug_mode
         http_server = HTTPServer(WSGIContainer(app))
-        http_server.listen(service_port, 'dev.aidds.kdn.com')
+        http_server.listen(service_port)
         
         logs()
         logs(code='main', value=f'{service_port}/predict')

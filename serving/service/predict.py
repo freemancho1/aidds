@@ -192,6 +192,8 @@ class Predict:
         
     def _np_int64_to_python_int(self):
         try:
+            # JSON 전송 시 np.int64 형의 데이터는 제대로 전송되지 않아
+            # Python 기본 int형으로 변환하여 전송함
             for pn_id in self._pred_result_dict.keys():
                 for key in self._pred_result_dict[pn_id].keys():
                     self._pred_result_dict[pn_id][key] = \
