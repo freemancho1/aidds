@@ -1,5 +1,6 @@
 import json 
 import pandas as pd
+from sklearn.metrics import mean_absolute_percentage_error as mape
 
 import aidds.sys.config as cfg 
 from aidds.sys.utils.logs import service_logs as logs
@@ -17,8 +18,9 @@ class Predict:
             self._pkl = get_service_pickle()
             self._ppm = PreprocessingModule()
             logs(code='predict.main')
-            # 서비스시 제거
-            self.run(in_json)
+            # 서비스시 제거(run()함수는 외부에서 실행)
+            if in_json is not None:
+                self.run(in_json)
         except Exception as e:
             raise AiddsException(e)
         
@@ -33,15 +35,21 @@ class Predict:
             # acc_no, cons_cost(실공사비), pred_all(전체예측), pred_pc(PC갯수별 예측)
             # 정보가 들어갈 딕셔너리
             self._pred_result_dict = {} 
+            
+            # 프로세싱
+            ## 이 부분은 테스트 버전과 서비스 버전의 차이가 있는 부분으로
+            ##
+            ## 전처리
             self._preprocessing()
+            ## 스케일링 및 예측
             self._scaling_and_prediction()
+            ## 데이터 변환(np.int64() -> python.int())
             self._np_int64_to_python_int()
-            # _pred_result_dict에 mape 추가해 로그 출력
-            # ret_json_dict에 리턴할 값 추가
-            # ret_json_dict에 리턴할 값 추가
-            # ret_json_dict에 리턴할 값 추가
-            # ret_json_dict에 리턴할 값 추가
-            # ret_json_dict에 리턴할 값 추가
+            ## 예측결과 리턴 데이터에 저장
+            self._update_ret_json_dict()
+
+            # 결과 리턴
+            return json.dumps(self._ret_json_dict)
             # 셈플키를 이용해 모델링 부분에서 예측하는 코드 추가
         except Exception as e:
             raise AiddsException(e)
@@ -201,4 +209,23 @@ class Predict:
         except Exception as e:
             raise AiddsException(e)
         
+    def _update_ret_json_dict(self):
+        try:
+            for key, _ in self._ret_json_dict.items():
+                self._ret_json_dict[key]['cons'].update({
+                    'pred_all': self._pred_result_dict[key]['pred_all'],
+                    'pred_pc': self._pred_result_dict[key]['pred_pc'],
+                    'mape_all': mape(
+                        [self._ret_json_dict[key]['cons']['cons_cost']],
+                        [self._pred_result_dict[key]['pred_all']]
+                    ),
+                    'mape_pc': mape(
+                        [self._ret_json_dict[key]['cons']['cons_cost']],
+                        [self._pred_result_dict[key]['pred_pc']]
+                    )
+                })
+        except Exception as e:
+            raise AiddsException(e)
+
+
         

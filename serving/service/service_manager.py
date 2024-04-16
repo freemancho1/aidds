@@ -1,9 +1,33 @@
 from aidds.sys.utils.logs import service_logs as logs
+
+# 싱글톤 서비스 
 from aidds.serving.service.samples import Samples
+from aidds.serving.service.predict import Predict
 
 
 class ServiceManager:
     """ 웹 서비스를 위한 RESTAPI 서비스 메니저 싱글톤 클래스 """
+    
+    def _init_services(cls):
+        # 이곳에 추가할 서비스 등록
+        cls._instance._services['samples'] = Samples()
+        cls._instance._services['predict'] = Predict()
+        
+    # 이곳에 추가할 서비스 요청함수 생성
+    
+    @classmethod
+    def samples(cls):
+        return cls._get_service(service_name='samples')
+    
+    @classmethod
+    def predict(cls):
+        return cls._get_service(service_name='predict')
+    
+    
+    #############################################################
+    # 자체적으로 사용하는 클래스함수
+    # 이 아래 부분은 수정할 필요 없음
+
     _instance = None
         
     def __new__(cls):
@@ -15,20 +39,7 @@ class ServiceManager:
             cls._instance._init_services()
             logs(code='manager')
         return cls._instance
-    
-    def _init_services(cls):
-        # 이곳에 추가할 서비스 등록
-        cls._instance._services['samples'] = Samples()
-        
-    # 이곳에 추가할 서비스 요청함수 생성
-    
-    @classmethod
-    def samples(cls):
-        return cls._get_service(service_name='samples')
-    
-    
-    # 자체적으로 사용하는 클래스함수
-        
+            
     @classmethod
     def get_instance(cls):
         return cls._instance

@@ -8,7 +8,7 @@ from sklearn.metrics import r2_score
 from aidds.sys.utils.exception import AiddsException
 
 
-def user_mape(y, p):
+def user_mape(y, p): 
     try:
         print(f'=== TYPE: y[{type(y)}], p[{type(p)}]')
         print(f'=== SHAPE: y[{y.shape}], p[{p.shape}]')
