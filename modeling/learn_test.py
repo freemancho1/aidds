@@ -23,6 +23,7 @@ class Learning:
                 id: read_data(file_code=f'pickle.models.{id}.best') \
                     for id in cfg.type.pc.ids
             }
+            print(f'----- self._best:\n{self._best}')
             self._history = {}
             self._run()
         except Exception as e:

@@ -11,7 +11,7 @@ from aidds.serving.service.service_manager import ServiceManager
 sm = ServiceManager().get_instance()
 
 
-class Predict(MethodView):
+class Predict(MethodView): 
     
     def post(self):
         try:

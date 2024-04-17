@@ -42,8 +42,11 @@ class Learning:
                 for pid in cfg.type.pc.ids:
                     self._history[pid] = {}
                     self._ml_fit_and_evals(mid=mid, pid=pid)
+            self._best_model_predict()
             # 데이터 유형별 최고 모델 저장(서비스에서 사용)
             self._save_best_model()
+            # 임시 작업(최고 모델로 다시 모델링해서 결과 확인)
+            self._best_model_predict()
         except Exception as e:
             raise AiddsException(e)
         
@@ -70,8 +73,8 @@ class Learning:
             evals, message = \
                 regression_evals(y=test_y, p=pred_y, verbose=1)
             # 학습결과 출력
-            value = f'MODEL[{mid.upper()}], Data[{pid.upper()}] - {message}'
-            self._logs.mid(code='result', value=value)
+            # value = f'MODEL[{mid.upper()}], Data[{pid.upper()}] - {message}'
+            # self._logs.mid(code='result', value=value)
             
             # 데이터 유형별 최고 모델 선별
             if self._best[pid]['score'] < evals[1]:
@@ -79,6 +82,27 @@ class Learning:
                     'score': evals[1], 'mape': evals[0], \
                     'model': model, 'model_key': mid
                 })
+            
+            # 재학습(임시코드)
+            if mid=='gbr' and pid=='all':
+                print(self._best)
+                print(ddict['test_x'].loc[0, 'cont_cap'])
+                pred_y = model.predict(ddict['test_x'])
+                evals, message = \
+                regression_evals(y=test_y, p=pred_y, verbose=1)
+                value = f'[모델 그대로 사용] - {message}'
+                self._logs.mid(code='result', value=value)
+
+                model = self._best['all']['model']
+                pred_y = model.predict(ddict['test_x'])
+                evals, message = \
+                regression_evals(y=test_y, p=pred_y, verbose=1)
+                value = f'[읽어들인 모델 사용] - {message}'
+                self._logs.mid(code='result', value=value)
+                
+                self._best_model_predict()
+
+            
             
             # 학습결과 모델 저장
             save_data(data=model, file_code=f'pickle.models.{pid}.{mid}')
@@ -90,13 +114,35 @@ class Learning:
     def _save_best_model(self):
         """ 전주 갯 수별 최고 모델과 전체 모델의 학습결과 저장 """
         try:
+            self._best_model_predict()
             # 전주 갯 수별 최고 모델 저장
             for pid in cfg.type.pc.ids:
                 save_data(
                     data=self._best[pid]['model'],
                     file_code=f'pickle.models.{pid}.best'
                 )
+            self._best_model_predict()
             # 전체 모델의 학습결과 저장
             save_data(data=self._history, file_code='pickle.modeling_history')
         except Exception as e:
             raise AiddsException(e)
+        
+    def _best_model_predict(self):
+        try:
+            # 전주 갯 수별 데이터 불러오기
+            # did=data id로 data는 train_x, train_y와 같은 모델링 ds id를 말함
+            # ddict = {did: self._sdict[did][pid] for did in cfg.type.mds.ids}
+            test_x = self._sdict['test_x']['all']
+            print(test_x.loc[0, 'cont_cap'])
+            test_y = self._sdict['test_y']['all'].to_numpy()
+            
+            model = self._best['all']['model']
+            print(self._best)
+            pred_y = model.predict(test_x)
+            evals, message = \
+                regression_evals(y=test_y, p=pred_y, verbose=1)
+            value = f'[1111111111] - {message}'
+            self._logs.mid(code='result', value=value)
+        except Exception as e:
+            raise AiddsException(e)
+        
