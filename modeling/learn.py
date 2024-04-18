@@ -1,3 +1,4 @@
+import sys
 import aidds.sys.config as cfg
 from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.data_io import save_data, get_scaling_data
@@ -20,9 +21,16 @@ class Learning:
             self._logs = Logs(code='learning') 
             self._sdict = scaling_data
             self._best = {
-                id: {'model': None, 'score': 0, 'mape': 0, 'model_key': ''} \
+                id: {
+                    'model': None, 
+                    'score': -sys.float_info.max, 
+                    'mape': 0, 
+                    'model_key': ''} \
                     for id in cfg.type.pc.ids
             }
+            self.model_all = None
+            self.model_e1 = None
+            self.model_n1 = None
             self._history = {}
             self._run()
         except Exception as e:
@@ -37,16 +45,13 @@ class Learning:
             if self._sdict is None:
                 self._sdict = get_scaling_data()
             # 모델별 학습
-            for mid in cfg.model.ids:
+            for pid in cfg.type.pc.ids:
                 # 전주 갯 수별 학습 => 모델 및 전주 갯 수별 학습
-                for pid in cfg.type.pc.ids:
+                for mid in cfg.model.ids:
                     self._history[pid] = {}
                     self._ml_fit_and_evals(mid=mid, pid=pid)
-            self._best_model_predict()
             # 데이터 유형별 최고 모델 저장(서비스에서 사용)
             self._save_best_model()
-            # 임시 작업(최고 모델로 다시 모델링해서 결과 확인)
-            self._best_model_predict()
         except Exception as e:
             raise AiddsException(e)
         
@@ -59,16 +64,17 @@ class Learning:
             pid (str, required): 전주 갯 수 id. Defaults to None.
         """
         try:
-            model = eval(f'cfg.model.ml.{mid}')
+            model = {}
+            model[pid] = eval(f'cfg.model.ml.{mid}')
             # 전주 갯 수별 데이터 불러오기
             # did=data id로 data는 train_x, train_y와 같은 모델링 ds id를 말함
             ddict = {did: self._sdict[did][pid] for did in cfg.type.mds.ids}
             
             # 모델 학습
             train_y = ddict[cfg.type.mds.train_y].to_numpy().reshape(-1)
-            model.fit(ddict[cfg.type.mds.train_x], train_y)
+            model[pid].fit(ddict[cfg.type.mds.train_x], train_y)
             # 평가를 위해 테스트 데이터 예측
-            pred_y = model.predict(ddict[cfg.type.mds.test_x])
+            pred_y = model[pid].predict(ddict[cfg.type.mds.test_x])
             test_y = ddict[cfg.type.mds.test_y].to_numpy()
             evals, message = \
                 regression_evals(y=test_y, p=pred_y, verbose=1)
@@ -78,29 +84,35 @@ class Learning:
             
             # 데이터 유형별 최고 모델 선별
             if self._best[pid]['score'] < evals[1]:
-                self._best[pid].update({
-                    'score': evals[1], 'mape': evals[0], \
-                    'model': model, 'model_key': mid
-                })
+                # print(f'+++++++++ model change: {mid}, {pid}: {self._best[pid]["score"]}, {evals[1]}')
+                self._best[pid] = {
+                    'score': evals[1], 'mape': evals[0], 
+                    'model': model[pid], 'model_key': mid
+                }
             
             # 재학습(임시코드)
-            if mid=='gbr' and pid=='all':
-                print(self._best)
-                print(ddict['test_x'].loc[0, 'cont_cap'])
-                pred_y = model.predict(ddict['test_x'])
-                evals, message = \
-                regression_evals(y=test_y, p=pred_y, verbose=1)
-                value = f'[모델 그대로 사용] - {message}'
-                self._logs.mid(code='result', value=value)
+            if mid=='gbr':
+                if pid == 'all':
+                    self.model_all = model[pid]
+                    self._best_model_predict(msg='all', model=self.model_all)
+                elif pid == 'e1':
+                    self.model_e1 = model[pid]
+                    self._best_model_predict(msg='all', model=self.model_all)
+                    self._best_model_predict(msg='e1', model=self.model_e1)
+                else:
+                    self.model_n1 = model[pid]
+                    self._best_model_predict(msg='all', model=self.model_all)
+                    self._best_model_predict(msg='e1', model=self.model_e1)
+                    self._best_model_predict(msg='n1', model=self.model_n1)
 
-                model = self._best['all']['model']
-                pred_y = model.predict(ddict['test_x'])
-                evals, message = \
-                regression_evals(y=test_y, p=pred_y, verbose=1)
-                value = f'[읽어들인 모델 사용] - {message}'
-                self._logs.mid(code='result', value=value)
+                # model = self._best['all']['model']
+                # pred_y = model.predict(ddict['test_x'])
+                # evals, message = \
+                # regression_evals(y=test_y, p=pred_y, verbose=1)
+                # value = f'[읽어들인 모델 사용] - {message}'
+                # self._logs.mid(code='result', value=value)
                 
-                self._best_model_predict()
+                
 
             
             
@@ -114,34 +126,32 @@ class Learning:
     def _save_best_model(self):
         """ 전주 갯 수별 최고 모델과 전체 모델의 학습결과 저장 """
         try:
-            self._best_model_predict()
             # 전주 갯 수별 최고 모델 저장
             for pid in cfg.type.pc.ids:
                 save_data(
                     data=self._best[pid]['model'],
                     file_code=f'pickle.models.{pid}.best'
                 )
-            self._best_model_predict()
             # 전체 모델의 학습결과 저장
             save_data(data=self._history, file_code='pickle.modeling_history')
         except Exception as e:
             raise AiddsException(e)
         
-    def _best_model_predict(self):
+    def _best_model_predict(self, msg=None, model=None):
         try:
             # 전주 갯 수별 데이터 불러오기
             # did=data id로 data는 train_x, train_y와 같은 모델링 ds id를 말함
             # ddict = {did: self._sdict[did][pid] for did in cfg.type.mds.ids}
             test_x = self._sdict['test_x']['all']
-            print(test_x.loc[0, 'cont_cap'])
+            # print(test_x.loc[0, 'cont_cap'], msg)
             test_y = self._sdict['test_y']['all'].to_numpy()
             
-            model = self._best['all']['model']
-            print(self._best)
+            # model = self._best['all']['model']
+            model = model
             pred_y = model.predict(test_x)
             evals, message = \
                 regression_evals(y=test_y, p=pred_y, verbose=1)
-            value = f'[1111111111] - {message}'
+            value = f'[{msg}:{self._best["all"]["model_key"]}] - {message}'
             self._logs.mid(code='result', value=value)
         except Exception as e:
             raise AiddsException(e)

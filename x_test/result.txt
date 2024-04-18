@@ -1,0 +1,146 @@
+[29ab3772a381][2024-04-18 14:14:49.498208] Preprocessing data scaling start.
+[29ab3772a381][2024-04-18 14:14:49.661259]   Total size of attribute data for learning: (10963, 98)
+[29ab3772a381][2024-04-18 14:14:49.667487]   Data size of training/testing data by pole count: pc_type[all] - total(10963, 98), train(8222, 98), test(2741, 98)
+[29ab3772a381][2024-04-18 14:14:49.697764]   Data size of training/testing data by pole count: pc_type[e1] - total(6635, 98), train(4976, 98), test(1659, 98)
+[29ab3772a381][2024-04-18 14:14:49.723379]   Data size of training/testing data by pole count: pc_type[n1] - total(4328, 98), train(3246, 98), test(1082, 98)
+[29ab3772a381][2024-04-18 14:14:53.552242] Preprocessing data scaling end., Total processing time: 0:00:04.054000
+[dc65400a95da][2024-04-18 14:14:53.553068] Learning start.
++++++++++ model change: lin, all: -1.7976931348623157e+308, -4.3313877182999555e+24
+0.22945594077132334 lin-all
+{'all': {'score': -4.3313877182999555e+24, 'mape': 30267146455.18011, 'model': LinearRegression(), 'model_key': 'lin'}, 'e1': {'model': None, 'score': -1.7976931348623157e+308, 'mape': 0, 'model_key': ''}, 'n1': {'model': None, 'score': -1.7976931348623157e+308, 'mape': 0, 'model_key': ''}}
+[dc65400a95da][2024-04-18 14:14:53.644667]   Model training results: [lin-all:lin] - MAPE: 30267146455.180111, R2SCORE: -4331387718299955452968960.000000
++++++++++ model change: lin, e1: -1.7976931348623157e+308, -1.400070583122046e+23
+0.22945594077132334 lin-e1
+{'all': {'score': -4.3313877182999555e+24, 'mape': 30267146455.18011, 'model': LinearRegression(), 'model_key': 'lin'}, 'e1': {'score': -1.400070583122046e+23, 'mape': 3567857502.4044857, 'model': LinearRegression(), 'model_key': 'lin'}, 'n1': {'model': None, 'score': -1.7976931348623157e+308, 'mape': 0, 'model_key': ''}}
+[dc65400a95da][2024-04-18 14:14:53.844669]   Model training results: [lin-e1:lin] - MAPE: 572980645829.609131, R2SCORE: -2529795776153776608509952.000000
++++++++++ model change: lin, n1: -1.7976931348623157e+308, -1.2255559846774044e+22
+0.22945594077132334 lin-n1
+{'all': {'score': -4.3313877182999555e+24, 'mape': 30267146455.18011, 'model': LinearRegression(), 'model_key': 'lin'}, 'e1': {'score': -1.400070583122046e+23, 'mape': 3567857502.4044857, 'model': LinearRegression(), 'model_key': 'lin'}, 'n1': {'score': -1.2255559846774044e+22, 'mape': 1991488742.99243, 'model': LinearRegression(), 'model_key': 'lin'}}
+[dc65400a95da][2024-04-18 14:14:54.031714]   Model training results: [lin-n1:lin] - MAPE: 698189287427.967285, R2SCORE: -54417423976982828579553280.000000
+/home/freeman/anaconda3/envs/aidds/lib/python3.10/site-packages/sklearn/linear_model/_coordinate_descent.py:678: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 4.148e+15, tolerance: 7.785e+12
+  model = cd_fast.enet_coordinate_descent(
++++++++++ model change: lasso, all: -4.3313877182999555e+24, 0.8694906418088656
+0.22945594077132334 lasso-all
+{'all': {'score': 0.8694906418088656, 'mape': 0.11527388108418424, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'e1': {'score': -1.400070583122046e+23, 'mape': 3567857502.4044857, 'model': LinearRegression(), 'model_key': 'lin'}, 'n1': {'score': -1.2255559846774044e+22, 'mape': 1991488742.99243, 'model': LinearRegression(), 'model_key': 'lin'}}
+[dc65400a95da][2024-04-18 14:14:56.934378]   Model training results: [lasso-all:lasso] - MAPE: 0.115274, R2SCORE: 0.869491
+/home/freeman/anaconda3/envs/aidds/lib/python3.10/site-packages/sklearn/linear_model/_coordinate_descent.py:678: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 2.996e+14, tolerance: 5.496e+11
+  model = cd_fast.enet_coordinate_descent(
++++++++++ model change: lasso, e1: -1.400070583122046e+23, 0.6858401726835941
+0.22945594077132334 lasso-e1
+{'all': {'score': 0.8694906418088656, 'mape': 0.11527388108418424, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': -1.2255559846774044e+22, 'mape': 1991488742.99243, 'model': LinearRegression(), 'model_key': 'lin'}}
+[dc65400a95da][2024-04-18 14:14:58.774436]   Model training results: [lasso-e1:lasso] - MAPE: 0.260327, R2SCORE: -0.031413
+/home/freeman/anaconda3/envs/aidds/lib/python3.10/site-packages/sklearn/linear_model/_coordinate_descent.py:678: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 3.375e+15, tolerance: 4.598e+12
+  model = cd_fast.enet_coordinate_descent(
++++++++++ model change: lasso, n1: -1.2255559846774044e+22, 0.8136012206096064
+0.22945594077132334 lasso-n1
+{'all': {'score': 0.8694906418088656, 'mape': 0.11527388108418424, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8136012206096064, 'mape': 0.12704086654139587, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}}
+[dc65400a95da][2024-04-18 14:14:59.978194]   Model training results: [lasso-n1:lasso] - MAPE: 0.662815, R2SCORE: 0.404304
++++++++++ model change: ridge, all: 0.8694906418088656, 0.8697380724128682
+0.22945594077132334 ridge-all
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8136012206096064, 'mape': 0.12704086654139587, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}}
+[dc65400a95da][2024-04-18 14:15:00.182844]   Model training results: [ridge-all:ridge] - MAPE: 0.115229, R2SCORE: 0.869738
+0.22945594077132334 ridge-e1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8136012206096064, 'mape': 0.12704086654139587, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}}
+[dc65400a95da][2024-04-18 14:15:00.414499]   Model training results: [ridge-e1:ridge] - MAPE: 0.249305, R2SCORE: 0.070262
++++++++++ model change: ridge, n1: 0.8136012206096064, 0.8145756314789224
+0.22945594077132334 ridge-n1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:00.654999]   Model training results: [ridge-n1:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 knr-all
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:00.885970]   Model training results: [knr-all:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 knr-e1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:01.042679]   Model training results: [knr-e1:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 knr-n1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:01.191176]   Model training results: [knr-n1:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 dtr-all
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:01.385839]   Model training results: [dtr-all:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 dtr-e1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:01.528327]   Model training results: [dtr-e1:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
+0.22945594077132334 dtr-n1
+{'all': {'score': 0.8697380724128682, 'mape': 0.1152289754532604, 'model': Ridge(), 'model_key': 'ridge'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:01.666243]   Model training results: [dtr-n1:ridge] - MAPE: 0.641503, R2SCORE: 0.403887
++++++++++ model change: rfr, all: 0.8697380724128682, 0.9027898210086506
+0.22945594077132334 rfr-all
+{'all': {'score': 0.9027898210086506, 'mape': 0.10528391965126842, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'e1': {'score': 0.6858401726835941, 'mape': 0.10606397350069713, 'model': Lasso(max_iter=3000), 'model_key': 'lasso'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:03.523398]   Model training results: [rfr-all:rfr] - MAPE: 0.105284, R2SCORE: 0.902790
++++++++++ model change: rfr, e1: 0.6858401726835941, 0.7063301735433173
+0.22945594077132334 rfr-e1
+{'all': {'score': 0.9027898210086506, 'mape': 0.10528391965126842, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'e1': {'score': 0.7063301735433173, 'mape': 0.10067237824437997, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'n1': {'score': 0.8145756314789224, 'mape': 0.1267857032839756, 'model': Ridge(), 'model_key': 'ridge'}}
+[dc65400a95da][2024-04-18 14:15:04.743597]   Model training results: [rfr-e1:rfr] - MAPE: 0.236528, R2SCORE: 0.087506
++++++++++ model change: rfr, n1: 0.8145756314789224, 0.8716849629614579
+0.22945594077132334 rfr-n1
+{'all': {'score': 0.9027898210086506, 'mape': 0.10528391965126842, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'e1': {'score': 0.7063301735433173, 'mape': 0.10067237824437997, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+[dc65400a95da][2024-04-18 14:15:05.755660]   Model training results: [rfr-n1:rfr] - MAPE: 0.520329, R2SCORE: 0.588369
++++++++++ model change: gbr, all: 0.9027898210086506, 0.9140070873689706
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7063301735433173, 'mape': 0.10067237824437997, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+0.22945594077132334
+[dc65400a95da][2024-04-18 14:15:07.416781]   Model training results: [모델 그대로 사용] - MAPE: 0.105591, R2SCORE: 0.914007
+[dc65400a95da][2024-04-18 14:15:07.423360]   Model training results: [읽어들인 모델 사용] - MAPE: 0.105591, R2SCORE: 0.914007
+=======================
+<generator object GradientBoostingRegressor.staged_predict at 0x7fb2d61d7140>
+0.22945594077132334 ml_fit_and_evals
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'e1': {'score': 0.7063301735433173, 'mape': 0.10067237824437997, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 
+'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+[dc65400a95da][2024-04-18 14:15:07.430328]   Model training results: [ml_fit_and_evals:gbr] - MAPE: 0.105591, R2SCORE: 0.914007
+0.22945594077132334 gbr-all
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'e1': {'score': 0.7063301735433173, 'mape': 0.10067237824437997, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}, 
+'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+[dc65400a95da][2024-04-18 14:15:07.441106]   Model training results: [gbr-all:gbr] - MAPE: 0.105591, R2SCORE: 0.914007
++++++++++ model change: gbr, e1: 0.7063301735433173, 0.7574029325739757
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+-1.0030824895730135
+[dc65400a95da][2024-04-18 14:15:08.248801]   Model training results: [모델 그대로 사용] - MAPE: 0.095575, R2SCORE: 0.757403
+[dc65400a95da][2024-04-18 14:15:08.254649]   Model training results: [읽어들인 모델 사용] - MAPE: 0.095575, R2SCORE: 0.757403
+=======================
+<generator object GradientBoostingRegressor.staged_predict at 0x7fb2d6f917e0>
+0.22945594077132334 ml_fit_and_evals
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+[dc65400a95da][2024-04-18 14:15:08.263658]   Model training results: [ml_fit_and_evals:gbr] - MAPE: 0.234452, R2SCORE: 0.103942
+0.22945594077132334 gbr-e1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'n1': {'score': 0.8716849629614579, 'mape': 0.11645639963438631, 'model': RandomForestRegressor(n_estimators=200, n_jobs=-1, random_state=1234), 'model_key': 'rfr'}}
+[dc65400a95da][2024-04-18 14:15:08.274604]   Model training results: [gbr-e1:gbr] - MAPE: 0.234452, R2SCORE: 0.103942
++++++++++ model change: gbr, n1: 0.8716849629614579, 0.8879877984269336
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 
+'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+-0.37719225664436556
+[dc65400a95da][2024-04-18 14:15:09.038155]   Model training results: [모델 그대로 사용] - MAPE: 0.112968, R2SCORE: 0.887988
+[dc65400a95da][2024-04-18 14:15:09.042261]   Model training results: [읽어들인 모델 사용] - MAPE: 0.112968, R2SCORE: 0.887988
+=======================
+<generator object GradientBoostingRegressor.staged_predict at 0x7fb2d61d7140>
+0.22945594077132334 ml_fit_and_evals
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:09.051366]   Model training results: [ml_fit_and_evals:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 gbr-n1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:09.061473]   Model training results: [gbr-n1:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 en-all
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:10.156273]   Model training results: [en-all:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 en-e1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:10.528245]   Model training results: [en-e1:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 en-n1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:10.966913]   Model training results: [en-n1:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 xgr-all
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:11.400258]   Model training results: [xgr-all:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 xgr-e1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:11.675845]   Model training results: [xgr-e1:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+0.22945594077132334 xgr-n1
+{'all': {'score': 0.9140070873689706, 'mape': 0.10559077590327572, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'e1': {'score': 0.7574029325739757, 'mape': 0.09557456244144073, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}, 'n1': {'score': 0.8879877984269336, 'mape': 0.11296784753045586, 'model': GradientBoostingRegressor(), 'model_key': 'gbr'}}
+[dc65400a95da][2024-04-18 14:15:11.962224]   Model training results: [xgr-n1:gbr] - MAPE: 0.517601, R2SCORE: 0.600395
+[dc65400a95da][2024-04-18 14:15:11.972372] Learning end., Total processing time: 0:00:18.419352
