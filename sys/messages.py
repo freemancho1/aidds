@@ -79,6 +79,15 @@ _log = {
         'exception': 'The system has terminated unexpectedly for an unknown reason.',
         'shut_down': 'The system has been shut down at the request of the administrator.'
     },
+}
+
+_exception = {
+    'sys': {
+        'error_endswith': '***',
+        'head_message': '\n::: [AiddsError] ',
+        'exception': 'The system has terminated unexpectedly for an unknown reason.',
+        'unknown_file_ext': 'Unknown file extension error, the extension is',
+    },
     'hc_msg': {
         'ok': 'Service Ok',
         'cr': 'Service Ok, Data has been created',
@@ -95,15 +104,6 @@ _log = {
         # 'nf': 'The requested service could not be found',
         # 'mna': 'No access permission for the requested method',
         # 'ise': 'Internal server error'        
-    },
-}
-
-_exception = {
-    'sys': {
-        'error_endswith': '***',
-        'head_message': '\n::: [AiddsError] ',
-        'exception': 'The system has terminated unexpectedly for an unknown reason.',
-        'unknown_file_ext': 'Unknown file extension error, the extension is',
     },
 }
 
