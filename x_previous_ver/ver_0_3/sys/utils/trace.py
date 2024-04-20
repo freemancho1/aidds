@@ -36,7 +36,7 @@ def get_caller(is_file_info=False, is_display=False):
     # 2: 이 함수를 호출한 함수를 호출한 함수
     caller_frame = stack[2]
     # 함수명 추출
-    caller_function = caller_frame.function
+    caller_function = caller_frame.function 
     # 클래스 메서드인 경우 클래스명 추출
     if caller_frame.frame.f_locals.get('self'):
         class_info = caller_frame.frame.f_locals['self']

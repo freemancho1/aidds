@@ -6,9 +6,13 @@ bayesian-optimization
 openpyxl
 xlrd      
 
+# save model
+joblib
+
 # Etc
 imageio
 dotmap
+
 
 # Jupyter
 jupyter

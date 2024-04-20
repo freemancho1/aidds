@@ -6,15 +6,15 @@ _log = {
         'stop': 'end.',
         'total': ', Total processing time:',
     },
-    'cleaning': {
-        'main': 'Cleaning provided data',
-        'cons': 'CONS dataset cleaning',
-        'pole': 'POLE dataset cleaning',
-        'line': 'LINE dataset cleaning',
-        'sl': 'SL dataset cleaning',
-    },
     'modeling': {
         'main': 'Data modeling',
+        'cleaning': {
+            'main': 'Cleaning provided data',
+            'cons': 'CONS dataset cleaning',
+            'pole': 'POLE dataset cleaning', 
+            'line': 'LINE dataset cleaning',
+            'sl': 'SL dataset cleaning',
+        },
         'get_provide_data': {
             'main': 'Fetching provided data',
             'cons': 'Get CONS dataset',
@@ -29,8 +29,8 @@ _log = {
             'line': 'Get cleaning LINE dataset',
             'sl': 'Get cleaning SL dataset',
         },
-        'pp': {
-            'main': 'Data preprocessing',
+        'preprocessing': {
+            'main': 'Data preprocessing for modeling part',
             'cons': {
                 'main': 'CONS dataset preprocessing',
                 'source': 'CONS dataset size before preprocessing',
@@ -56,12 +56,14 @@ _log = {
         'scaling': {
             'main': 'Preprocessing data scaling',
             'source_x': 'Total size of attribute data for learning',
-            'type_pc': 'Data size of training/testing data by pole count',
+            'split': 'Data size of training/testing data',
         },
-    },
-    'learning': {
-        'main': 'Learning',
-        'result': 'Model training results',
+        'learning': {
+            'main': 'Learning',
+            'size': 'Modeling data size',
+            'best': 'Change best model',
+            'result': 'Model training results',
+        },
     },
     'service': {
         'main': 'The construction cost prediction web service is ready. Please visit http://aidds.kdn.com:',
@@ -70,6 +72,7 @@ _log = {
         'exit': 'When you press Ctrl+C, the service will be terminated.', 
         'samples': {
             'main': 'The sample manager for the web service has started.',
+            'get': 'Accept numbers of sample data:',
         },
         'predict': {
             'main': 'The predic manager for the web service has started.',
@@ -84,7 +87,7 @@ _log = {
 _exception = {
     'sys': {
         'error_endswith': '***',
-        'head_message': '\n::: [AiddsError] ',
+        'head_message': ' ::: [AiddsError] ',
         'exception': 'The system has terminated unexpectedly for an unknown reason.',
         'unknown_file_ext': 'Unknown file extension error, the extension is',
     },

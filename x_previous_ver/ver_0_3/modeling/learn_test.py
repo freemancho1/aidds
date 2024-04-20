@@ -5,7 +5,7 @@ from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.evaluation import regression_evals
 
 
-class Learning:
+class Learning: 
     """ 9개의 모델을 훈련해 최상의 모델을 저장하는 클래스
     Args:
         scaling_data ({pd.DataFrame}): 스케일링 데이터의 데이터프레임 딕셔너리

@@ -24,7 +24,7 @@ def read_data(file_code=None, **kwargs):
             raise AiddsException(
                 f'{msg.exception.sys.unknown_file_ext} {file_ext}')
     except Exception as e:
-        raise AiddsException(e)
+        raise AiddsException(e) 
     
     
 def save_data(data=None, file_code=None, **kwargs):

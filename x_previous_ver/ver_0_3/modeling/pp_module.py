@@ -156,7 +156,7 @@ class PreprocessingModule:
             unique_cons_ids = df[cfg.col.join].unique()
             cons_id_sums = []
             # 공사번호별 합산
-            for id in unique_cons_ids:
+            for id in unique_cons_ids: 
                 append_value = df[df[cfg.col.join]==id][cols].sum().values.tolist()
                 cons_id_sums.append([id] + append_value)
             # 공사번호 기준 합산 데이터 데이터프레임 생성

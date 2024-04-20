@@ -45,6 +45,15 @@ _sys = {
         'font_family': 'sans-serif',
     },
     # Etc.....
+    'utils': {
+        'trace': {
+            'skip_lib': 'site-packages',
+            'error_pattern': r'\n[A-Z].*?\n',
+        },
+        'data_io': {
+            'index': 'index',
+        }
+    },
 }
 
 # Models
@@ -69,7 +78,17 @@ _models['ml'] = {
     ),
     'xgr': XGBRegressor(eta=0.01, n_estimators=100, n_jobs=-1),
 }
-_models['keys'] = list(_models['ml'.keys()])
+_models['key'] = list(_models['ml'].keys())
+
+# Modeling settings
+_modeling = {
+    'test_size': 0.25,
+    'cols': 'modeling_cols',
+    'best': {
+        'cnt': 5,
+        'per': 0.85,  
+    },
+}
 
 # Data type
 _type = {
@@ -103,8 +122,8 @@ _cols.update({
     # Columns to be translated into English
     'rename': {
         # cons
-        '공사번호'              : _col['join'],          # 'acc_no', Accept No
-        '총공사비'              : _col['target'],        # 'cons_cost', Total Construction Cost
+        '공사번호'              : _cols['join'],          # 'acc_no', Accept No
+        '총공사비'              : _cols['target'],        # 'cons_cost', Total Construction Cost
         '최종변경일시'          : 'acc_date',            # Last Modification Date and Time
         '사업소명'              : 'office_name',
         '계약전력'              : 'cont_cap',            # Contracted Capacity
@@ -132,8 +151,8 @@ _cols.update({
     'cons': {
         'source': {
             'modeling': [
-                _col['join'], 
-                _col['target'],
+                _cols['join'], 
+                _cols['target'],
                 'acc_date',   # 제거(공사일과 접수일은 다름)
                 'office_name',
                 'cont_cap',
@@ -142,8 +161,8 @@ _cols.update({
                 'acc_type_name',
             ],
             'service': [
-                _col['join'],
-                _col['target'],  # 서비스시는 공백값(시험시 테스트 용으로 사용)
+                _cols['join'],
+                _cols['target'],  # 서비스시는 공백값(시험시 테스트 용으로 사용)
                 'pred_no',
                 'pred_type',
                 'acc_date',   # 제거
@@ -153,8 +172,8 @@ _cols.update({
             ],
         },
         'pp': [
-            _col['join'], 
-            _col['target'],
+            _cols['join'], 
+            _cols['target'],
             'office_cd',
             'cont_cap',
             'sup_type',                    
@@ -163,14 +182,14 @@ _cols.update({
     'pole': {
         'source': {
             'modeling': [
-                _col['join'],
+                _cols['join'],
                 'pole_shape_cd',
                 'pole_type_cd',
                 'pole_spec_cd',
                 'coordinate',
             ],
             'service': [
-                _col['join'],
+                _cols['join'],
                 'pole_shape_cd',
                 'pole_type_cd',
                 'pole_spec_cd',
@@ -179,7 +198,7 @@ _cols.update({
             ],
         },
         'pp': [
-            _col['join'],
+            _cols['join'],
             'pole_shape_cd',
             'pole_type_cd',
             'pole_spec_cd',
@@ -187,7 +206,7 @@ _cols.update({
     },
     'line': {
         'pp': [
-            _col['join'],
+            _cols['join'],
             'wiring_scheme',
             'line_type_cd',
             'line_spec_cd',
@@ -199,7 +218,7 @@ _cols.update({
     },
     'sl': {
         'pp': [
-            _col['join'],
+            _cols['join'],
             'sl_type_cd',
             'sl_spec_cd',
             'sl_span',
@@ -212,13 +231,14 @@ _file = {
     'type': {
         'data'                  : 'data',
         'pickle'                : 'pickle',
-        # Using: from sklearn.externals import joblib
+        # Using: joblib
         'model'                 : 'model',
     },
     'ext': {
         'excel'                 : '.xlsx',
         'csv'                   : '.csv',
         'pickle'                : '.pkl',
+        'model'                 : '.model',
     },
     'base_path': \
         os.path.join(os.path.expanduser('~'), 'projects', 'data', 'aidds'),
@@ -240,7 +260,7 @@ _file.update({
             },
             'pp': {
                 pkey: f'data02_{pkey}_pp'+_csv \
-                    for pkey in _type['pds'] + ['last', 'best']
+                    for pkey in _type['pds'] + ['last']
             },
             'split': {
                 tkey: f'data03_split_{tkey}'+_csv \
@@ -248,7 +268,7 @@ _file.update({
             },
             'scaling': {
                 tkey: f'data04_scaling_{tkey}'+_csv \
-                    for tkey in _type['tds']   
+                    for tkey in ['x','y','best'] + _type['tds']   
             }
         },
         # Memory Data
@@ -260,13 +280,12 @@ _file.update({
             'last_pp_cols': 'mem05_last_pp_cols'+_pkl,
             'modeling_cols': 'mem06_modeling_cols'+_pkl,
             'scaler': 'mem07_scaler'+_pkl,
-            'modeling_history': 'mem08_modeling_history'+_pkl,
         },
         # Model Data: 
-        # This model data is stored using joblib(sklearn) instead of pickle
+        # This model data is stored using joblib instead of pickle
         'model': {
-            mkey: f'mem09_model_{mkey}'+_pkl \
-                for mkey in _models['keys'] + ['best']
+            mkey: f'mem09_model_{mkey}'+_file['ext']['model'] \
+                for mkey in _models['key'] + ['best']
         },
     }
 })
@@ -275,6 +294,7 @@ _file.update({
 # - to use attribute assignment, e.g., sys.cond.debug_mode = False
 sys = DotMap(_sys)
 models = DotMap(_models)
+modeling = DotMap(_modeling)
 type = DotMap(_type)
 constraints = DotMap(_constraints)
 cols = DotMap(_cols)

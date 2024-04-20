@@ -19,6 +19,9 @@ class AppInit:
         module = 'openpyxl.styles.stylesheet'
         warnings.filterwarnings('ignore', category=UserWarning, module=module)
         
+        warnings.filterwarnings(action='ignore', category=DataConversionWarning)
+        warnings.filterwarnings(action='ignore', category=ConvergenceWarning)
+        
 
 class PltInit:
     # Code for resolving issues such as korean font problems when using matplotlib

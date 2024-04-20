@@ -8,7 +8,7 @@ from aidds.sys.utils.data_io import get_provide_data, save_data
 
 
 class Cleaning:
-    def __init__(self):
+    def __init__(self): 
         try:
             self._logs = Logs(code='cleaning')
             self.cd_dict = {}
