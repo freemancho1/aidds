@@ -77,6 +77,7 @@ _log = {
         'predict': {
             'main': 'The predic manager for the web service has started.',
             'json_size': 'Prediction request data size:',
+            'result': 'Predict result:',
         },
         'manager': 'The service manager for the web service has started.',
         'exception': 'The system has terminated unexpectedly for an unknown reason.',
@@ -108,6 +109,9 @@ _exception = {
         # 'mna': 'No access permission for the requested method',
         # 'ise': 'Internal server error'        
     },
+    'web': {
+        'bad_json': 'An error in the request JSON data',
+    }
 }
 
 log = DotMap(_log)

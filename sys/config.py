@@ -47,7 +47,7 @@ _sys = {
     # Etc.....
     'utils': {
         'trace': {
-            'skip_lib': 'site-packages',
+            'skip_lib': 'envs',
             'error_pattern': r'\n[A-Z].*?\n',
         },
         'data_io': {
@@ -153,7 +153,7 @@ _cols.update({
             'modeling': [
                 _cols['join'], 
                 _cols['target'],
-                'acc_date',   # 제거(공사일과 접수일은 다름)
+                'acc_date',   # Remove(CONS date not equals ACC date)
                 'office_name',
                 'cont_cap',
                 'sup_type',
@@ -162,10 +162,10 @@ _cols.update({
             ],
             'service': [
                 _cols['join'],
-                _cols['target'],  # 서비스시는 공백값(시험시 테스트 용으로 사용)
+                _cols['target'],  
                 'pred_no',
                 'pred_type',
-                'acc_date',   # 제거
+                'acc_date',   # Remove
                 'office_cd',
                 'cont_cap',
                 'sup_type',

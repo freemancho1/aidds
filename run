@@ -18,5 +18,4 @@ elif args.serving:
 else:
     exec_str += './modeling/main.py'
 
-print(exec_str)
 os.system(exec_str)

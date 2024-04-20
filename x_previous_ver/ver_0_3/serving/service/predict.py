@@ -8,7 +8,7 @@ from aidds.sys.utils.exception import AiddsException
 from aidds.sys.utils.data_io import get_service_pickle
 from aidds.sys.utils.ect import convert_to_builtin_int
 # 모델링 부분에 구현되어 있는 전처리 공통 모듈
-from aidds.modeling.pp_module import PreprocessingModule
+from aidds.modeling.pp_module import PreprocessingModule 
 
 
 class Predict:
