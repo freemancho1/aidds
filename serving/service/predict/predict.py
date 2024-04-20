@@ -31,9 +31,8 @@ class Predict:
             self._display_result = {}
             self._scaling_and_prediction()
             logs(code='predict.result')
-            if cfg.sys.cond.display_logs.service:
-                for key in self._display_result.keys():
-                    print(f'{key}: {self._display_result[key]}')
+            for key in self._display_result.keys():
+                logs(value=f'{key}: {self._display_result[key]}')
             return json.dumps(self._return_json)
         except Exception as e:
             raise AppException(e)

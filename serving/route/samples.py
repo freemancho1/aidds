@@ -1,4 +1,4 @@
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, json
 from flask.views import MethodView
 from werkzeug.exceptions import HTTPException
 
@@ -26,26 +26,34 @@ class Samples(MethodView):
             return jsonify({'error': error_message}), he.code
         except AppException as ae:
             ae.print()
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE
         except Exception as e:
             logs(e)
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE
         
     def post(self):
         try:
-            json_data = request.json
-            return jsonify(json_data), hc.OK
+            try:
+                # Exception handling is ambiguous
+                # input_json = request.json
+                input_data = request.get_data()
+                input_json = json.loads(input_data)
+            except ValueError as ve:
+                logs(ve)
+                error_message = eval(f'msg.exception.web.bad_json') + f': {ve}'
+                return jsonify({'error': error_message}), hc.BR
+            return jsonify(input_json), hc.OK
         except HTTPException as he:
             logs(he)
             error_message = eval(f'msg.exception.hc_msg.e{he.code}')
             return jsonify({'error': error_message}), he.code
         except AppException as ae:
             ae.print()
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE
         except Exception as e:
             logs(e)
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE

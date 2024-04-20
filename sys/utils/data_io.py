@@ -23,13 +23,16 @@ def read_data(code=None, **kwargs) -> Union[pd.DataFrame, bytes]:
         elif file_type == cfg.file.type.model:
             return load(file_path)
         else:
+            assert file_ext.lower() in [cfg.file.ext.excel, cfg.file.ext.csv], \
+                f'{msg.exception.sys.unknown_file_ext} {file_ext}'
             if file_ext.lower() == cfg.file.ext.excel:
                 return pd.read_excel(file_path, **kwargs)
-            if file_ext.lower() == cfg.file.ext.csv:
+            else:
+            # if file_ext.lower() == cfg.file.ext.csv:
                 return pd.read_csv(file_path, **kwargs)
-            raise AppException(
-                f'{msg.exception.sys.unknown_file_ext} {file_ext}'
-            )
+            # raise AppException(
+            #     f'{msg.exception.sys.unknown_file_ext} {file_ext}'
+            # )
     except Exception as e:
         raise AppException(e)
     
@@ -43,17 +46,15 @@ def save_data(data=None, code=None, **kwargs) -> None:
         elif file_type == cfg.file.type.model:
             dump(data, file_path)
         else:
+            assert file_ext.lower() in [cfg.file.ext.excel, cfg.file.ext.csv], \
+                f'{msg.exception.sys.unknown_file_ext} {file_ext}'
             # When saving a DataFrame, do not include the index.
             if cfg.sys.utils.data_io.index not in kwargs:
                 kwargs[cfg.sys.utils.data_io.index] = False
             if file_ext == cfg.file.ext.excel:
                 data.to_excel(file_path, **kwargs)
-            elif file_ext == cfg.file.ext.csv:
-                data.to_csv(file_path, **kwargs)
             else:
-                raise AppException(
-                    f'{msg.exception.sys.unknown_file_ext} {file_ext}'
-                )
+                data.to_csv(file_path, **kwargs)
     except Exception as e:
         raise AppException(e)
     

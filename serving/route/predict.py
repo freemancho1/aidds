@@ -33,9 +33,9 @@ class Predict(MethodView):
             return jsonify({'error': error_message}), he.code
         except AppException as ae:
             ae.print()
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE
         except Exception as e:
             logs(e)
-            error_message = msg.log.hc_msg.ise
+            error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE
