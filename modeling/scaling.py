@@ -2,10 +2,8 @@ from typing import Type
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 
-import aidds.sys.config as cfg 
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.data_io import read_data, save_data
+from aidds import config as cfg, AppException, modeling_logs as logs
+from aidds.sys import read_data, save_data
 
 
 class Scaling:
@@ -13,7 +11,7 @@ class Scaling:
     
     def __init__(self, pp_df=None) -> Type['Scaling']:
         try:
-            self._logs = Logs(code='scaling')
+            self._logs = logs(code='scaling')
             self._ppdf = pp_df 
             # Source data dictionary before scaling 
             self._data = {}

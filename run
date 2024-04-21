@@ -1,13 +1,13 @@
 #!/home/freeman/anaconda3/envs/aidds/bin/python
 import os
 
-import aidds.sys.config as cfg
+from aidds import config as cfg
 from aidds.args import run_args
 
 args = run_args()
 exec_str = 'python '
 if args.cleaning:
-    exec_str += './cleaning/main.py'
+    exec_str += './cleaning/run.py'
 elif args.serving:
     exec_str += './serving/main.py '
     if args.debug or cfg.sys.cond.debug_mode:
@@ -16,6 +16,6 @@ elif args.serving:
         args.port = cfg.sys.web.port
     exec_str += f'--port {args.port}'
 else:
-    exec_str += './modeling/main.py'
+    exec_str += './modeling/run.py'
 
 os.system(exec_str)

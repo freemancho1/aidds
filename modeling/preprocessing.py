@@ -1,8 +1,5 @@
-import aidds.sys.config as cfg
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.data_io import get_cleaning_data, save_data
-
+from aidds import config as cfg, AppException, modeling_logs
+from aidds.sys import get_cleaning_data, save_data
 from aidds.modeling.preprocess_module import PreprocessModule as ppm
 
 
@@ -11,7 +8,7 @@ class ModelingPreprocessing:
     
     def __init__(self, cd_dict=None):
         try:
-            self._logs = Logs(code='preprocessing')
+            self._logs = modeling_logs(code='preprocessing')
             # Cleaning Dataframe DICTionary
             self._cd_dict = cd_dict
             # PreProcessing DataFrame
@@ -40,7 +37,7 @@ class ModelingPreprocessing:
         
     def _cons(self):
         """ Preprocessing CONS dataset for modeling section. """
-        logs = Logs(code='preprocessing.cons')
+        logs = modeling_logs(code='preprocessing.cons')
         try:
             cons_df = self._cd_dict[cfg.type.pds[0]]
             logs.mid(code='source', value=cons_df.shape)
@@ -69,7 +66,7 @@ class ModelingPreprocessing:
         
     def _facility_data(self, pkey=None):
         """ Preprocessing facility dataset for modeling section. """
-        logs = Logs(code=f'preprocessing.{pkey}')
+        logs = modeling_logs(code=f'preprocessing.{pkey}')
         try:
             # Get facility dataset
             pds_df = self._cd_dict[pkey]

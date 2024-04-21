@@ -3,11 +3,11 @@ import pandas as pd
 from typing import Type
 from sklearn.model_selection import train_test_split
 
-import aidds.sys.config as cfg 
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.evaluation import regression_evals, calculate_mape
-from aidds.sys.utils.data_io import save_data, get_scaling_data, read_data
+from aidds import config as cfg
+from aidds import modeling_logs as logs
+from aidds import AppException
+from aidds.sys import regression_evals, calculate_mape
+from aidds.sys import read_data, save_data, get_scaling_data
 
 
 class Learning:
@@ -15,7 +15,7 @@ class Learning:
 
     def __init__(self, scaling_df_dict=None) -> Type['Learning']:
         try:
-            self._logs = Logs(code='learning')
+            self._logs = logs(code='learning')
             self._sd_dict = scaling_df_dict
             self._tds = None
             self._modeling_cols = None
@@ -57,7 +57,7 @@ class Learning:
             # Save best model and data
             save_data(data=self._best['model'], code='model.best')
             save_data(data=self._tds['x'], code='data.scaling.best')
-            ppdf = read_data(code='data.pp.last')
+            ppdf = read_data(code='data.pp.last', dtype={'acc_no': str})
             save_data(ppdf[ppdf.acc_no.isin(self._tds['x'].acc_no)],'data.pp.best')
         except Exception as e:
             raise AppException(e)

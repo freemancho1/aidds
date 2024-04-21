@@ -1,7 +1,6 @@
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils.exception import AppException
+from aidds import config as cfg, AppException
 
 
 class PreprocessModule:

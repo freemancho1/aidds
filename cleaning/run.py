@@ -1,12 +1,11 @@
-from aidds.sys.init import AppInit
-from aidds.sys.utils.exception import AppException
-from aidds.cleaning.cleaning import Cleaning
+from aidds import app_init, AppException
+from aidds.cleaning import cleaning
 
 
 def main():
     try:
-        AppInit()
-        Cleaning()
+        app_init()
+        cleaning()
     except KeyboardInterrupt as ke:
         raise AppException(ke)
     except Exception as e:

@@ -1,16 +1,16 @@
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.data_io import get_provide_data, save_data
+from aidds import config as cfg
+from aidds import modeling_logs as logs
+from aidds import AppException
+from aidds.sys import get_provide_data, save_data
 
 
 class Cleaning:
     """ Extract only the necessary columns and rows for modeling """
     def __init__(self):
         try:
-            self._logs = Logs(code='cleaning')
+            self._logs = logs(code='cleaning')
             # cd_dict: cleaning data dictionary
             self._cd_dict = {}
             # pd_dict: provided data dictionary

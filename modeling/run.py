@@ -1,16 +1,12 @@
-from aidds.sys.init import AppInit
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AppException
-from aidds.modeling.preprocessing import ModelingPreprocessing
-from aidds.modeling.scaling import Scaling
-from aidds.modeling.learning import Learning
+from aidds import app_init, modeling_logs, AppException
+from aidds.modeling import Preprocessing, Scaling, Learning
 
 
 def main():
-    logs = Logs(code='')    # Default 'modeling'
+    logs = modeling_logs(code='')    # Default 'modeling'
     try:
-        AppInit()
-        pp = ModelingPreprocessing()
+        app_init()
+        pp = Preprocessing()
         sc = Scaling(pp_df=pp.ppdf)
         Learning(scaling_df_dict=sc.sdata)
     except KeyboardInterrupt as ke:
