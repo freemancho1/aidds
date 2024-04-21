@@ -80,7 +80,7 @@ def service_logs(code=None, value=None) -> None:
         return
     display = f'[{datetime.now()}]'
     display += f' {eval(f"msg.log.service.{code}")}' if code else ''
-    display += '' if value is None else f'{value}' if code else f' {value}'
+    display += '' if value is None else f' {value}'
     print(display)
     
     

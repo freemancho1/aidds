@@ -17,21 +17,37 @@ class Samples:
         try:
             self._source_df = read_data(
                 code='data.scaling.best', dtype={cfg.cols.join: str})
+            self._zero_df = read_data(
+                code='data.pp.zero', dtype={cfg.cols.join: str})
             self._acc_nos = self._source_df[cfg.cols.join].tolist()
+            self._acc_nos_z = self._zero_df[cfg.cols.join].tolist()
             self._cd_dict = get_cleaning_data()
             logs(code='samples.main')
         except Exception as e:
             raise AppException(e)
         
-    def get(self, recommend_count=3) -> json:
+    def get(
+        self, 
+        recommend_count:int=3, 
+        zero_data:int=0,
+        req_list: list=[]
+    ) -> json:
         """ Returns 1 sample data(JSON) for service testing 
             - Sample data is a single JSON consisting of the number
               of recommended(suggested) route data.
         """
         try:
             # Extract acc_no to be used in the sample as recommend_count
-            sample_acc_nos = random.sample(self._acc_nos, k=recommend_count)
-            logs(code='samples.get', value=sample_acc_nos)
+            # - By default, [''] is entered as the first item
+            if len(req_list) > 0 and req_list[0]:
+                sample_acc_nos = req_list
+            else:
+                # When you want data without pole or line, set zero_data=1,
+                # if data is needed, change it to 0.
+                # If there is no input value, extract it from normal data
+                acc_nos = self._acc_nos_z if zero_data else self._acc_nos
+                sample_acc_nos = random.sample(acc_nos, k=recommend_count)
+            logs(code='samples.samples', value=sample_acc_nos)
             
             # Generate sample data(JSON)
             sample_dict = {}
@@ -87,6 +103,9 @@ class Samples:
                 for pkey in cfg.type.pds[1:]:
                     cleaning_dict[pred_no][pkey] = {}
                     pds_df = row[pkey].copy()
+                    if pkey == cfg.type.pds[1]: # 'pole'
+                        pds_df['geo_x'] = ''
+                        pds_df['geo_y'] = ''
                     detail_dict = {}
                     seq = 1
                     for _, detail_row in pds_df.iterrows():

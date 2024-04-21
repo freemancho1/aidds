@@ -25,7 +25,7 @@ def main(service_port=None, is_debug_mode=None):
         
         IOLoop.instance().start()
     except KeyboardInterrupt as _:
-        logs()
+        print()
         logs(code='shut_down')
         exit()
         # raise AppException(ke)

@@ -100,15 +100,18 @@ class ModelingPreprocessing:
             # Preprocessing final missing values handling
             self.ppdf = self.ppdf.fillna(0)
             
-            # Store column info in the modeling section to ensure consistency
+            # Save column info in the modeling section to ensure consistency
             # between datafram column info in the modeling and service section
             # - Column positions may change due to operations like one-hot encoding,
             #   requiring column rearrangement at the service section.
             save_cols = self.ppdf.columns.tolist()
             save_data(data=save_cols, code='pickle.last_pp_cols')
             
-            # Store preprocessing data
+            # Save preprocessing data
             save_data(data=self.ppdf, code='data.pp.last')
+            # Save data without pold for test
+            # - Of these, 7 have line and 30 not line
+            save_data(self.ppdf[self.ppdf.pole_cnt==0], 'data.pp.zero')
         except Exception as e:
             raise AppException(e)
         

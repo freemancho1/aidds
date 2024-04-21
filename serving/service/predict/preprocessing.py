@@ -127,12 +127,13 @@ class PredictPreprocessing:
         """ Preprocessing complete:
             - Final NaN handling, Match the column order """
         try:
-            # Preprocessing final missing values handling
-            self.ppdf[pnid].fillna(0, inplace=True)
             # Match the column order of the service section
             # with the modeling section.
             self.ppdf[pnid] = self.ppdf[pnid].reindex(
                 columns=self._pkl['last_pp_cols'])
+            # Preprocessing final missing values handling
+            self.ppdf[pnid] = \
+                self.ppdf[pnid].fillna(0).infer_objects(copy=False)
         except Exception as e:
             raise AppException(e)
         

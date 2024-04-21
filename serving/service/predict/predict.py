@@ -30,9 +30,7 @@ class Predict:
             # Data for log display
             self._display_result = {}
             self._scaling_and_prediction()
-            logs(code='predict.result')
-            for key in self._display_result.keys():
-                logs(value=f'{key}: {self._display_result[key]}')
+            self._log_display()
             return json.dumps(self._return_json)
         except Exception as e:
             raise AppException(e)
@@ -55,9 +53,21 @@ class Predict:
                 
                 # Save result
                 self._display_result[pnid].update({
-                    'pred': int(p), 'mape': round(calculate_mape(y=y, p=p),3)
+                    'pred': int(p), 'mape': round(calculate_mape(y, p), 3)
                 })
                 self._return_json[pnid]['cons']\
                     .update({cfg.cols.target: int(p)})
+        except Exception as e:
+            raise AppException(e)
+
+    def _log_display(self):
+        try:
+            logs(code='predict.result')
+            for key in self._display_result.keys():
+                p = self._display_result[key]
+                value = f'{key} -> acc_no: {p["acc_no"]}, ' \
+                        f'real: {p["cons_cost"]:>10,d}, ' \
+                        f'pred: {p["pred"]:>10,d}, mape: {p["mape"]:>6.3f}'
+                logs(value=value)
         except Exception as e:
             raise AppException(e)

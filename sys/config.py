@@ -104,9 +104,9 @@ _constraints = {
     'max_cont_cap'              : 50,
     'cons_type_cd'              : 2,
     'max_total_cons_cost'       : 30000000,
-    'min_pole_cnt'              : 1,
+    'min_pole_cnt'              : 0,
     'max_pole_cnt'              : 10,
-    'min_line_cnt'              : 1,
+    'min_line_cnt'              : 0,
     'max_line_cnt'              : 11,
     'sl_cnt'                    : 1,
 } 
@@ -261,7 +261,9 @@ _file.update({
             },
             'pp': {
                 pkey: f'data02_{pkey}_pp'+_csv \
-                    for pkey in _type['pds'] + ['last']
+                    # 'zero' is a dataframe of data without pole for testing
+                    # - Of these, 7 have wires, and 30 not wires.
+                    for pkey in _type['pds'] + ['last', 'zero', 'best']
             },
             'split': {
                 tkey: f'data03_split_{tkey}'+_csv \

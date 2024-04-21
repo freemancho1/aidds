@@ -7,7 +7,7 @@ import aidds.sys.config as cfg
 from aidds.sys.utils.logs import ModelingLogs as Logs
 from aidds.sys.utils.exception import AppException
 from aidds.sys.utils.evaluation import regression_evals, calculate_mape
-from aidds.sys.utils.data_io import save_data, get_scaling_data
+from aidds.sys.utils.data_io import save_data, get_scaling_data, read_data
 
 
 class Learning:
@@ -55,7 +55,10 @@ class Learning:
                 self._gen_optimal_data()
                 
             # Save best model and data
-            self._save_best_model_and_data()
+            save_data(data=self._best['model'], code='model.best')
+            save_data(data=self._tds['x'], code='data.scaling.best')
+            ppdf = read_data(code='data.pp.last')
+            save_data(ppdf[ppdf.acc_no.isin(self._tds['x'].acc_no)],'data.pp.best')
         except Exception as e:
             raise AppException(e)
         
@@ -113,9 +116,3 @@ class Learning:
         except Exception as e:
             raise AppException(e)
         
-    def _save_best_model_and_data(self):
-        try:
-            save_data(data=self._best['model'], code='model.best')
-            save_data(data=self._tds['x'], code='data.scaling.best')
-        except Exception as e:
-            raise AppException(e)

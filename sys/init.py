@@ -21,6 +21,7 @@ class AppInit:
         
         warnings.filterwarnings(action='ignore', category=DataConversionWarning)
         warnings.filterwarnings(action='ignore', category=ConvergenceWarning)
+        warnings.filterwarnings(action='ignore', category=FutureWarning)
         
 
 class PltInit:

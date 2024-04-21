@@ -15,8 +15,15 @@ class Samples(MethodView):
     
     def get(self):
         try:
-            recommend_count = request.args.get('req_cnt', default=3, type=int)
-            sample = sm.samples().get(recommend_count=recommend_count)
+            recommend_count: int = request.args.get('req_cnt', default=3, type=int)
+            zero_data: int = request.args.get('zero_data', default=0, type=int)
+            req_list_str: str = request.args.get('req_list', default='[]')
+            req_list = list(map(str, req_list_str.strip('[]').split(',')))
+            sample = sm.samples().get(
+                recommend_count = recommend_count, 
+                zero_data = zero_data,
+                req_list = req_list
+            )
             # Test HTTPException
             # abort(401)
             return jsonify(sample), hc.OK

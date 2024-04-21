@@ -72,7 +72,7 @@ _log = {
         'exit': 'When you press Ctrl+C, the service will be terminated.', 
         'samples': {
             'main': 'The sample manager for the web service has started.',
-            'get': 'Accept numbers of sample data:',
+            'samples': 'Accept numbers of sample data:',
         },
         'predict': {
             'main': 'The predic manager for the web service has started.',
