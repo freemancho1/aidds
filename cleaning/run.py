@@ -1,4 +1,5 @@
-from aidds import app_init, app_exception
+from aidds.sys import app_init
+from aidds.sys.utils import app_exception
 from aidds.cleaning import cleaning
 
 

@@ -1,1 +1,1 @@
-from ._cleaning import Cleaning as cleaning
+from ._base import Cleaning as cleaning

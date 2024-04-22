@@ -1,4 +1,4 @@
-from aidds import service_logs as logs
+from aidds.sys.utils import service_logs as logs
 
 # Singleton service 
 from aidds.serving import samples_service

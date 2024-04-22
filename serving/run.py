@@ -2,17 +2,16 @@ from tornado.wsgi import WSGIContainer
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from aidds import app_init
-from aidds import app_exception
-from aidds import service_logs as logs
-from aidds import serving_argvs
+from aidds.sys import app_init
+from aidds.sys.utils import app_exception
+from aidds.sys.utils import service_logs as logs
+from aidds.args import serving_argvs
 
-from aidds.serving import create_app
+from aidds.serving import app
 
 
 def main(service_port=None, is_debug_mode=None):
     try:
-        app = create_app()
         app.debug = is_debug_mode
         http_server = HTTPServer(WSGIContainer(app))
         http_server.listen(service_port)

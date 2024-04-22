@@ -1,10 +1,10 @@
 import pandas as pd
 from typing import Type
 
-from aidds import config as cfg 
-from aidds import service_logs as logs
-from aidds import app_exception
-from aidds.modeling import PreprocessModule as ppm
+from aidds.sys import config as cfg 
+from aidds.sys.utils import service_logs as logs
+from aidds.sys.utils import app_exception
+from aidds.modeling import preprocess_module as ppm
 
 
 class PredictPreprocessing:

@@ -19,7 +19,7 @@ _sys = {
     # System conditions
     'cond': {
         # Debug Mode
-        'debug_mode': False,
+        'debug_mode': True,
         # Determining whether to display logs
         'display_logs': {
             'modeling': True,

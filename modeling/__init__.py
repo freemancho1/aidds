@@ -3,8 +3,8 @@
 #
 
 # Common Module
-from .preprocess_module import PreprocessModule  
+from .preprocess_module import PreprocessModule as preprocess_module
 
-from .preprocessing import ModelingPreprocessing as Preprocessing
-from .scaling import Scaling
-from .learning import Learning
+from .preprocessing import ModelingPreprocessing as preprocessing
+from .scaling import Scaling as scaling
+from .learning import Learning as learning

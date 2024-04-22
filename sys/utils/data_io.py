@@ -6,10 +6,10 @@ from typing import Union
 from datetime import datetime
 from joblib import dump, load
 
-from aidds import config as cfg
-from aidds import messages as msg
-from aidds import modeling_logs 
-from aidds import app_exception
+from aidds.sys import config as cfg
+from aidds.sys import messages as msg
+from aidds.sys.utils import modeling_logs as logs
+from aidds.sys.utils import app_exception
 
 
 # 'Union' means returning one of the data types in the declared variable
@@ -59,7 +59,7 @@ def save_data(data=None, code=None, **kwargs) -> None:
         raise app_exception(e)
     
 def get_provide_data() -> dict[str, pd.DataFrame]:
-    logs = Logs(code='get_provide_data') 
+    _logs = logs(code='get_provide_data') 
     try:
         data_dict = {}
         for pkey in cfg.type.pds:
@@ -71,12 +71,12 @@ def get_provide_data() -> dict[str, pd.DataFrame]:
             data_dict[pkey] = df
             value = f'size{df.shape}, ' \
                     f'processing time {datetime.now()-start_time}'
-            logs.mid(code=pkey, value=value)
+            _logs.mid(code=pkey, value=value)
         return data_dict
     except Exception as e:
         raise app_exception(e)
     finally:
-        logs.stop()
+        _logs.stop()
         
 def get_cleaning_data() -> dict[str, pd.DataFrame]:
     try:

@@ -1,6 +1,9 @@
-from aidds import config as cfg, app_exception, modeling_logs
-from aidds.sys import get_cleaning_data, save_data
-from aidds.modeling import PreprocessModule as ppm
+from aidds.sys import config as cfg
+from aidds.sys.utils import app_exception
+from aidds.sys.utils import modeling_logs as logs
+from aidds.sys.utils import get_cleaning_data
+from aidds.sys.utils import save_data
+from aidds.modeling import preprocess_module as ppm
 
 
 class ModelingPreprocessing:
@@ -8,7 +11,7 @@ class ModelingPreprocessing:
     
     def __init__(self, cd_dict=None):
         try:
-            self._logs = modeling_logs(code='preprocessing')
+            self._logs = logs(code='preprocessing')
             # Cleaning Dataframe DICTionary
             self._cd_dict = cd_dict
             # PreProcessing DataFrame
@@ -37,10 +40,10 @@ class ModelingPreprocessing:
         
     def _cons(self):
         """ Preprocessing CONS dataset for modeling section. """
-        logs = modeling_logs(code='preprocessing.cons')
+        _logs = logs(code='preprocessing.cons')
         try:
             cons_df = self._cd_dict[cfg.type.pds[0]]
-            logs.mid(code='source', value=cons_df.shape)
+            _logs.mid(code='source', value=cons_df.shape)
             # Preprocessing CONS dataset using common modules
             cons_df = ppm.cons(cons_df=cons_df)
             
@@ -54,25 +57,25 @@ class ModelingPreprocessing:
             cons_df['office_id'] = office_ids
             # Remove 'office_cd' column
             cons_df.drop(columns=['office_cd'], inplace=True)
-            logs.mid(code='result', value=cons_df.shape)
+            _logs.mid(code='result', value=cons_df.shape)
             
             # Calculate the number of facility
             self.ppdf = ppm.calculate(cons_df=cons_df, cd_dict=self._cd_dict)
-            logs.mid(code='calculate', value=self.ppdf.shape)
+            _logs.mid(code='calculate', value=self.ppdf.shape)
         except Exception as e:
             raise app_exception(e)
         finally:
-            logs.stop()
+            _logs.stop()
         
     def _facility_data(self, pkey=None):
         """ Preprocessing facility dataset for modeling section. """
-        logs = modeling_logs(code=f'preprocessing.{pkey}')
+        _logs = logs(code=f'preprocessing.{pkey}')
         try:
             # Get facility dataset
             pds_df = self._cd_dict[pkey]
             # Preprocessing facility dataset using common modules
             pds_df = eval(f'ppm.{pkey}({pkey}_df=pds_df)')
-            logs.mid(code='one_hot', value=pds_df.shape)
+            _logs.mid(code='one_hot', value=pds_df.shape)
             
             # Saving modeling columns 
             # to be used for preprocessing in the service section.
@@ -84,11 +87,11 @@ class ModelingPreprocessing:
             sum_cols = pds_df.columns.tolist()[1:]
             self.ppdf = ppm.aggregation_by_facility(
                 pds_df=pds_df, cols=sum_cols, pp_df=self.ppdf)
-            logs.mid(code='result', value=self.ppdf.shape)
+            _logs.mid(code='result', value=self.ppdf.shape)
         except Exception as e:
             raise app_exception(e)
         finally:
-            logs.stop()
+            _logs.stop()
         
     def _complete(self):
         """ Preprocessing complete:
