@@ -1,12 +1,11 @@
 import json
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.data_io import get_service_pickle
-from aidds.sys.utils.evaluation import calculate_mape
-from aidds.serving.service.predict.preprocessing import PredictPreprocessing
+from aidds import config as cfg 
+from aidds import service_logs as logs
+from aidds import app_exception
+from aidds.sys import get_service_pickle, calculate_mape
+from aidds.serving import preprocessing
 
 
 class Predict:
@@ -20,11 +19,11 @@ class Predict:
             self._modeling_cols = self._pkl['modeling_cols']
             logs(code='predict.main')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def run(self, in_json=None) -> json:
         try:
-            pp = PredictPreprocessing(in_json=in_json, pkl=self._pkl)
+            pp = preprocessing(in_json=in_json, pkl=self._pkl)
             self._return_json = pp.return_json
             self._ppdf = pp.ppdf
             # Data for log display
@@ -33,7 +32,7 @@ class Predict:
             self._log_display()
             return json.dumps(self._return_json)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _scaling_and_prediction(self):
         try:
@@ -58,7 +57,7 @@ class Predict:
                 self._return_json[pnid]['cons']\
                     .update({cfg.cols.target: int(p)})
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
 
     def _log_display(self):
         try:
@@ -70,4 +69,4 @@ class Predict:
                         f'pred: {p["pred"]:>10,d}, mape: {p["mape"]:>6.3f}'
                 logs(value=value)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)

@@ -1,8 +1,8 @@
-from aidds.sys.utils.logs import service_logs as logs
+from aidds import service_logs as logs
 
 # Singleton service 
-from aidds.serving.service.samples import Samples
-from aidds.serving.service.predict.predict import Predict
+from aidds.serving import samples_service
+from aidds.serving import predict_service
 
 
 class ServiceManager:
@@ -10,8 +10,8 @@ class ServiceManager:
     
     def _init_services(cls):
         # Register services to add here
-        cls._instance._services['samples'] = Samples()
-        cls._instance._services['predict'] = Predict()
+        cls._instance._services['samples'] = samples_service()
+        cls._instance._services['predict'] = predict_service()
         
     # Define the service request function to be add here
     

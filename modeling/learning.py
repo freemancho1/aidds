@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 from aidds import config as cfg
 from aidds import modeling_logs as logs
-from aidds import AppException
+from aidds import app_exception
 from aidds.sys import regression_evals, calculate_mape
 from aidds.sys import read_data, save_data, get_scaling_data
 
@@ -27,7 +27,7 @@ class Learning:
             }
             self._run()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             if hasattr(self, '_logs'):
                 self._logs.stop()
@@ -60,7 +60,7 @@ class Learning:
             ppdf = read_data(code='data.pp.last', dtype={'acc_no': str})
             save_data(ppdf[ppdf.acc_no.isin(self._tds['x'].acc_no)],'data.pp.best')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _ml_fit_and_evals(self, mkey=None) -> None:
         """ Creating and evaluating models using the given algorithm 
@@ -85,7 +85,7 @@ class Learning:
             # Save models
             save_data(data=model, code=f'model.{mkey}')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _gen_optimal_data(self) -> None:
         try:
@@ -114,5 +114,5 @@ class Learning:
                     train_test_split(self._tds['x'], self._tds['y'],
                                      test_size=cfg.modeling.test_size)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         

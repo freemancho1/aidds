@@ -1,10 +1,10 @@
 import pandas as pd
 from typing import Type
 
-import aidds.sys.config as cfg 
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.exception import AppException
-from aidds.modeling.preprocess_module import PreprocessModule as ppm
+from aidds import config as cfg 
+from aidds import service_logs as logs
+from aidds import app_exception
+from aidds.modeling import PreprocessModule as ppm
 
 
 class PredictPreprocessing:
@@ -19,7 +19,7 @@ class PredictPreprocessing:
             self.return_json = {}
             self._run()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     def _run(self) -> None:
         try:
@@ -33,7 +33,7 @@ class PredictPreprocessing:
                     self._facility_data(pnid=pnid, pkey=pkey)
                 self._complete(pnid=pnid)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     def _json_to_dataframe(self) -> None:
         # Using the input JSON data dictionary
@@ -77,7 +77,7 @@ class PredictPreprocessing:
                     # Save dataframe
                     self._cleaning_df[pnid][pkey] = pds_df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     def _cons(self, pnid=None) -> None: 
         try:
@@ -97,7 +97,7 @@ class PredictPreprocessing:
                 cons_df=pds_df, cd_dict=self._cleaning_df[pnid])
             self.ppdf[pnid] = pds_df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     def _facility_data(self, pnid=None, pkey=None) -> None:
         try:
@@ -121,7 +121,7 @@ class PredictPreprocessing:
             self.ppdf[pnid] = ppm.aggregation_by_facility(
                 pds_df=pds_df, cols=sum_cols, pp_df=self.ppdf[pnid])
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _complete(self, pnid=None) -> None:
         """ Preprocessing complete:
@@ -135,5 +135,5 @@ class PredictPreprocessing:
             self.ppdf[pnid] = \
                 self.ppdf[pnid].fillna(0).infer_objects(copy=False)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         

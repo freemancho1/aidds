@@ -1,6 +1,6 @@
 import pandas as pd
 
-from aidds import config as cfg, AppException
+from aidds import config as cfg, app_exception
 
 
 class PreprocessModule:
@@ -21,7 +21,7 @@ class PreprocessModule:
             
             return df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     @staticmethod
     def calculate(cons_df=None, cd_dict=None) -> pd.DataFrame:
@@ -70,7 +70,7 @@ class PreprocessModule:
             ppdf = ppdf[modeling_rows].reset_index(drop=True)
             return ppdf
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     @staticmethod
     def pole(pole_df=None) -> pd.DataFrame:
@@ -104,7 +104,7 @@ class PreprocessModule:
             
             return df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     @staticmethod
     def line(line_df=None) -> pd.DataFrame:
@@ -152,7 +152,7 @@ class PreprocessModule:
             
             return df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     @staticmethod
     def sl(sl_df=None) -> pd.DataFrame:
@@ -184,7 +184,7 @@ class PreprocessModule:
             
             return df
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     @staticmethod
     def aggregation_by_facility(pds_df=None, cols=None, pp_df=None):
@@ -204,7 +204,7 @@ class PreprocessModule:
             ppdf = pd.merge(pp_df, sums_df, on=cfg.cols.join, how='left')
             return ppdf
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
     
     

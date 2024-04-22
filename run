@@ -9,7 +9,7 @@ exec_str = 'python '
 if args.cleaning:
     exec_str += './cleaning/run.py'
 elif args.serving:
-    exec_str += './serving/main.py '
+    exec_str += './serving/run.py '
     if args.debug or cfg.sys.cond.debug_mode:
         exec_str += '-d '
     if args.port == 0:

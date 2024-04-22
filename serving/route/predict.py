@@ -2,13 +2,13 @@ from flask import jsonify, request, json
 from flask.views import MethodView
 from werkzeug.exceptions import HTTPException
 
-import aidds.sys.http_codes as hc
-import aidds.sys.messages as msg
-from aidds.sys.utils.logs import route_error_logs as logs
-from aidds.sys.utils.exception import AppException
-from aidds.serving.service.service_manager import ServiceManager
+from aidds import http_codes as hc
+from aidds import messages as msg
+from aidds import route_error_logs as logs
+from aidds import app_exception
+from aidds.serving import service_manager
 
-sm = ServiceManager().get_instance()
+sm = service_manager().get_instance()
 
 
 class Predict(MethodView): 
@@ -31,7 +31,7 @@ class Predict(MethodView):
             logs(he)
             error_message = eval(f'msg.exception.hc_msg.e{he.code}')
             return jsonify({'error': error_message}), he.code
-        except AppException as ae:
+        except app_exception as ae:
             ae.print()
             error_message = msg.exception.hc_msg.e500
             return jsonify({'error': error_message}), hc.ISE

@@ -1,10 +1,10 @@
 import json
 import random
 
-import aidds.sys.config as cfg 
-from aidds.sys.utils.exception import AppException
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.data_io import read_data, get_cleaning_data
+from aidds import config as cfg
+from aidds import app_exception
+from aidds import service_logs as logs
+from aidds.sys import read_data, get_cleaning_data
 
 
 class Samples:
@@ -24,7 +24,7 @@ class Samples:
             self._cd_dict = get_cleaning_data()
             logs(code='samples.main')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def get(
         self, 
@@ -67,7 +67,7 @@ class Samples:
             sample_json = self._sample_to_json(sample=sample_dict)
             return sample_json
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _sample_to_json(self, sample=None) -> json:
         """ Convert sample data to JSON data """
@@ -121,7 +121,7 @@ class Samples:
             sample_json = json.dumps(cleaning_dict, ensure_ascii=False) 
             return sample_json
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
     
                 
         

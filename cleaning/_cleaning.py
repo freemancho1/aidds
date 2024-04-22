@@ -2,7 +2,7 @@ import pandas as pd
 
 from aidds import config as cfg
 from aidds import modeling_logs as logs
-from aidds import AppException
+from aidds import app_exception
 from aidds.sys import get_provide_data, save_data
 
 
@@ -17,7 +17,7 @@ class Cleaning:
             self._pd_dict = get_provide_data()
             self._run()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             if hasattr(self, '_logs'):
                 self._logs.stop()
@@ -68,4 +68,4 @@ class Cleaning:
                 save_data(self._cd_dict[pkey], code=f'data.cleaning.{pkey}')
                 self._logs.mid(code=pkey, value=self._cd_dict[pkey].shape)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)

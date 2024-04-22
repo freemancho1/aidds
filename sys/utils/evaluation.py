@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error as mse
 from sklearn.metrics import mean_absolute_percentage_error as mape
 from sklearn.metrics import r2_score
 
-from aidds.sys.utils.exception import AppException
+from aidds.sys.utils.exception import app_exception
 
 
 def regression_evals(y, p, verbose=1) -> list:
@@ -29,7 +29,7 @@ def regression_evals(y, p, verbose=1) -> list:
         
         return [_mape, _r2score, _mae, _mse, _rmse], message
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def calculate_mape(y, p):
     return abs((y-p)/y) * 100

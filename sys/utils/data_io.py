@@ -6,10 +6,10 @@ from typing import Union
 from datetime import datetime
 from joblib import dump, load
 
-import aidds.sys.config as cfg 
-import aidds.sys.messages as msg
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AppException
+from aidds import config as cfg
+from aidds import messages as msg
+from aidds import modeling_logs 
+from aidds import app_exception
 
 
 # 'Union' means returning one of the data types in the declared variable
@@ -30,11 +30,11 @@ def read_data(code=None, **kwargs) -> Union[pd.DataFrame, bytes]:
             else:
             # if file_ext.lower() == cfg.file.ext.csv:
                 return pd.read_csv(file_path, **kwargs)
-            # raise AppException(
+            # raise app_exception(
             #     f'{msg.exception.sys.unknown_file_ext} {file_ext}'
             # )
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def save_data(data=None, code=None, **kwargs) -> None:
     # Save csv, pickle and joblib(model)
@@ -56,7 +56,7 @@ def save_data(data=None, code=None, **kwargs) -> None:
             else:
                 data.to_csv(file_path, **kwargs)
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def get_provide_data() -> dict[str, pd.DataFrame]:
     logs = Logs(code='get_provide_data') 
@@ -74,7 +74,7 @@ def get_provide_data() -> dict[str, pd.DataFrame]:
             logs.mid(code=pkey, value=value)
         return data_dict
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     finally:
         logs.stop()
         
@@ -85,7 +85,7 @@ def get_cleaning_data() -> dict[str, pd.DataFrame]:
                 for pkey in cfg.type.pds
         }
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def get_scaling_data() -> dict[str, any]:
     try:
@@ -96,7 +96,7 @@ def get_scaling_data() -> dict[str, any]:
         sd_dict[cfg.modeling.cols] = read_data(code='pickle.modeling_cols')
         return sd_dict
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def get_service_pickle() -> tuple[dict[str, bytes], bytes, bytes]:
     try:
@@ -108,7 +108,7 @@ def get_service_pickle() -> tuple[dict[str, bytes], bytes, bytes]:
         models = read_data(code=f'model.best')
         return pkl, scaler, models
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
 
 def _get_file_path(code=None) -> tuple[str, str, str]:
     try:
@@ -128,7 +128,7 @@ def _get_file_path(code=None) -> tuple[str, str, str]:
         # file_type, file_path, file_ext
         return file_type, os.path.join(*file_paths), file_ext
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)
     
 def _get_rename_cols(cols=None) -> dict[str, str]:
     try:
@@ -138,4 +138,4 @@ def _get_rename_cols(cols=None) -> dict[str, str]:
                 for k_name in cfg.cols.rename if k_name in cols
         }
     except Exception as e:
-        raise AppException(e)
+        raise app_exception(e)

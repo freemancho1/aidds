@@ -1,6 +1,6 @@
-from aidds import config as cfg, AppException, modeling_logs
+from aidds import config as cfg, app_exception, modeling_logs
 from aidds.sys import get_cleaning_data, save_data
-from aidds.modeling.preprocess_module import PreprocessModule as ppm
+from aidds.modeling import PreprocessModule as ppm
 
 
 class ModelingPreprocessing:
@@ -15,7 +15,7 @@ class ModelingPreprocessing:
             self.ppdf = None
             self._run()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             if hasattr(self, '_logs'):
                 self._logs.stop()
@@ -33,7 +33,7 @@ class ModelingPreprocessing:
             # - Final NaN handling, Save column info, Save preprocessing df
             self._complete()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
     def _cons(self):
         """ Preprocessing CONS dataset for modeling section. """
@@ -60,7 +60,7 @@ class ModelingPreprocessing:
             self.ppdf = ppm.calculate(cons_df=cons_df, cd_dict=self._cd_dict)
             logs.mid(code='calculate', value=self.ppdf.shape)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             logs.stop()
         
@@ -86,7 +86,7 @@ class ModelingPreprocessing:
                 pds_df=pds_df, cols=sum_cols, pp_df=self.ppdf)
             logs.mid(code='result', value=self.ppdf.shape)
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             logs.stop()
         
@@ -110,6 +110,6 @@ class ModelingPreprocessing:
             # - Of these, 7 have line and 30 not line
             save_data(self.ppdf[self.ppdf.pole_cnt==0], 'data.pp.zero')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         
         

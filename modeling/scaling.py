@@ -2,7 +2,7 @@ from typing import Type
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 
-from aidds import config as cfg, AppException, modeling_logs as logs
+from aidds import config as cfg, app_exception, modeling_logs as logs
 from aidds.sys import read_data, save_data
 
 
@@ -19,7 +19,7 @@ class Scaling:
             self.sdata = {}
             self._run()
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)
         finally:
             if hasattr(self, '_logs'):
                 self._logs.stop()
@@ -74,4 +74,4 @@ class Scaling:
             # Save scaler
             save_data(data=scaler, code='pickle.scaler')
         except Exception as e:
-            raise AppException(e)
+            raise app_exception(e)

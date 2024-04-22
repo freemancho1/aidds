@@ -69,14 +69,16 @@ def get_error(e_msg=None) -> str:
     # Get full trace of error events
     traces = inspect.trace()
     # Iterates from the last to 0
-    for error_idx in range(len(traces)-1, -1, -1):
-        error_pos = traces[error_idx]
-        error_filename = error_pos.filename
-        # if the error location is within an open-source(site-packages), skip
-        if cfg.sys.utils.trace.skip_lib in error_filename:
-            continue
-        else:
-            break
+    # for error_idx in range(len(traces)-1, -1, -1):
+    #     error_pos = traces[error_idx]
+    #     error_filename = error_pos.filename
+    #     # if the error location is within an open-source(site-packages), skip
+    #     if cfg.sys.utils.trace.skip_lib in error_filename:
+    #         continue
+    #     else:
+    #         break
+    error_pos = traces[0]
+    error_filename = error_pos.filename
         
     # Get error informations(line number, func_name(or class_name.func_name))
     error_lineno = error_pos.lineno
