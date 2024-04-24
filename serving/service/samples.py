@@ -9,7 +9,7 @@ from aidds.sys.utils import get_cleaning_data
 
 
 class Samples:
-    """ Generate sample data to be used for 
+    """ Generate s ample data to be used for 
         web service testing from cleaned data 
     
         * Singleton service 
