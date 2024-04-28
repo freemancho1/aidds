@@ -96,7 +96,7 @@ class Samples:
                 # Change acc_no, add pred_no, pred_type
                 cons_dict.update({
                     cfg.cols.join: acc_no,
-                    'pred_no': pred_no, 'pred_type': pred_no
+                    'pred_id': pred_no, 'pred_seq': pred_no
                 })
                 cleaning_dict[pred_no][cfg.type.pds[0]] = cons_dict
                 

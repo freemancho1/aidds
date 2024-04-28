@@ -47,7 +47,7 @@ class Learning:
                 
             # Train the model while extracting the best data
             for idx in range(cfg.modeling.best.cnt):
-                value = f'Index: {idx+1}, Total{self._tds["x"].shape}' \
+                value = f'Index: {idx+1}, Total{self._tds["x"].shape}, ' \
                         f'train_x{self._tds["train_x"].shape}, ' \
                         f'test_x{self._tds["test_x"].shape}'
                 self._logs.mid(code='size', value=value)

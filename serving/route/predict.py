@@ -26,7 +26,7 @@ class Predict(MethodView):
                 return jsonify({'error': error_message}), hc.BR
             
             ret_json = sm.predict().run(in_json=input_json)
-            return jsonify(ret_json), hc.OK
+            return ret_json, hc.OK
         except HTTPException as he:
             logs(he)
             error_message = eval(f'msg.exception.hc_msg.e{he.code}')

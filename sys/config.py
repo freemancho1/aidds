@@ -100,9 +100,8 @@ _type = {
 
 # Constraints on modeling data
 _constraints = {
-    'acc_type_name'             : '신설(상용/임시)',
-    'max_cont_cap'              : 50,
-    'cons_type_cd'              : 2,
+    'acpt_knd_cd'               : '신설(상용/임시)',
+    'max_cntr_pwr'              : 50,
     'max_total_cons_cost'       : 30000000,
     'min_pole_cnt'              : 0,
     'max_pole_cnt'              : 10,
@@ -124,74 +123,71 @@ _cols.update({
         # cons
         '공사번호'              : _cols['join'],          # 'acc_no', Accept No
         '총공사비'              : _cols['target'],        # 'cons_cost', Total Construction Cost
-        '최종변경일시'          : 'acc_date',            # Last Modification Date and Time
+        '최종변경일시'          : 'acc_date',             # Last Modification Date and Time
         '사업소명'              : 'office_name',
-        '계약전력'              : 'cont_cap',            # Contracted Capacity
-        '공급방식'              : 'sup_type',
-        '접수종류명'            : 'acc_type_name',       # Accept Type Name
+        '계약전력'              : 'cntr_pwr',             # Contracted Capacity
+        '공급방식'              : 'sply_tpcd',
+        '접수종류명'            : 'acpt_knd_cd',          # Accept Type Name
         # pole
-        '전주형태코드'          : 'pole_shape_cd',
-        '전주종류코드'          : 'pole_type_cd',
+        '전주형태코드'          : 'pole_form_cd',
+        '전주종류코드'          : 'pole_knd_cd',
         '전주규격코드'          : 'pole_spec_cd',
         'X좌표_Y좌표'           : 'coordinate',
         # line
-        '결선방식코드'          : 'wiring_scheme',
+        '결선방식코드'          : 'wrng_mode_cd',
         '지지물간거리'          : 'span',
-        '전선종류코드1'         : 'line_type_cd',
-        '전선규격코드1'         : 'line_spec_cd', 
-        '전선조수1'             : 'line_phase_cd', 
-        '중성선종류코드'        : 'neutral_type_cd', 
-        '중성선규격코드'        : 'neutral_spec_cd',
+        '전선종류코드1'         : 'wire_knd_cd',
+        '전선규격코드1'         : 'wire_spec_cd', 
+        '전선조수1'             : 'wire_lico', 
+        '중성선종류코드'        : 'newi_knd_cd', 
+        '중성선규격코드'        : 'newi_spec_cd',
         # sl
         '인입전선종류코드'      : 'sl_type_cd',
         '고객공급선규격코드'    : 'sl_spec_cd', 
         '인입선지지물간거리'    : 'sl_span', 
-        '조수'                 : 'sl_phase',
+        '조수'                 : 'sl_lico',
     },
     'cons': {
         'source': {
             'modeling': [
                 _cols['join'], 
                 _cols['target'],
-                'acc_date',   # Remove(CONS date not equals ACC date)
                 'office_name',
-                'cont_cap',
-                'sup_type',
-                'cont_type',
-                'acc_type_name',
+                'cntr_pwr',
+                'sply_tpcd',
+                'acpt_knd_cd',
             ],
             'service': [
                 _cols['join'],
                 _cols['target'],  
-                'pred_no',
-                'pred_type',
-                'acc_date',   # Remove
+                'pred_id',
+                'pred_seq',
                 'office_cd',
-                'cont_cap',
-                'sup_type',
+                'cntr_pwr',
+                'sply_tpcd',
             ],
         },
         'pp': [
             _cols['join'], 
             _cols['target'],
             'office_cd',
-            'cont_cap',
-            'sup_type',                    
+            'cntr_pwr',
+            'sply_tpcd',                    
         ],  
     }, 
     'pole': {
         'source': {
             'modeling': [
                 _cols['join'],
-                'pole_shape_cd',
-                'pole_type_cd',
+                'pole_form_cd',
+                'pole_knd_cd',
                 'pole_spec_cd',
                 'coordinate',
             ],
             'service': [
                 _cols['join'],
-                'pole_shape_cd',
-                'pole_type_cd',
+                'pole_form_cd',
+                'pole_knd_cd',
                 'pole_spec_cd',
                 'geo_x',
                 'geo_y',
@@ -199,21 +195,21 @@ _cols.update({
         },
         'pp': [
             _cols['join'],
-            'pole_shape_cd',
-            'pole_type_cd',
+            'pole_form_cd',
+            'pole_knd_cd',
             'pole_spec_cd',
         ],
     },
     'line': {
         'pp': [
             _cols['join'],
-            'wiring_scheme',
-            'line_type_cd',
-            'line_spec_cd',
-            'line_phase_cd',
+            'wrng_mode_cd',
             'span',
-            'neutral_type_cd',
-            'neutral_spec_cd',
+            'wire_knd_cd',
+            'wire_spec_cd',
+            'wire_lico',
+            'newi_knd_cd',
+            'newi_spec_cd',
         ]
     },
     'sl': {
@@ -222,7 +218,7 @@ _cols.update({
             'sl_type_cd',
             'sl_spec_cd',
             'sl_span',
-            'sl_phase',
+            'sl_lico',
         ]
     }
 })

@@ -64,7 +64,7 @@ class PredictPreprocessing:
                         pds_df = pd.DataFrame([json_data])
                         # Remove unused pred_no/type columns from predictions
                         pds_df.drop(
-                            columns=['pred_no', 'pred_type'], inplace=True)
+                            columns=['pred_id', 'pred_seq'], inplace=True)
                         # Remove unnecessary columns from return JSON data
                         # - Only CONS data, not in facility data
                         # - Remove except join, cons_cost, pred_no, pred_type

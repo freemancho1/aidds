@@ -26,7 +26,7 @@ class Samples(MethodView):
             )
             # Test HTTPException
             # abort(401)
-            return jsonify(sample), hc.OK
+            return sample, hc.OK
         except HTTPException as he:
             logs(he)
             error_message = eval(f'msg.exception.hc_msg.e{he.code}')
@@ -51,7 +51,7 @@ class Samples(MethodView):
                 logs(ve)
                 error_message = eval(f'msg.exception.web.bad_json') + f': {ve}'
                 return jsonify({'error': error_message}), hc.BR
-            return jsonify(input_json), hc.OK
+            return input_json, hc.OK
         except HTTPException as he:
             logs(he)
             error_message = eval(f'msg.exception.hc_msg.e{he.code}')

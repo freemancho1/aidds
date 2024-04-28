@@ -84,7 +84,7 @@ class PreprocessModule:
             try:
                 # One-hot encoding for categorical columns
                 # Target columns
-                cols = ['pole_shape_cd', 'pole_type_cd', 'pole_spec_cd']
+                cols = ['pole_form_cd', 'pole_knd_cd', 'pole_spec_cd']
                 # Prefix is used by removing the last 3 letters('_cd')
                 # from each item in the cols list
                 prefix = [item[:-3] for item in cols]
@@ -117,24 +117,23 @@ class PreprocessModule:
                 # One-hot encoding for categorical columns
                 # Target columns
                 cols = [
-                    'wiring_scheme', 'line_type_cd', 'line_spec_cd', 
-                    'line_phase_cd', 'neutral_type_cd', 'neutral_spec_cd'
+                    'wrng_mode_cd', 'wire_knd_cd', 'wire_spec_cd', 
+                    'newi_knd_cd', 'newi_spec_cd'
                 ]
                 # Prefix is used by removing the last 3 letters('_cd')
                 # from each item in the cols list
-                # However, exclude 'wiring_scheme' as it does not end with '_cd'
-                prefix = [cols[0]] + [item[:-3] for item in cols[1:]]
+                prefix = [item[:-3] for item in cols]
                 # Standardizing numerical values(converting non-float values to float)
                 # 1 and 1.0 are treated as separate columns in One-hot encoding
-                if df.line_spec_cd.dtype != 'float64':
-                    df.line_spec_cd = df.line_spec_cd.astype(float)
+                if df.wire_spec_cd.dtype != 'float64':
+                    df.wire_spec_cd = df.wire_spec_cd.astype(float)
                 # Neutral wire specification code contains both 0.0 and NaN
                 # - Replace NaN with 999.0 to differentiate
-                df.neutral_spec_cd = df.neutral_spec_cd.fillna(999.0)
+                df.newi_spec_cd = df.newi_spec_cd.fillna(999.0)
                 # Convert NaN values in Neutral wire type code to the string 'NaN'
-                df.neutral_type_cd = df.neutral_type_cd.fillna('NaN')
+                df.newi_knd_cd = df.newi_knd_cd.fillna('NaN')
                 # Add total wire length = Span length * Number of wires(phase_cd)
-                df.loc[:, 'line_length'] = df.span * df.line_phase_cd
+                df.loc[:, 'line_length'] = df.span * df.wire_lico
                 
                 # Handling missing values for the remaining columns,
                 # considering there's separate treatment for missing values above.
@@ -174,7 +173,7 @@ class PreprocessModule:
             if df.sl_spec_cd.dtype != 'float64':
                 df.sl_spec_cd = df.sl_spec_cd.astype(float)
             # Add total wire length = Span length * Number of wires(phase_cd)
-            df.loc[:, 'sl_length'] = df.sl_span * df.sl_phase
+            df.loc[:, 'sl_length'] = df.sl_span * df.sl_lico
             
             # One-hot encoding
             df = pd.get_dummies(df, columns=cols, prefix=prefix)
