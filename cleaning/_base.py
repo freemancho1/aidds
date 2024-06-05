@@ -1,8 +1,8 @@
-from aidds.sys import config as cfg
-from aidds.sys.utils import modeling_logs as logs
-from aidds.sys.utils import app_exception
-from aidds.sys.utils import get_provide_data
-from aidds.sys.utils import save_data
+from aidds_buy.sys import config as cfg
+from aidds_buy.sys.utils import modeling_logs as logs
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.sys.utils import get_provide_data
+from aidds_buy.sys.utils import save_data
 
 
 class Cleaning:
@@ -17,7 +17,7 @@ class Cleaning:
             self._run()
         except Exception as e:
             raise app_exception(e)
-        finally:
+        finally: 
             if hasattr(self, '_logs'):
                 self._logs.stop()
                 
@@ -36,18 +36,18 @@ class Cleaning:
             
             # Add columns: 'sup_type'
             # - Columns to be added in future data updates.
-            cons_df['sply_tpcd'] = 1
+            # cons_df['sply_tpcd'] = 1
             
-            # Change office-name to office-cd
-            office_names = cons_df.office_name.unique().tolist()
-            office_codes = []
-            for name in cons_df.office_name:
-                # Assigning office_codes like AAAA, BBBB...
-                # based on the order of unique office_names
-                code = f'{chr(ord("A") + office_names.index(name)) * 4}'
-                office_codes.append(code)
-            # Add office_cd column to cons_df 
-            cons_df['office_cd'] = office_codes
+            # # Change office-name to office-cd
+            # office_names = cons_df.office_name.unique().tolist()
+            # office_codes = []
+            # for name in cons_df.office_name:
+            #     # Assigning office_codes like AAAA, BBBB...
+            #     # based on the order of unique office_names
+            #     code = f'{chr(ord("A") + office_names.index(name)) * 4}'
+            #     office_codes.append(code)
+            # # Add office_cd column to cons_df 
+            # cons_df['office_cd'] = office_codes
             
             # Extracting modeling columns from cons_df
             self._cd_dict[pkey] = cons_df[cfg.cols.cons.pp]

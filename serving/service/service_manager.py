@@ -1,8 +1,8 @@
-from aidds.sys.utils import service_logs as logs
+from aidds_buy.sys.utils import service_logs as logs
 
 # Singleton service 
-from aidds.serving import samples_service
-from aidds.serving import predict_service
+from aidds_buy.serving import samples_service
+from aidds_buy.serving import predict_service
 
 
 class ServiceManager:

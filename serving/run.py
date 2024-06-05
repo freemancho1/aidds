@@ -2,12 +2,12 @@ from tornado.wsgi import WSGIContainer
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from aidds.sys import app_init
-from aidds.sys.utils import app_exception
-from aidds.sys.utils import service_logs as logs
-from aidds.args import serving_argvs
+from aidds_buy.sys import app_init
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.sys.utils import service_logs as logs
+from aidds_buy.args import serving_argvs
 
-from aidds.serving import app
+from aidds_buy.serving import app
 
 
 def main(service_port=None, is_debug_mode=None):

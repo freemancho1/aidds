@@ -1,9 +1,9 @@
-from aidds.sys import app_init
-from aidds.sys.utils import modeling_logs as logs
-from aidds.sys.utils import app_exception
-from aidds.modeling import preprocessing
-from aidds.modeling import scaling
-from aidds.modeling import learning
+from aidds_buy.sys import app_init
+from aidds_buy.sys.utils import modeling_logs as logs
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.modeling import preprocessing
+from aidds_buy.modeling import scaling
+from aidds_buy.modeling import learning
 
 
 def main():

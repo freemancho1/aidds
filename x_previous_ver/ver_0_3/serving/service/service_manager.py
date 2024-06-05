@@ -1,8 +1,8 @@
-from aidds.sys.utils.logs import service_logs as logs
+from aidds_buy.sys.utils.logs import service_logs as logs
 
 # 싱글톤 서비스 
-from aidds.serving.service.samples import Samples
-from aidds.serving.service.predict import Predict
+from aidds_buy.serving.service.samples import Samples
+from aidds_buy.serving.service.predict import Predict
 
 
 class ServiceManager:

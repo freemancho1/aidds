@@ -3,8 +3,8 @@ import pickle
 import pandas as pd
 from datetime import datetime
 
-import aidds.sys.config as cfg
-from aidds.sys.utils import Logs, AiddsException
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import Logs, AiddsException
 
 
 def read_data(fcode=None, **kwargs):

@@ -1,11 +1,11 @@
-from aidds.sys.app_init import AiddsInit
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AiddsException
+from aidds_buy.sys.app_init import AiddsInit
+from aidds_buy.sys.utils.logs import ModelingLogs as Logs
+from aidds_buy.sys.utils.exception import AiddsException
 from modeling.preprocess import Preprocessing
-from aidds.modeling.scaler import Scaling
-from aidds.modeling.learning import Learning
+from aidds_buy.modeling.scaler import Scaling
+from aidds_buy.modeling.learning import Learning
 
-import aidds.sys.messages as msg
+import aidds_buy.sys.messages as msg
 
 
 def main():

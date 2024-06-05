@@ -2,9 +2,9 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-import aidds.sys.config as cfg
-from aidds.sys.utils import Logs, AiddsException
-from aidds.module.data_io import save_data
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import Logs, AiddsException
+from aidds_buy.module.data_io import save_data
 
 
 class Scaling:

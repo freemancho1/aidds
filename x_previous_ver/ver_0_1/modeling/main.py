@@ -1,5 +1,5 @@
-from aidds.sys.utils import AiddsInit as init
-from aidds.sys.utils import Logs, AiddsException
+from aidds_buy.sys.utils import AiddsInit as init
+from aidds_buy.sys.utils import Logs, AiddsException
 from modeling.preprocess import Preprocessing
 
 

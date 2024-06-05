@@ -1,6 +1,6 @@
-from aidds.sys import messages as msg
-from aidds.sys.utils import get_caller
-from aidds.sys.utils import get_error
+from aidds_buy.sys import messages as msg
+from aidds_buy.sys.utils import get_caller
+from aidds_buy.sys.utils import get_error
 
 
 class AppException(Exception):

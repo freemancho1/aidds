@@ -2,12 +2,12 @@ import json
 import random
 import pandas as pd 
 
-import aidds.sys.config as cfg
-import aidds.sys.messages as msg
+import aidds_buy.sys.config as cfg
+import aidds_buy.sys.messages as msg
 
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.data_io import read_data, get_cleaning_data
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.logs import service_logs as logs
+from aidds_buy.sys.utils.data_io import read_data, get_cleaning_data
 
 
 class Samples:

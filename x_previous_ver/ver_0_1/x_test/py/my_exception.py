@@ -1,4 +1,4 @@
-from aidds.x_previous_ver.ver_0_1.x_test.py.my_utils import get_caller_name2, get_error_info
+from aidds_buy.x_previous_ver.ver_0_1.x_test.py.my_utils import get_caller_name2, get_error_info
 
 ERR_ENDSWITH = '***'
 

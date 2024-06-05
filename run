@@ -1,8 +1,8 @@
 #!/home/freeman/anaconda3/envs/aidds/bin/python
 import os
 
-from aidds import run_args
-from aidds.sys import config as cfg
+from aidds_buy import run_args
+from aidds_buy.sys import config as cfg
 
 args = run_args()
 exec_str = 'python '

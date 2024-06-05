@@ -1,4 +1,4 @@
-from aidds.x_previous_ver.ver_0_1.x_test.py.my_exception import MyException, MyLog
+from aidds_buy.x_previous_ver.ver_0_1.x_test.py.my_exception import MyException, MyLog
 
 def free_fn():
     try:

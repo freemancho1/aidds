@@ -1,7 +1,7 @@
-import aidds.sys.config as cfg
-from aidds.sys.utils import Logs, AiddsException
-from aidds.module.data_io import get_cleaning_data, save_data
-from aidds.module.pp_mod import PreprocessingModule
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import Logs, AiddsException
+from aidds_buy.module.data_io import get_cleaning_data, save_data
+from aidds_buy.module.pp_mod import PreprocessingModule
 
 class Preprocessing:
     def __init__(self):

@@ -6,10 +6,10 @@ from typing import Union
 from datetime import datetime
 from joblib import dump, load
 
-from aidds.sys import config as cfg
-from aidds.sys import messages as msg
-from aidds.sys.utils import modeling_logs as logs
-from aidds.sys.utils import app_exception
+from aidds_buy.sys import config as cfg
+from aidds_buy.sys import messages as msg
+from aidds_buy.sys.utils import modeling_logs as logs
+from aidds_buy.sys.utils import app_exception
 
 
 # 'Union' means returning one of the data types in the declared variable

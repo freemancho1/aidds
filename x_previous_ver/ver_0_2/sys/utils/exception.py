@@ -1,4 +1,4 @@
-from aidds.sys.utils.trace_info import get_caller_info, get_error_info
+from aidds_buy.sys.utils.trace_info import get_caller_info, get_error_info
 
 
 class AiddsException(Exception):

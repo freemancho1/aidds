@@ -2,7 +2,7 @@ import re
 import inspect
 import traceback
 
-from aidds.sys import config as cfg
+from aidds_buy.sys import config as cfg
 
 
 def get_caller(is_display=False) -> tuple[str, str]:

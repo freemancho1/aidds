@@ -1,10 +1,10 @@
 import uuid
 from datetime import datetime
 
-import aidds.sys.config as cfg
-import aidds.sys.messages as msg
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.trace_info import get_caller_info, get_error_info
+import aidds_buy.sys.config as cfg
+import aidds_buy.sys.messages as msg
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.trace_info import get_caller_info, get_error_info
 
 
 class ModelingLogs:

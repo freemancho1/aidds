@@ -2,13 +2,13 @@ import json
 import pandas as pd
 from sklearn.metrics import mean_absolute_percentage_error as mape
 
-import aidds.sys.config as cfg 
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.data_io import get_service_pickle
-from aidds.sys.utils.ect import convert_to_builtin_int
+import aidds_buy.sys.config as cfg 
+from aidds_buy.sys.utils.logs import service_logs as logs
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.data_io import get_service_pickle
+from aidds_buy.sys.utils.ect import convert_to_builtin_int
 # 모델링 부분에 구현되어 있는 전처리 공통 모듈
-from aidds.modeling.pp_module import PreprocessingModule 
+from aidds_buy.modeling.pp_module import PreprocessingModule 
 
 
 class Predict:

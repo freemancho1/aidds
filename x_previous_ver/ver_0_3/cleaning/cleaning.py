@@ -1,10 +1,10 @@
 import pandas as pd
 
-import aidds.sys.config as cfg
-import aidds.sys.message as msg
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.data_io import get_provide_data, save_data
+import aidds_buy.sys.config as cfg
+import aidds_buy.sys.message as msg
+from aidds_buy.sys.utils.logs import ModelingLogs as Logs
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.data_io import get_provide_data, save_data
 
 
 class Cleaning:

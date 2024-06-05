@@ -1,8 +1,8 @@
 import re
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils import AiddsException
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import AiddsException
 
 
 class PreprocessingModule:

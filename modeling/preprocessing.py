@@ -1,9 +1,9 @@
-from aidds.sys import config as cfg
-from aidds.sys.utils import app_exception
-from aidds.sys.utils import modeling_logs as logs
-from aidds.sys.utils import get_cleaning_data
-from aidds.sys.utils import save_data
-from aidds.modeling import preprocess_module as ppm
+from aidds_buy.sys import config as cfg
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.sys.utils import modeling_logs as logs
+from aidds_buy.sys.utils import get_cleaning_data
+from aidds_buy.sys.utils import save_data
+from aidds_buy.modeling import preprocess_module as ppm
 
 
 class ModelingPreprocessing:

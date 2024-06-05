@@ -2,11 +2,11 @@ import json
 import inspect
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils import ServiceLogs as Logs
-from aidds.sys.utils import AiddsServiceException as ASE
-from aidds.module.data_io import read_data
-from aidds.serving.service.preprocessing import Preprocessing
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import ServiceLogs as Logs
+from aidds_buy.sys.utils import AiddsServiceException as ASE
+from aidds_buy.module.data_io import read_data
+from aidds_buy.serving.service.preprocessing import Preprocessing
 
 class Predict:
     def __init__(self):

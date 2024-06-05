@@ -2,9 +2,9 @@ from flask import request, jsonify
 from flask.views import MethodView
 from werkzeug.exceptions import HTTPException
 
-import aidds.serving.route.return_code as rc
-from aidds.sys.utils import AiddsServiceException as ASE
-from aidds.serving.service.service_manager import ServiceManager
+import aidds_buy.serving.route.return_code as rc
+from aidds_buy.sys.utils import AiddsServiceException as ASE
+from aidds_buy.serving.service.service_manager import ServiceManager
 
 sm = ServiceManager()
 

@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.metrics import r2_score
 
-from aidds.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.exception import AiddsException
 
 
 def user_mape(y, p): 

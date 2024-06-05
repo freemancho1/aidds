@@ -124,28 +124,29 @@ _cols.update({
         '공사번호'              : _cols['join'],          # 'acc_no', Accept No
         '총공사비'              : _cols['target'],        # 'cons_cost', Total Construction Cost
         '최종변경일시'          : 'acc_date',             # Last Modification Date and Time
-        '사업소명'              : 'office_name',
+        '사업소코드'            : 'office_cd',
         '계약전력'              : 'cntr_pwr',             # Contracted Capacity
+        '계약종별'              : 'cntr_type',
         '공급방식'              : 'sply_tpcd',
         '접수종류명'            : 'acpt_knd_cd',          # Accept Type Name
         # pole
-        '전주형태코드'          : 'pole_form_cd',
-        '전주종류코드'          : 'pole_knd_cd',
-        '전주규격코드'          : 'pole_spec_cd',
-        'X좌표_Y좌표'           : 'coordinate',
+        'CONS_NO'               : _cols['join'],
+        'POLE_KND_CD'           : 'pole_knd_cd',
+        'POLE_SPEC_CD'          : 'pole_spec_cd',
+        'POLE_FORM_CD'          : 'pole_form_cd',
         # line
         '결선방식코드'          : 'wrng_mode_cd',
-        '지지물간거리'          : 'span',
-        '전선종류코드1'         : 'wire_knd_cd',
-        '전선규격코드1'         : 'wire_spec_cd', 
-        '전선조수1'             : 'wire_lico', 
+        '긍장'                  : 'span',
+        '저압선종류코드'         : 'wire_knd_cd',
+        '저압선규격코드'         : 'wire_spec_cd', 
+        '조수코드'             : 'wire_lico', 
         '중성선종류코드'        : 'newi_knd_cd', 
         '중성선규격코드'        : 'newi_spec_cd',
         # sl
         '인입전선종류코드'      : 'sl_type_cd',
         '고객공급선규격코드'    : 'sl_spec_cd', 
-        '인입선지지물간거리'    : 'sl_span', 
-        '조수'                 : 'sl_lico',
+        '인입선긍장'            : 'sl_span', 
+        '인입선조수코드'        : 'sl_lico',
     },
     'cons': {
         'source': {
@@ -154,6 +155,7 @@ _cols.update({
                 _cols['target'],
                 'office_name',
                 'cntr_pwr',
+                'cntr_type',
                 'sply_tpcd',
                 'acpt_knd_cd',
             ],
@@ -164,6 +166,7 @@ _cols.update({
                 'pred_seq',
                 'office_cd',
                 'cntr_pwr',
+                'cntr_type',
                 'sply_tpcd',
             ],
         },
@@ -172,6 +175,7 @@ _cols.update({
             _cols['target'],
             'office_cd',
             'cntr_pwr',
+            'cntr_type',
             'sply_tpcd',                    
         ],  
     }, 
@@ -237,7 +241,10 @@ _file = {
         'model'                 : '.model',
     },
     'base_path': \
-        os.path.join(os.path.expanduser('~'), 'projects', 'data', 'aidds'),
+        os.path.join(
+            os.path.expanduser('~'), 
+            "projects", "data", "buy", "cost"
+        ),
 }
 # Temporary variable for brevity
 _xls = _file['ext']['excel']
@@ -247,9 +254,7 @@ _file.update({
     'name': {
         'data': {
             'provide': {
-                pkey: f'{pkey}_data'+_xls \
-                # pkey: f'{pkey}_data.abcd' \
-                    for pkey in _type['pds']
+                pkey: f'{pkey}{_csv}' for pkey in _type['pds']
             },
             'cleaning': {
                 pkey: f'data01_{pkey}_cleaning'+_csv \

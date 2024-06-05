@@ -1,6 +1,6 @@
-from aidds.sys.utils import ServiceLogs as Logs
-from aidds.serving.service.samples import Samples
-from aidds.serving.service.predict import Predict
+from aidds_buy.sys.utils import ServiceLogs as Logs
+from aidds_buy.serving.service.samples import Samples
+from aidds_buy.serving.service.predict import Predict
 
 
 class ServiceManager:

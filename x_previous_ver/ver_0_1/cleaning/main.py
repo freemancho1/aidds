@@ -1,6 +1,6 @@
-from aidds.sys.utils import AiddsInit as init
-from aidds.sys.utils import AiddsException
-from aidds.cleaning.cleaning import Cleaning
+from aidds_buy.sys.utils import AiddsInit as init
+from aidds_buy.sys.utils import AiddsException
+from aidds_buy.cleaning.cleaning import Cleaning
 
 
 def main():

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 from sklearn.exceptions import DataConversionWarning, ConvergenceWarning
 
-from aidds.sys import config as cfg
+from aidds_buy.sys import config as cfg
 
 
 class AppInit:

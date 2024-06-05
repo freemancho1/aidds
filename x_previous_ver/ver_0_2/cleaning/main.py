@@ -1,8 +1,8 @@
-from aidds.sys.app_init import AiddsInit
-from aidds.sys.utils.exception import AiddsException
-from aidds.cleaning.cleaning import Cleaning
+from aidds_buy.sys.app_init import AiddsInit
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.cleaning.cleaning import Cleaning
 
-import aidds.sys.messages as msg
+import aidds_buy.sys.messages as msg
 
 
 def main():

@@ -2,11 +2,11 @@ from typing import Type
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 
-from aidds.sys import config as cfg
-from aidds.sys.utils import app_exception
-from aidds.sys.utils import modeling_logs as logs
-from aidds.sys.utils import read_data
-from aidds.sys.utils import save_data
+from aidds_buy.sys import config as cfg
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.sys.utils import modeling_logs as logs
+from aidds_buy.sys.utils import read_data
+from aidds_buy.sys.utils import save_data
 
 
 class Scaling:

@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error as mse
 from sklearn.metrics import mean_absolute_percentage_error as mape
 from sklearn.metrics import r2_score
 
-from aidds.sys.utils import app_exception
+from aidds_buy.sys.utils import app_exception
 
 
 def regression_evals(y, p, verbose=1) -> list:

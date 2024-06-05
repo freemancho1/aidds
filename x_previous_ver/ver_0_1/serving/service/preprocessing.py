@@ -1,7 +1,7 @@
 import pandas as pd
-import aidds.sys.config as cfg
-from aidds.sys.utils import AiddsServiceException as ASE
-from aidds.module.pp_mod import PreprocessingModule
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import AiddsServiceException as ASE
+from aidds_buy.module.pp_mod import PreprocessingModule
 
 class Preprocessing:
     def __init__(self, jdict=None, pkl=None):

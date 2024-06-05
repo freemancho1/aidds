@@ -2,13 +2,13 @@ import json
 import numpy as np
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils.logs import service_logs as logs
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.data_io import read_data
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils.logs import service_logs as logs
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.data_io import read_data
 
 # 모델링에 구현되어 있는 전처리 공통 모듈
-from aidds.modeling.pp_module import PreprocessingModule as PPM
+from aidds_buy.modeling.pp_module import PreprocessingModule as PPM
 
 
 class Predict:

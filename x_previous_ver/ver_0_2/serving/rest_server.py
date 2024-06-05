@@ -1,7 +1,7 @@
 from flask import Flask
 
-from aidds.serving.route.samples import Samples
-from aidds.serving.route.predict import Predict
+from aidds_buy.serving.route.samples import Samples
+from aidds_buy.serving.route.predict import Predict
 
 
 app = Flask(__name__)

@@ -2,11 +2,11 @@ from flask import jsonify, request, abort, json
 from flask.views import MethodView
 from werkzeug.exceptions import HTTPException
 
-from aidds.sys import http_codes as hc
-from aidds.sys import messages as msg
-from aidds.sys.utils import route_error_logs as logs
-from aidds.sys.utils import app_exception
-from aidds.serving import service_manager
+from aidds_buy.sys import http_codes as hc
+from aidds_buy.sys import messages as msg
+from aidds_buy.sys.utils import route_error_logs as logs
+from aidds_buy.sys.utils import app_exception
+from aidds_buy.serving import service_manager
 
 sm = service_manager().get_instance()
 

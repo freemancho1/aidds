@@ -1,8 +1,8 @@
-import aidds.sys.config as cfg
-from aidds.sys.utils.logs import ModelingLogs as Logs
-from aidds.sys.utils.data_io import save_data, get_scaling_data, read_data
-from aidds.sys.utils.exception import AiddsException
-from aidds.sys.utils.evaluation import regression_evals
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils.logs import ModelingLogs as Logs
+from aidds_buy.sys.utils.data_io import save_data, get_scaling_data, read_data
+from aidds_buy.sys.utils.exception import AiddsException
+from aidds_buy.sys.utils.evaluation import regression_evals
 
 
 class Learning: 

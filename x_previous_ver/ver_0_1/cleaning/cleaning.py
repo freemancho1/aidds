@@ -1,8 +1,8 @@
 import pandas as pd
 
-import aidds.sys.config as cfg
-from aidds.sys.utils import Logs, AiddsException
-from aidds.module.data_io import get_provide_data, save_data
+import aidds_buy.sys.config as cfg
+from aidds_buy.sys.utils import Logs, AiddsException
+from aidds_buy.module.data_io import get_provide_data, save_data
 
 
 class Cleaning:
