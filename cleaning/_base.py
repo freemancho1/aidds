@@ -29,9 +29,10 @@ class Cleaning:
             
             # Handling constraints on rows
             modeling_rows = \
-                (cons_df.acpt_knd_cd == cfg.constraints.acpt_knd_cd) & \
-                (cons_df.cntr_pwr     < cfg.constraints.max_cntr_pwr) & \
-                (cons_df.cons_cost    < cfg.constraints.max_total_cons_cost)
+                (cons_df.acpt_knd_cd.isin(cfg.constraints.acpt_knd_cd)) & \
+                (cons_df.cntr_type.isin(cfg.constraints.cntr_type)) & \
+                (cons_df.cntr_pwr  < cfg.constraints.max_cntr_pwr) & \
+                (cons_df.cons_cost < cfg.constraints.max_total_cons_cost)
             cons_df = cons_df[modeling_rows].reset_index(drop=True)
             
             # Add columns: 'sup_type'

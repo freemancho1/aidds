@@ -85,7 +85,7 @@ _modeling = {
     'test_size': 0.25,
     'cols': 'modeling_cols',
     'best': {
-        'cnt': 5,
+        'cnt': 10,
         'per': 0.85,  
     },
 }
@@ -100,7 +100,10 @@ _type = {
 
 # Constraints on modeling data
 _constraints = {
-    'acpt_knd_cd'               : '신설(상용/임시)',
+    # acpt_knd_cd: 
+    # P=Power, L=Electric Light, K=Tube Well, I=Temporary
+    'acpt_knd_cd'               : ['P', 'L'],
+    'cntr_type'                 : [100, 211],
     'max_cntr_pwr'              : 50,
     'max_total_cons_cost'       : 30000000,
     'min_pole_cnt'              : 0,

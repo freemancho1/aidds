@@ -13,6 +13,7 @@ def main():
         pp = preprocessing()
         sc = scaling(pp_df=pp.ppdf)
         learning(scaling_df_dict=sc.sdata)
+        # learning()
     except KeyboardInterrupt as ke:
         raise app_exception(ke)
     except Exception as e:

@@ -10,7 +10,7 @@ from aidds_buy.sys.utils import regression_evals
 from aidds_buy.sys.utils import calculate_mape
 from aidds_buy.sys.utils import read_data
 from aidds_buy.sys.utils import save_data
-from aidds_buy.sys.utils import get_scaling_data
+from aidds_buy.sys.utils import get_scaling_data 
 
 
 class Learning:
