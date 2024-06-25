@@ -27,6 +27,9 @@ class Cleaning:
             pkey = cfg.type.pds[0]
             cons_df = self._pd_dict[pkey]
             
+            # 중복된 접수번호 제거
+            cons_df = cons_df.drop_duplicates(subset=["acc_no"], keep="first")
+            
             # Handling constraints on rows
             modeling_rows = \
                 (cons_df.acpt_knd_cd.isin(cfg.constraints.acpt_knd_cd)) & \
